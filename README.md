@@ -1,7 +1,7 @@
 ﻿# 信用卡管家（Credit Card Manager）
 
 自托管的个人信用卡账单与还款管理工具。
-Vue 3 Web 前端 + FastAPI 后端，打包为单个 Python Docker 镜像，数据存储于 SQLite。
+Vue 3 Web 前端 + FastAPI 后端，打包为单个 Python Docker 镜像，数据存储于 本地SQLite。
 
 ## 功能
 
