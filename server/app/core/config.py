@@ -25,7 +25,6 @@ class Settings(BaseSettings):
     admin_token: SecretStr | None = None
     session_idle_seconds: int = 86400  # 24 hours
     session_absolute_seconds: int = 2592000  # 30 days
-    master_key: SecretStr | None = None
     timezone: str = "Asia/Shanghai"
     allowed_host: str | None = None
     error_log_path: str | None = "./data/logs/errors.log"

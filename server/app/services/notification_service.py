@@ -4,13 +4,12 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from typing import Any
 
-from pydantic import SecretStr
 from sqlalchemy import and_, or_, select
 from sqlalchemy.orm import Session, selectinload
 
-from app.core.crypto import decrypt_secret, encrypt_secret
 from urllib.parse import urlsplit
 from app.core.notification_secrets import is_credential_bearing_url
+from app.core.plain_secrets import get_secret_json
 from app.models.card import Card
 from app.models.manual_bill import ManualBillNotificationLog
 from app.models.mixins import utc_now
@@ -163,7 +162,6 @@ def create_default_setting(session: Session) -> NotificationSetting:
         push_time="09:00",
         provider="disabled",
         public_config_json="{}",
-        secret_ciphertext=None,
         only_if_unpaid=True,
     )
     session.add(setting)
@@ -191,17 +189,14 @@ def separate_provider_config(provider: str, config: dict[str, Any]) -> tuple[dic
     return public_config, secret_config
 
 
-def assemble_provider_config(setting: NotificationSetting, master_key: SecretStr | None) -> dict[str, Any]:
+def assemble_provider_config(setting: NotificationSetting) -> dict[str, Any]:
     try:
         config = json.loads(setting.public_config_json or "{}")
     except Exception:
         config = {}
 
-    if setting.secret_ciphertext:
-        if not master_key:
-            raise ValueError("CCM_MASTER_KEY is required to decrypt notification secrets")
-        decrypted = decrypt_secret(setting.secret_ciphertext, master_key)
-        secrets_dict = json.loads(decrypted.get_secret_value())
+    secrets_dict = get_secret_json("notification", setting.id)
+    if secrets_dict:
         config.update(secrets_dict)
     return config
 
@@ -236,14 +231,14 @@ def _describe_due(days_left: int) -> tuple[str, str, str]:
 
 
 def check_and_send_due_reminders(
-    session: Session, today: date | None = None, master_key: SecretStr | None = None
+    session: Session, today: date | None = None
 ) -> list[NotificationLog | ManualBillNotificationLog]:
     with _NOTIFICATION_LOCK:
-        return _check_and_send_due_reminders(session, today, master_key)
+        return _check_and_send_due_reminders(session, today)
 
 
 def _check_and_send_due_reminders(
-    session: Session, today: date | None = None, master_key: SecretStr | None = None
+    session: Session, today: date | None = None
 ) -> list[NotificationLog | ManualBillNotificationLog]:
     if today is None:
         today = local_today(session.info.get("timezone", "Asia/Shanghai"))
@@ -257,7 +252,7 @@ def _check_and_send_due_reminders(
     except Exception:
         offsets = [2, 1, 0, -1, -2]
 
-    config = assemble_provider_config(setting, master_key)
+    config = assemble_provider_config(setting)
 
     cutoff = get_history_cutoff_date(session)
     if today is not None and today < cutoff:
@@ -482,4 +477,3 @@ def _check_and_send_due_reminders(
 
     session.commit()
     return sent_logs
-

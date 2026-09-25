@@ -6471,8 +6471,8 @@ const IconDictionary = {
           if (/IMAP is not enabled|credentials are not configured/i.test(detail)) {
             return '同步未开始：请先在“同步推送”中启用 IMAP，并保存邮箱账号和授权码';
           }
-          if (/CCM_MASTER_KEY|decrypt email account secrets/i.test(detail)) {
-            return '同步失败：服务端加密密钥不可用，请检查 CCM_MASTER_KEY 后重启服务';
+          if (/secret|credential|凭据/i.test(detail)) {
+            return '同步失败：服务端凭据配置不可用，请检查服务配置后重启服务';
           }
           if (/already running/i.test(detail)) {
             return '邮箱正在同步，请勿重复操作';

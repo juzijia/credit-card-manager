@@ -6,7 +6,7 @@ from croniter import croniter
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, Response, status
 from sqlalchemy.orm import Session
 
-from app.core.crypto import encrypt_secret
+from app.core.plain_secrets import get_secret, set_secret
 from app.core.redaction import redact_sensitive
 from app.core.security import require_agent_access
 from app.db.session import get_session
@@ -36,6 +36,9 @@ router = APIRouter(prefix="/backups", tags=["backups"])
 SessionDep = Annotated[Session, Depends(get_session)]
 
 
+BACKUP_SECRET_NS = "backup"
+
+
 def _setting_or_defaults(session: Session) -> BackupSetting:
     return get_backup_setting(session, create=False) or BackupSetting(id="default")
 
@@ -54,14 +57,14 @@ def _to_read_dto(setting: BackupSetting, request: Request) -> BackupSettingsRead
     if last_backup_at and last_backup_at.tzinfo is None:
         last_backup_at = last_backup_at.replace(tzinfo=ZoneInfo(timezone))
     return BackupSettingsRead(
-        backup_password_set=bool(setting.backup_password_ciphertext),
+        backup_password_set=get_secret(BACKUP_SECRET_NS, "crypt_password") is not None,
         webdav_url=(
             ""
             if setting.webdav_url and _webdav_url_has_credentials(setting.webdav_url)
             else setting.webdav_url or ""
         ),
         webdav_username=setting.webdav_username or "",
-        webdav_password_set=bool(setting.webdav_password_ciphertext),
+        webdav_password_set=get_secret(BACKUP_SECRET_NS, "webdav_password") is not None,
         schedule_type=setting.schedule_type or "off",
         cron_expr=setting.cron_expr or "0 3 * * *",
         retention_count=(
@@ -105,7 +108,6 @@ def update_settings_endpoint(
 ) -> BackupSettingsRead:
     setting = get_backup_setting(session)
     assert setting is not None
-    master_key = request.app.state.settings.master_key
     backup_password_changed = bool(
         payload.backup_password is not None
         and payload.backup_password.get_secret_value().strip()
@@ -133,10 +135,6 @@ def update_settings_endpoint(
         )
     )
 
-    if backup_password_changed:
-        setting.backup_password_ciphertext = encrypt_secret(payload.backup_password, master_key)
-    if webdav_password_changed:
-        setting.webdav_password_ciphertext = encrypt_secret(payload.webdav_password, master_key)
     if webdav_url is not None:
         setting.webdav_url = webdav_url
     if webdav_username is not None:
@@ -158,12 +156,16 @@ def update_settings_endpoint(
             detail="Cron 表达式无效，请输入标准 5 段格式（如 0 3 * * *）",
         )
     if setting.schedule_type == "cron":
-        if not setting.backup_password_ciphertext or not (setting.webdav_url or "").strip():
+        if not (backup_password_changed or get_secret(BACKUP_SECRET_NS, "crypt_password")) or not (setting.webdav_url or "").strip():
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail="启用 Cron 前必须设置备份密码和 WebDAV 地址",
             )
 
+    if backup_password_changed:
+        set_secret(BACKUP_SECRET_NS, "crypt_password", payload.backup_password.get_secret_value())
+    if webdav_password_changed:
+        set_secret(BACKUP_SECRET_NS, "webdav_password", payload.webdav_password.get_secret_value())
     session.commit()
     session.refresh(setting)
     return _to_read_dto(setting, request)

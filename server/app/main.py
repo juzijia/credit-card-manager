@@ -230,7 +230,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 with session_factory() as session:
                     account = get_default_email_account(session)
                     delay = compute_next_imap_delay(account, resolved_settings.timezone)
-                    runtime_config = build_imap_runtime_config(account, resolved_settings.master_key)
+                    runtime_config = build_imap_runtime_config(account)
                     if runtime_config is not None:
                         await run_in_thread_orderly(
                             sync_mailbox,
@@ -267,7 +267,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                         logs = await run_in_thread_orderly(
                             check_and_send_due_reminders,
                             session,
-                            master_key=resolved_settings.master_key,
                         )
                         if not logs or all(log.status == "success" for log in logs):
                             last_run_date = now.date()

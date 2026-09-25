@@ -1,12 +1,11 @@
-import hashlib
 import secrets
 from dataclasses import dataclass
 from typing import Annotated, Literal
 
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import select
 
+from app.core.plain_secrets import get_secret
 from app.services.session_service import (
     CSRF_HEADER_NAME,
     SESSION_COOKIE_NAME,
@@ -148,17 +147,8 @@ async def authenticate_access(
         if expected and secrets.compare_digest(supplied, expected):
             return AccessContext(mode="token", role="admin")
 
-        from app.models.agent_token import AgentToken
-
-        digest = hashlib.sha256(supplied.encode()).hexdigest()
-        with request.app.state.session_factory() as session:
-            active_digest = session.scalar(
-                select(AgentToken.token_hash)
-                .where(AgentToken.revoked.is_(False))
-                .order_by(AgentToken.created_at.desc(), AgentToken.id.desc())
-                .limit(1)
-            )
-        if active_digest and secrets.compare_digest(digest, active_digest):
+        vault_token = get_secret("agent", "token")
+        if vault_token and secrets.compare_digest(supplied, vault_token):
             return AccessContext(mode="token", role="agent")
 
     if settings.auth_mode in ("dev_bypass", "local") and settings.env != "production" and not supplied:

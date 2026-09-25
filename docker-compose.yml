@@ -12,8 +12,6 @@
     environment:
       # 必填：Owner 登录验证令牌（首次/管理登录）
       CCM_OWNER_TOKEN: replace_with_random_token_at_least_32_chars
-      # 必填：主加密密钥（加密邮箱凭据）
-      CCM_MASTER_KEY: replace_with_random_base64_key
       # 选填：公网反代域名（纯局域网访问留空或不填即可）
       CCM_ALLOWED_HOST: ""
       # 选填：时区，默认上海时区

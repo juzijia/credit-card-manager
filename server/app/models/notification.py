@@ -22,7 +22,6 @@ class NotificationSetting(TimestampMixin, Base):
     push_time: Mapped[str] = mapped_column(String(16), default="09:00")
     provider: Mapped[str] = mapped_column(String(32), default="disabled")
     public_config_json: Mapped[str] = mapped_column(Text(), default="{}")
-    secret_ciphertext: Mapped[str | None] = mapped_column(Text(), nullable=True)
     only_if_unpaid: Mapped[bool] = mapped_column(Boolean(), default=True)
 
 

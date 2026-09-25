@@ -1,12 +1,11 @@
 import json
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, HTTPException, Request
-from pydantic import SecretStr
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.core.crypto import encrypt_secret
+from app.core.plain_secrets import get_secret_json, set_secret_json
 from app.core.redaction import redact_sensitive
 from app.core.security import require_agent_access, require_owner_access
 from app.db.session import get_session
@@ -70,7 +69,7 @@ def get_settings_and_providers(session: SessionDep) -> dict[str, Any]:
         public_conf = json.loads(setting.public_config_json or "{}")
     except Exception:
         public_conf = {}
-    configured = bool(setting.secret_ciphertext or public_conf)
+    configured = bool(get_secret_json("notification", setting.id) or public_conf)
 
     is_enabled = bool(setting.enabled) and setting.provider != "disabled"
     current_provider = setting.provider if (is_enabled and setting.provider in PROVIDERS) else "disabled"
@@ -94,7 +93,7 @@ def get_settings_and_providers(session: SessionDep) -> dict[str, Any]:
 
 @router.post("/settings", dependencies=[Depends(require_owner_access)])
 def update_settings(
-    payload: NotificationSettingWriteDTO, request: Request, session: SessionDep
+    payload: NotificationSettingWriteDTO, session: SessionDep
 ) -> dict[str, Any]:
     if payload.provider != "disabled" and payload.provider not in PROVIDERS:
         raise HTTPException(status_code=422, detail="Unsupported notification provider")
@@ -124,14 +123,10 @@ def update_settings(
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
-    master_key = request.app.state.settings.master_key
     previous_provider = setting.provider
 
     if previous_provider == payload.provider:
-        try:
-            assembled = assemble_provider_config(setting, master_key)
-        except ValueError as exc:
-            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        assembled = assemble_provider_config(setting)
         assembled.update({k: v for k, v in incoming.items() if v not in (None, "")})
     else:
         assembled = {k: v for k, v in incoming.items() if v not in (None, "")}
@@ -140,35 +135,25 @@ def update_settings(
     setting.provider = payload.provider
     setting.public_config_json = json.dumps(public_conf)
 
-    if secret_conf:
-        if not master_key:
-            raise HTTPException(
-                status_code=503,
-                detail="CCM_MASTER_KEY is required to save encrypted notification secrets",
-            )
-        setting.secret_ciphertext = encrypt_secret(
-            SecretStr(json.dumps(secret_conf)), master_key
-        )
-    elif previous_provider != payload.provider:
-        setting.secret_ciphertext = None
-
     session.commit()
     session.refresh(setting)
+
+    if secret_conf:
+        set_secret_json("notification", setting.id, secret_conf)
+    elif previous_provider != payload.provider:
+        set_secret_json("notification", setting.id, None)
+
     return {"success": True, "message": "通知设置已保存"}
 
 
 @router.post("/test", dependencies=[Depends(require_owner_access)])
-def test_provider(payload: NotificationTestWriteDTO, request: Request, session: SessionDep) -> dict[str, Any]:
+def test_provider(payload: NotificationTestWriteDTO, session: SessionDep) -> dict[str, Any]:
     if payload.provider == "disabled":
         return {"success": False, "message": "当前通知方式为已关闭，请先选择具体通知渠道"}
     setting = get_default_setting(session)
-    master_key = request.app.state.settings.master_key
 
     if setting and setting.provider == payload.provider:
-        try:
-            assembled = assemble_provider_config(setting, master_key)
-        except ValueError as exc:
-            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        assembled = assemble_provider_config(setting)
     else:
         assembled = {}
 
@@ -188,9 +173,8 @@ def test_provider(payload: NotificationTestWriteDTO, request: Request, session: 
 
 
 @router.post("/trigger", dependencies=[Depends(require_agent_access)])
-def trigger_check(request: Request, session: SessionDep) -> dict[str, Any]:
-    master_key = request.app.state.settings.master_key
-    sent = check_and_send_due_reminders(session, master_key=master_key)
+def trigger_check(session: SessionDep) -> dict[str, Any]:
+    sent = check_and_send_due_reminders(session)
     return {
         "success": True,
         "sent_count": len(sent),

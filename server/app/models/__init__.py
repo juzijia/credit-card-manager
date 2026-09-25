@@ -1,4 +1,3 @@
-from app.models.agent_token import AgentToken
 from app.models.backup import BackupSetting
 from app.models.catalog import (
     BankRegistry,
@@ -26,7 +25,6 @@ from app.models.system_setting import SystemSetting
 from app.models.transaction import Transaction
 
 __all__ = [
-    "AgentToken",
     "BackupSetting",
     "BankRegistry",
     "CatalogArtwork",

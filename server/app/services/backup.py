@@ -23,7 +23,7 @@ from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings
-from app.core.crypto import decrypt_secret
+from app.core.plain_secrets import get_secret
 from app.core.redaction import redact_sensitive
 from app.models.backup import BackupSetting
 from alembic.config import Config
@@ -194,24 +194,17 @@ def get_backup_setting(session: Session, *, create: bool = True) -> BackupSettin
     return setting
 
 
-def _remote_env(setting: BackupSetting, settings: Settings) -> dict[str, str]:
-    if not setting.backup_password_ciphertext:
+def _remote_env(setting: BackupSetting) -> dict[str, str]:
+    crypt_password = get_secret("backup", "crypt_password")
+    if not crypt_password:
         raise ValueError("未配置备份密码")
     if not setting.webdav_url or not setting.webdav_url.strip():
         raise ValueError("未配置 WebDAV，无法执行备份")
-    backup_password = decrypt_secret(
-        setting.backup_password_ciphertext, settings.master_key
-    ).get_secret_value()
-    webdav_password = None
-    if setting.webdav_password_ciphertext:
-        webdav_password = decrypt_secret(
-            setting.webdav_password_ciphertext, settings.master_key
-        ).get_secret_value()
     return build_rclone_env(
-        backup_password,
+        crypt_password,
         setting.webdav_url,
         setting.webdav_username,
-        webdav_password,
+        get_secret("backup", "webdav_password"),
     )
 
 
@@ -263,7 +256,7 @@ def list_backups(session: Session, settings: Settings) -> list[dict[str, Any]]:
     setting = get_backup_setting(session, create=False)
     if setting is None:
         raise ValueError("未配置 WebDAV")
-    return list_remote_backups(_remote_env(setting, settings), settings.timezone)
+    return list_remote_backups(_remote_env(setting), settings.timezone)
 
 
 def _cleanup_remote(
@@ -296,7 +289,7 @@ def cleanup_backups(session: Session, settings: Settings) -> dict[str, int]:
         if setting is None:
             raise ValueError("未配置 WebDAV")
         return _cleanup_remote(
-            _remote_env(setting, settings), settings.timezone, setting.retention_count
+            _remote_env(setting), settings.timezone, setting.retention_count
         )
 
 
@@ -311,7 +304,7 @@ def delete_backup(session: Session, settings: Settings, backup_name: str) -> Non
             raise ValueError("未配置 WebDAV")
         run_rclone(
             ["--config", "", "deletefile", f"CCM_WEBDAV_CRYPT:{backup_name}"],
-            env=_remote_env(setting, settings),
+            env=_remote_env(setting),
         )
 
 
@@ -326,7 +319,7 @@ def execute_backup(session: Session, settings: Settings) -> dict[str, Any]:
         setting.last_attempt_at = now
         staging_file: Path | None = None
         try:
-            env = _remote_env(setting, settings)
+            env = _remote_env(setting)
             filename = f"ccm-{now.strftime('%Y%m%d-%H%M%S')}.sqlite"
             staging_file = paths.staging_dir / filename
             sqlite_backup(paths.database_file, staging_file)
@@ -364,7 +357,7 @@ def test_webdav_connection(session: Session, settings: Settings) -> dict[str, An
     setting = get_backup_setting(session, create=False)
     if setting is None:
         raise ValueError("未配置 WebDAV")
-    env = _remote_env(setting, settings)
+    env = _remote_env(setting)
     probe_name = f"probe-{uuid.uuid4().hex}.tmp"
     content = os.urandom(64)
     with tempfile.TemporaryDirectory() as td:
@@ -483,7 +476,7 @@ def prepare_pending_restore(
             paths,
             backup_name,
             datetime.now(ZoneInfo(settings.timezone)).isoformat(),
-            _remote_env(setting, settings),
+            _remote_env(setting),
         )
         return {"status": "PENDING_RESTART", "backup_name": backup_name}
 

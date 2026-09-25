@@ -5,6 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     CCM_ENV=production \
     CCM_AUTH_MODE=session \
     CCM_DATABASE_URL=sqlite:////data/credit-card-manager.db \
+    CCM_SECRETS_FILE=/data/config/secrets.json \
     CCM_ERROR_LOG_PATH=/data/logs/errors.log
 
 WORKDIR /app

@@ -1,14 +1,13 @@
 import json
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from pydantic import SecretStr, ValidationError
 
-from app.core.config import Settings
-from app.core.crypto import decrypt_secret, encrypt_secret
+from app.core.plain_secrets import get_secret, set_secret
 from app.core.redaction import redact_sensitive
 from app.core.security import AccessContext, require_agent_access
 from app.db.session import get_session
@@ -42,18 +41,21 @@ def get_default_email_account(session: Session) -> EmailAccount | None:
 
 def create_or_update_default_email_account(
     session: Session,
-    settings: Settings,
     payload: ImapConfigWriteDTO,
 ) -> EmailAccount:
     account = get_default_email_account(session)
     username = payload.username.strip() if payload.username and payload.username.strip() else (account.username if account else "")
+    password = (
+        payload.password.get_secret_value()
+        if payload.password and payload.password.get_secret_value()
+        else None
+    )
     if account is None:
         account = EmailAccount(
             name=DEFAULT_ACCOUNT_NAME,
             host=payload.host.strip(),
             port=payload.port,
             username=username,
-            secret_ciphertext="",
             enabled=payload.enabled,
             mailbox=payload.mailbox,
             all_folders=payload.all_folders,
@@ -64,6 +66,7 @@ def create_or_update_default_email_account(
             initial_sync_months=payload.initial_sync_months,
         )
         session.add(account)
+        session.flush()
     else:
         account.enabled = payload.enabled
         account.host = payload.host.strip()
@@ -78,13 +81,8 @@ def create_or_update_default_email_account(
         account.cron_expr = payload.cron_expr.strip()
         account.initial_sync_months = payload.initial_sync_months
 
-    if payload.password and payload.password.get_secret_value():
-        if not settings.master_key:
-            raise HTTPException(
-                status_code=503,
-                detail="CCM_MASTER_KEY is required to save encrypted email account secrets",
-            )
-        account.secret_ciphertext = encrypt_secret(payload.password, settings.master_key)
+    if password:
+        set_secret("imap", account.id, password)
 
     session.commit()
     session.refresh(account)
@@ -93,21 +91,20 @@ def create_or_update_default_email_account(
 
 def build_imap_runtime_config(
     account: EmailAccount | None,
-    master_key: SecretStr | None,
 ) -> ImapRuntimeConfig | None:
     if not account or not account.enabled:
         return None
-    if not account.host or not account.username or not account.secret_ciphertext:
+    if not account.host or not account.username:
         return None
-    if not master_key:
-        raise ValueError("CCM_MASTER_KEY is required to decrypt email account secrets for sync")
-    decrypted = decrypt_secret(account.secret_ciphertext, master_key)
+    password = get_secret("imap", account.id)
+    if not password:
+        return None
     return ImapRuntimeConfig(
         account_id=account.id,
         host=account.host,
         port=account.port,
         username=account.username,
-        password=decrypted,
+        password=SecretStr(password),
         mailbox=account.mailbox,
         all_folders=account.all_folders,
         initial_sync_months=account.initial_sync_months,
@@ -134,7 +131,12 @@ def _status_payload(account: EmailAccount | None) -> dict[str, object]:
 
     return {
         "enabled": account.enabled,
-        "configured": bool(account.enabled and account.host and account.username and account.secret_ciphertext),
+        "configured": bool(
+            account.enabled
+            and account.host
+            and account.username
+            and get_secret("imap", account.id)
+        ),
         "host": account.host,
         "port": account.port,
         "username_configured": bool(account.username),
@@ -179,7 +181,6 @@ def imap_status(session: SessionDep) -> dict[str, object]:
 
 @router.post("/sync")
 def imap_sync(
-    request: Request,
     session: SessionDep,
     access: Annotated[AccessContext, Depends(require_agent_access)],
     full_scan: bool = Query(default=False),
@@ -191,11 +192,7 @@ def imap_sync(
             detail="Agent token may only run the default incremental IMAP sync",
         )
     account = get_default_email_account(session)
-    master_key = request.app.state.settings.master_key
-    try:
-        runtime_config = build_imap_runtime_config(account, master_key)
-    except ValueError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    runtime_config = build_imap_runtime_config(account)
 
     if runtime_config is None:
         raise HTTPException(status_code=400, detail="IMAP is not enabled or credentials are not configured in EmailAccount")
@@ -246,17 +243,13 @@ def imap_sync_runs(
 
 
 @router.post("/test", dependencies=[Depends(require_agent_access)])
-def test_imap_connection(request: Request, payload: ImapTestWriteDTO, session: SessionDep) -> dict[str, object]:
+def test_imap_connection(payload: ImapTestWriteDTO, session: SessionDep) -> dict[str, object]:
     from imapclient import IMAPClient
-    settings = request.app.state.settings
     account = get_default_email_account(session)
 
     password = payload.password.get_secret_value() if payload.password else None
-    if not password and account and account.secret_ciphertext and settings.master_key:
-        try:
-            password = decrypt_secret(account.secret_ciphertext, settings.master_key).get_secret_value()
-        except Exception:
-            pass
+    if not password and account:
+        password = get_secret("imap", account.id)
 
     username = payload.username.strip() if payload.username and payload.username.strip() else (account.username if account else "")
     if not username:
@@ -293,7 +286,6 @@ def test_imap_connection(request: Request, payload: ImapTestWriteDTO, session: S
 
 @router.post("/config")
 def update_imap_config(
-    request: Request,
     payload: ImapConfigUpdateDTO,
     session: SessionDep,
     access: Annotated[AccessContext, Depends(require_agent_access)],
@@ -340,10 +332,8 @@ def update_imap_config(
             owner_payload.daily_time,
             owner_payload.cron_expr,
         )
-        account = create_or_update_default_email_account(
-            session, request.app.state.settings, owner_payload
-        )
-        message = "IMAP 配置已更新并安全加密存储"
+        account = create_or_update_default_email_account(session, owner_payload)
+        message = "IMAP 配置已更新"
 
     return {
         "success": True,

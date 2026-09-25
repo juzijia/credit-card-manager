@@ -67,8 +67,7 @@ def main() -> None:
         from contextlib import closing
         import getpass
         import sqlite3
-        from app.core.config import Settings
-        from app.core.crypto import decrypt_secret
+        from app.core.plain_secrets import get_secret
         from app.services.backup import (
             apply_restore_offline,
             prepare_pending_restore_with_credentials,
@@ -77,31 +76,21 @@ def main() -> None:
         if not args.yes:
             raise SystemExit("恢复会替换当前数据库；确认服务已停止后追加 --yes")
 
-        settings = Settings(database_url=args.database_url)
-        resolved_pass: str | None = None
         webdav_url: str | None = None
         webdav_user: str | None = None
-        webdav_pass: str | None = None
-        webdav_password_required = False
 
         if target.is_file():
             try:
                 with closing(sqlite3.connect(target)) as conn:
                     row = conn.execute(
-                        "SELECT backup_password_ciphertext, webdav_url, webdav_username, webdav_password_ciphertext FROM backup_settings WHERE id = 'default'"
+                        "SELECT webdav_url, webdav_username FROM backup_settings WHERE id = 'default'"
                     ).fetchone()
                     if row:
-                        bp_cipher, w_url, w_user, w_pass_cipher = row
-                        if bp_cipher and settings.master_key:
-                            resolved_pass = decrypt_secret(bp_cipher, settings.master_key).get_secret_value()
-                        webdav_url = w_url
-                        webdav_user = w_user
-                        webdav_password_required = bool(w_pass_cipher)
-                        if w_pass_cipher and settings.master_key:
-                            webdav_pass = decrypt_secret(w_pass_cipher, settings.master_key).get_secret_value()
+                        webdav_url, webdav_user = row
             except Exception:
                 pass
 
+        resolved_pass = get_secret("backup", "crypt_password")
         if not resolved_pass:
             resolved_pass = os.getenv("CCM_BACKUP_PASSWORD")
 
@@ -110,13 +99,14 @@ def main() -> None:
             if not resolved_pass:
                 raise SystemExit("未提供备份密码，无法恢复")
 
+        webdav_pass = get_secret("backup", "webdav_password")
         if not webdav_url:
             print("当前数据库未记录有效的 WebDAV 配置，请输入连接信息：")
             webdav_url = input("WebDAV 地址: ").strip()
             webdav_user = input("WebDAV 用户名: ").strip()
-            webdav_pass = getpass.getpass("WebDAV 密码: ").strip()
-        elif webdav_password_required and not webdav_pass:
-            webdav_pass = getpass.getpass("WebDAV 密码: ").strip()
+            webdav_pass = getpass.getpass("WebDAV 密码: ").strip() or None
+        elif not webdav_pass:
+            webdav_pass = getpass.getpass("WebDAV 密码（无密码直接回车）: ").strip() or None
         if not webdav_url:
             raise SystemExit("未提供 WebDAV 地址，无法恢复")
 
