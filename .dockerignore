@@ -18,6 +18,8 @@ venv
 **/*.sqlite
 **/*.sqlite3
 data
+server/data
+**/secrets.json
 dev
 client
 server/tests
