@@ -4004,26 +4004,24 @@
         @click="mobileMoreExpanded = false"
       ></div>
 
-      <!-- Mobile More Popup Menu (仅两项：年费管理, 同步推送) -->
+      <!-- Mobile More Popup Menu (纯文字：年费管理, 同步推送) -->
       <div
         v-if="mobileMoreExpanded"
-        class="md:hidden fixed bottom-[calc(3.75rem+max(0.5rem,env(safe-area-inset-bottom)))] right-3 w-40 z-50 bg-white/95 dark:bg-[#151b2d]/95 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-1.5 backdrop-blur-md space-y-1 animate-in fade-in slide-in-from-bottom-2 duration-150"
+        class="md:hidden fixed bottom-[calc(3.75rem+max(0.5rem,env(safe-area-inset-bottom)))] right-3 w-32 z-50 bg-white/95 dark:bg-[#151b2d]/95 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl py-1 px-1 backdrop-blur-md space-y-0.5 animate-in fade-in slide-in-from-bottom-2 duration-150"
       >
         <button
           @click="selectMobileTab('annual_fee')"
           :class="activeTab === 'annual_fee' ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'"
-          class="w-full px-3 py-2.5 rounded-xl flex items-center gap-2.5 transition text-xs text-left"
+          class="w-full px-3 py-2 rounded-lg text-xs font-medium text-center transition"
         >
-          <component :is="IconAnnualFee" class="w-4 h-4 text-amber-500 shrink-0" />
-          <span>年费管理</span>
+          年费管理
         </button>
         <button
           @click="selectMobileTab('sync')"
           :class="activeTab === 'sync' ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'"
-          class="w-full px-3 py-2.5 rounded-xl flex items-center gap-2.5 transition text-xs text-left"
+          class="w-full px-3 py-2 rounded-lg text-xs font-medium text-center transition"
         >
-          <component :is="IconSync" class="w-4 h-4 text-indigo-500 shrink-0" />
-          <span>同步推送</span>
+          同步推送
         </button>
       </div>
 
