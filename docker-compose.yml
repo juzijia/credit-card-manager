@@ -16,14 +16,3 @@
       CCM_ALLOWED_HOST: ""
       # 选填：时区，默认上海时区
       CCM_TIMEZONE: Asia/Shanghai
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
