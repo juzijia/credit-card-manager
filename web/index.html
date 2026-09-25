@@ -2725,20 +2725,17 @@
             <div>
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs text-slate-600 dark:text-slate-300">备份加密密码（选填）</label>
-                <span :class="backupPasswordEffective ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'" class="text-[11px] font-medium">{{ backupPasswordEffective ? '已设置' : (backupPasswordClear ? '待清除' : '未设置') }}</span>
+                <span :class="backupForm.backup_password ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'" class="text-[11px] font-medium">{{ backupForm.backup_password ? '已设置' : '未设置' }}</span>
               </div>
               <div class="relative">
-                <input v-model="backupForm.backup_password" @input="backupConnectionVerified = false; backupPasswordClear = false" :type="backupPasswordVisible ? 'text' : 'password'" autocomplete="off" :placeholder="backupSettings.backup_password_set ? '已配置 — 输入新密码可替换' : '留空则不加密直接上传'" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                <input v-model="backupForm.backup_password" @input="backupConnectionVerified = false" :type="backupPasswordVisible ? 'text' : 'password'" autocomplete="off" placeholder="留空则不加密直接上传" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
                 <button type="button" @click="backupPasswordVisible = !backupPasswordVisible" :title="backupPasswordVisible ? '隐藏密码' : '显示密码'" :aria-label="backupPasswordVisible ? '隐藏密码' : '显示密码'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
                   <svg v-if="!backupPasswordVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
                   <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
                 </button>
               </div>
-              <div class="mt-1.5 flex items-center justify-between gap-2">
-                <p v-if="backupPasswordEffective" class="text-[11px] text-amber-600 dark:text-amber-400">请妥善保管：丢失或忘记此密码后，已有备份将无法恢复。</p>
-                <span v-else></span>
-                <button v-if="backupSettings.backup_password_set && !backupForm.backup_password && !backupPasswordClear" @click="backupPasswordClear = true; backupConnectionVerified = false" class="shrink-0 text-[11px] text-rose-600 dark:text-rose-400 hover:underline">清除密码</button>
-                <button v-else-if="backupPasswordClear" @click="backupPasswordClear = false; backupConnectionVerified = false" class="shrink-0 text-[11px] text-slate-500 hover:underline">取消清除</button>
+              <div v-if="backupForm.backup_password" class="mt-1.5">
+                <p class="text-[11px] text-amber-600 dark:text-amber-400">请妥善保管：丢失或忘记此密码后，已有备份将无法恢复。</p>
               </div>
               <p class="mt-1 text-[11px] text-slate-400">加密与未加密备份存放于不同的远端目录，切换模式不影响已有备份；列表与恢复仅针对当前模式。</p>
             </div>
@@ -8248,13 +8245,11 @@ const IconDictionary = {
               cron_expr: backupForm.value.cron_expr,
               retention_count: backupForm.value.retention_count
             };
-            if (backupForm.value.backup_password) {
-              payload.backup_password = backupForm.value.backup_password;
-            } else if (backupPasswordClear.value) {
-              payload.backup_password = '';
+            if (backupForm.value.backup_password !== backupSettings.value.backup_password) {
+              payload.backup_password = backupForm.value.backup_password || '';
             }
-            if (backupForm.value.webdav_password) {
-              payload.webdav_password = backupForm.value.webdav_password;
+            if (backupForm.value.webdav_password !== backupSettings.value.webdav_password) {
+              payload.webdav_password = backupForm.value.webdav_password || '';
             }
             const updated = await api('/backups/settings', {
               method: 'PUT',
@@ -8262,9 +8257,8 @@ const IconDictionary = {
               body: JSON.stringify(payload)
             });
             backupSettings.value = updated;
-            backupForm.value.backup_password = '';
-            backupForm.value.webdav_password = '';
-            backupPasswordClear.value = false;
+            backupForm.value.backup_password = updated.backup_password || '';
+            backupForm.value.webdav_password = updated.webdav_password || '';
             await loadBackupList();
             if (!silent) {
               showToast('备份设置已保存');
