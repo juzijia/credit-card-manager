@@ -1,0 +1,16 @@
+alembic==1.16.5
+beancount-sieve==0.7.0
+beautifulsoup4==4.13.5
+fastapi==0.116.1
+httpx==0.28.1
+IMAPClient==3.1.0
+lxml==6.0.1
+pymupdf==1.28.2
+pydantic-settings==2.10.1
+python-multipart==0.0.30
+starlette==0.47.3
+croniter>=6.0.0
+cryptography==50.0.1
+SQLAlchemy==2.0.43
+tzdata==2025.2
+uvicorn[standard]==0.35.0

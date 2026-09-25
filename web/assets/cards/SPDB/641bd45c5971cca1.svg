@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 252" width="400" height="252">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#083344" />
+      <stop offset="50%" stop-color="#0e7490" />
+      <stop offset="100%" stop-color="#0891b2" />
+    </linearGradient>
+    <radialGradient id="glimmer" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#ca8a04" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <rect x="10" y="8" width="380" height="236" rx="16" fill="url(#bg)" filter="url(#shadow)" />
+  <rect x="10" y="8" width="380" height="236" rx="16" fill="url(#glimmer)" />
+  <rect x="10" y="8" width="380" height="236" rx="16" fill="none" stroke="#06b6d4" stroke-width="1.2" stroke-opacity="0.4" />
+
+  <g transform="translate(30, 36)">
+    <circle cx="12" cy="12" r="12" fill="#06b6d4" fill-opacity="0.2" />
+    <circle cx="12" cy="12" r="6" fill="#06b6d4" />
+    <text x="32" y="16" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', PingFang SC, sans-serif" font-size="14" font-weight="600" fill="#cffafe" letter-spacing="1">浦发银行</text>
+  </g>
+
+  <g transform="translate(320, 30)">
+    <rect x="0" y="0" width="55" height="20" rx="10" fill="#06b6d4" fill-opacity="0.25" stroke="#06b6d4" stroke-width="0.8" stroke-opacity="0.6"/>
+    <text x="27.5" y="14" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="700" fill="#cffafe" text-anchor="middle" letter-spacing="0.5">STANDARD</text>
+  </g>
+
+  <g transform="translate(32, 85)">
+    <rect x="0" y="0" width="38" height="28" rx="5" fill="url(#chip)" stroke="#a16207" stroke-width="0.8" />
+    <line x1="12" y1="0" x2="12" y2="28" stroke="#854d0e" stroke-width="0.8" opacity="0.6" />
+    <line x1="26" y1="0" x2="26" y2="28" stroke="#854d0e" stroke-width="0.8" opacity="0.6" />
+    <line x1="0" y1="14" x2="38" y2="14" stroke="#854d0e" stroke-width="0.8" opacity="0.6" />
+  </g>
+
+  <g transform="translate(82, 92)" stroke="#cffafe" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.75">
+    <path d="M0,4 A8,8 0 0,1 0,16" />
+    <path d="M4,1 A12,12 0 0,1 4,19" />
+    <path d="M8,-2 A16,16 0 0,1 8,22" />
+  </g>
+
+  <text x="32" y="165" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', PingFang SC, sans-serif" font-size="17" font-weight="700" fill="#ffffff" letter-spacing="0.5">浦发梦卡 / 美团联名卡</text>
+
+  <g transform="translate(32, 208)">
+    <text x="0" y="12" font-family="Courier, monospace" font-size="13" font-weight="600" fill="#cffafe" opacity="0.85" letter-spacing="3.5">••••  ••••  ••••  8888</text>
+    <text x="338" y="12" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#06b6d4" text-anchor="end">UnionPay</text>
+  </g>
+</svg>

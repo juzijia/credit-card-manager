@@ -1,0 +1,1 @@
+"""CCM feature-module boundary."""

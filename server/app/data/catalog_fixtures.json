@@ -1,0 +1,6667 @@
+{
+  "CMB": [
+    {
+      "bank_id": "CMB",
+      "canonical_name": "经典白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": null,
+        "waiver_description": "主卡年费3600元，可用10000永久积分兑换主卡年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/42853e4e.png",
+          "image_hash": "b908fff188cdf2b4067bdcb1f1bc89ecaba820eea15b3324e9712046dc9b2496",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "自由人生白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，当年消费满9万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/c9d8bea5.png",
+          "image_hash": "432c562ae2c52a7620e08a7281a59e0326092a21f6e142100d6678753653c399",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "百夫长白金卡",
+      "aliases": [],
+      "networks": [
+        "AmericanExpress"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": null,
+        "waiver_description": "刚性年费3600元，核卡即收不可减免"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/1a45ae00.png",
+          "image_hash": "afc105b0e5e47a5d32f8609d7143bc7aa53abd4ca3315724d8ff724ac172eb98",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "银联白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，当年消费满9万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/4df9bddc.png",
+          "image_hash": "e1747703e50f657ad317ffbe3e987570cd9971cc50b876bdbc6959dfc940915c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "鸟白/智汇白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，当年消费满9万元免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/f7c866de.png",
+          "image_hash": "f6f354c3ef1bd7ed23bece0710e6d839f609eb714075816366ddef114b59501f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "招商银行滴滴联名信用卡",
+      "aliases": [
+        "滴滴联名卡",
+        "招行滴滴卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，单卡每年刷卡消费满6次免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/c686d267.png",
+          "image_hash": "20e758a93f34964bce5e9d319a4b5b2c33ef8090b2f37365b274c3fc531bd316",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "Bilibili联名卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，单卡每年刷卡消费满6次免次年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/c10b42b0.png",
+          "image_hash": "fd9fc15bf3caa0a2216b4e5e8c651d5ee69f9bda5fe94ee0e056eb2bb5c18567",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "全币种国际信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay",
+        "VISA"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "卡片有效期内无条件免年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/b703a876.png",
+          "image_hash": "c666485cdd68429e8ff9935d72c0f987edd3343606bbad8b425a7a3faac57ddb",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "标准信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，单卡每年刷卡消费满6次免次年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/3baac4f0.png",
+          "image_hash": "bec466d2ea8253aa4ca1b4aa26dec6af60c1e35532237814fc7376db49a7dc45",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行官方产品公示目录",
+          "url": "https://www.bank.test/cmb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "招商银行钻石信用卡",
+      "aliases": [
+        "招行钻石卡",
+        "钻石卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Diamond",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": 180000,
+        "waiver_description": "主卡年费3600元刚性收取，附属卡年费1800元刚性收取"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "境内机场贵宾厅VIP接送机与登机服务",
+          "description": "全国数十家主要机场自营贵宾厅全套CIP服务及安检通道",
+          "quota": "不限次/年",
+          "cycle": "核卡年度",
+          "source_url": "https://market.cmbchina.com/ccard/diamond/"
+        },
+        {
+          "category": "酒店",
+          "title": "亲子度假与顶奢酒店贵宾价入住",
+          "description": "精选全国顶奢度假酒店及亲子度假村专属优惠权益",
+          "quota": "4间夜/年",
+          "cycle": "核卡年度",
+          "source_url": "https://market.cmbchina.com/ccard/diamond/"
+        },
+        {
+          "category": "健康",
+          "title": "儿童齿科及全家人身意外医疗保障",
+          "description": "知名口腔门诊儿童涂氟窝沟封闭及全家人身健康保障",
+          "quota": "每年儿童齿科2次",
+          "cycle": "核卡年度",
+          "source_url": "https://market.cmbchina.com/ccard/diamond/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/diamond_card.png",
+          "image_hash": "87e483879d7c3038249081814988ada69176ed3efda61e3226a9a0e2b00c73e1",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行信用卡官方网站 - 钻石信用卡公示",
+          "url": "https://market.cmbchina.com/ccard/diamond/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "招商银行城市信用卡 (Car Card 经典版)",
+      "aliases": [
+        "招行Car Card",
+        "车卡老版",
+        "招行车卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": 5000,
+        "waiver_description": "首年免年费，每年刷卡满6笔免次年年费（已停发新办）"
+      },
+      "benefits": [
+        {
+          "category": "加油",
+          "title": "全国指定合作加油站享最高5%加油金返还",
+          "description": "合作加油站刷卡享专属积分兑换加油金",
+          "quota": "最高5%返还",
+          "cycle": "长期有效",
+          "source_url": "https://market.cmbchina.com/ccard/carcard/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/carcard.png",
+          "image_hash": "6afb8466ebe6a719fd072270a4fd760425286a0dcfc1aea0c6a48d8ebe5c34e4",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行信用卡官方网站 - 城市卡(Car Card)业务调整指引",
+          "url": "https://market.cmbchina.com/ccard/carcard/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CMB",
+      "canonical_name": "招商银行YOUNG卡",
+      "aliases": [
+        "YOUNG卡",
+        "招行YOUNG卡",
+        "招商YOUNG卡",
+        "青年卡",
+        "YOUNG卡黑卡",
+        "YOUNG卡白卡",
+        "YOUNG卡青年版"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": 5000,
+        "waiver_description": "首年免年费，每年刷卡消费满6笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "取现",
+          "title": "每月首笔预借现金免收手续费",
+          "description": "每个自然月内第一笔预借现金交易免收手续费，青年应急随心取",
+          "quota": "每月1次免手续费",
+          "cycle": "自然月度",
+          "source_url": "https://market.cmbchina.com/ccard/young/"
+        },
+        {
+          "category": "积分",
+          "title": "持卡人生日月专享双倍积分累积",
+          "description": "主卡持卡人生日当月计积分消费专享双倍积分赠送，最高赠送2000分",
+          "quota": "生日月双倍积分",
+          "cycle": "核卡年度",
+          "source_url": "https://market.cmbchina.com/ccard/young/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmb/young_card.png",
+          "image_hash": "30e8814264b6a6da6b236d5b09e108d60060b64462cf2b282e356b9f0c6f608b",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "招商银行信用卡官方网站 - YOUNG卡(青年版)产品公示",
+          "url": "https://market.cmbchina.com/ccard/young/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "CGB": [
+    {
+      "bank_id": "CGB",
+      "canonical_name": "臻尚白金卡 (高铁白)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "发卡90天内刷卡3笔且每笔满88元免首年，刷卡满12次免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/dca19589.png",
+          "image_hash": "73ba9fea6cf6c0421dbee0a2864e6648e5b239efdf54ecfbecf93ad8a2cc2ba2",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "鼎极白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 400000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，当年绑定第三方支付或消费满48笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/6097b22c.png",
+          "image_hash": "1fe0042bbad4d58b74f89c32b4f87903c92f48cb0aea90dcb4582b5d83372f62",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "多利白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "绑定微信/支付宝快捷支付免首年年费，连续12个月有效消费免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/6c9544b6.png",
+          "image_hash": "6b417adccd16f1533a0a0f096f8bafa8fc8c11ced80d362563d1b75a32a493a6",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发有鱼白金卡",
+      "aliases": [
+        "有鱼白金卡 / 潮白金卡",
+        "有鱼白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "绑定快捷支付免首年，连续12个月消费或刷卡满12笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/69209fd9.png",
+          "image_hash": "d277458a75452178de84fe5fe270686991364fc822bf49939c069c5fa4937f89",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "车主白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满9万元或8万积分免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "车主",
+          "title": "加油/充电长期高比例返现或满减",
+          "description": "合作加油站或主流充电平台消费享专属达标优惠",
+          "quota": "每月最高返现50-100元",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/5f8e9844.png",
+          "image_hash": "e590dec8068ad6997d245cf02c660a3d406f6bbf1b0b4b041be4f2670bdea5bd",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "车主信用卡 (金普卡)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6次免次年"
+      },
+      "benefits": [
+        {
+          "category": "车主",
+          "title": "加油/充电长期高比例返现或满减",
+          "description": "合作加油站或主流充电平台消费享专属达标优惠",
+          "quota": "每月最高返现50-100元",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/0f872ae1.png",
+          "image_hash": "2e3427bb801dde6cd54330852fac92032cea361aa188e13f9ef344c0e51018d5",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "DIY信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，单卡每年刷卡消费满6次免次年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/70c9c87f.png",
+          "image_hash": "e0b15688a04af62444176976195aee3709573acc17587dc75fab74e2675d6bdf",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "尊旅白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 288800,
+        "supplementary": null,
+        "waiver_description": "刚性年费2888元，不可减免"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/1a33abe4.png",
+          "image_hash": "1e4f68d79c1658c3e18d1f3fba33676d9f72dedeadd9279adc10651ef8d02e4f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发南航明珠信用卡",
+      "aliases": [
+        "航司联名卡 (南航/东航/国航)",
+        "广发南航卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，单卡每年刷卡消费满6次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/9a5c52ca.png",
+          "image_hash": "885d1a57b0344dfea82d966c43228299e8b06f5ffaaff919dfad62dd28a19bae",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "标准信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，单卡每年刷卡消费满6次免次年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/3baac4f0.png",
+          "image_hash": "69f764f42f4d5acb01a29c402f0bb8318a58fea5bd2f9b26668f6d29308e0f41",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行官方产品公示目录",
+          "url": "https://www.bank.test/cgb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发银行DIY信用卡",
+      "aliases": [
+        "广发DIY卡",
+        "自选三倍卡",
+        "DIY卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": 4000,
+        "waiver_description": "首年免年费，当年刷卡满6笔免次年年费（已停止新卡发行）"
+      },
+      "benefits": [
+        {
+          "category": "多倍积分",
+          "title": "自选商户大类全额3倍积分",
+          "description": "自主开通餐饮娱乐、购物商场或商旅出行大类享3倍积分累积",
+          "quota": "自选类3倍积分",
+          "cycle": "长期有效",
+          "source_url": "https://card.cgbchina.com.cn/diy/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/diy_card.png",
+          "image_hash": "bdf0e3f1e68a45a84dd759e25d29db37674b347753099d703eacea36f4e4fbeb",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行信用卡中心 - DIY信用卡产品维护说明",
+          "url": "https://card.cgbchina.com.cn/diy/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发银行留学生信用卡",
+      "aliases": [
+        "广发留学生卡",
+        "废行留学生卡"
+      ],
+      "networks": [
+        "UnionPay",
+        "MasterCard"
+      ],
+      "card_level": "Standard",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": 0,
+        "waiver_description": "卡片有效期内终身免年费（已停发）"
+      },
+      "benefits": [
+        {
+          "category": "里程",
+          "title": "无门槛积分全额转出至国航南航东航里程",
+          "description": "广发积分按20:1比例全额自由兑换主流航司飞行里程",
+          "quota": "年度限额兑换",
+          "cycle": "核卡年度",
+          "source_url": "https://card.cgbchina.com.cn/student/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cgb/student_card.png",
+          "image_hash": "eafae930d6cf746d8c50ab18490aca347af66e606878a134282d676579e87a9a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "广发银行信用卡中心 - 留学生卡停发与续卡换发通知",
+          "url": "https://card.cgbchina.com.cn/student/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发有鱼潮系列白金卡",
+      "aliases": [
+        "广发有鱼潮卡",
+        "有鱼潮系列白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发东航联名信用卡",
+      "aliases": [
+        "广发东航卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CGB",
+      "canonical_name": "广发国航联名信用卡",
+      "aliases": [
+        "广发国航卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "CCB": [
+    {
+      "bank_id": "CCB",
+      "canonical_name": "尊享白金卡 (大山白)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 180000,
+        "supplementary": null,
+        "waiver_description": "主卡年费1800元，可用40万综合积分兑换年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/55eb30b5.png",
+          "image_hash": "c03a4eadd571975d84fd38b51078143554fc1f09005ff456dd5ace902e3ae8d9",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "建行全球支付白金卡",
+      "aliases": [
+        "家庭卡 / 全球支付白金卡",
+        "全球支付卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满10笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/38c6b8fb.png",
+          "image_hash": "9eb1d31d63246272f35c803be212a6991e32bba0e95c95937175d6b6bc3d9f52",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "龙卡优享信用卡",
+      "aliases": [
+        "龙卡优享卡 / 畅享卡",
+        "龙卡优享卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满10笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/b23a6016.png",
+          "image_hash": "532c4d9b06d7c0a7b963ebe274e3158499cf07bac694425a42c62a4fd41655da",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "汽车卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": null,
+        "waiver_description": "刚性年费200元/年，享受每周洗车等车主权益"
+      },
+      "benefits": [
+        {
+          "category": "车主",
+          "title": "加油/充电长期高比例返现或满减",
+          "description": "合作加油站或主流充电平台消费享专属达标优惠",
+          "quota": "每月最高返现50-100元",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/e58696df.png",
+          "image_hash": "9a67cd049fc28987d172f568935026589f1764280ebf875e4e33bce722425741",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "龙卡MUSE信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满3笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/0c7a749e.png",
+          "image_hash": "13d45b63fee191c63f3f593cea32c29719ba13bdcc98e4652186b509fec5e5a0",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "变形金刚 / 腾讯联名卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满3笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/4546a099.png",
+          "image_hash": "361cfd4f701a590d8efc01ddcf0f569d675ee3f6f3334d6b016677c4308590d9",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "标准信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 8000,
+        "supplementary": null,
+        "waiver_description": "每年刷卡消费或取现累计满3笔免当年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/3baac4f0.png",
+          "image_hash": "a88758dcd750d334b04f87cb30feb84495ef27010fe45599c4971303bc67582a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行官方产品公示目录",
+          "url": "https://www.bank.test/ccb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "龙卡全球支付Visa白金信用卡",
+      "aliases": [
+        "全币种Visa白",
+        "龙卡全球支付卡"
+      ],
+      "networks": [
+        "VISA"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": 30000,
+        "waiver_description": "卡片有效期内无条件免收年费"
+      },
+      "benefits": [
+        {
+          "category": "外币",
+          "title": "全球所有外币交易免收1.5%外汇兑换手续费",
+          "description": "所有外币交易直接人民币入账，免收外汇兑换手续费",
+          "quota": "长期免除",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ccb.com/cn/creditcard/cards/20130912_1378972833.html"
+        },
+        {
+          "category": "出行",
+          "title": "境外消费笔笔返现与境外旅行保障",
+          "description": "Visa Signature 礼遇及高额航空意外伤害险",
+          "quota": "最高500万元航空意外险",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ccb.com/cn/creditcard/cards/20130912_1378972833.html"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/global_visa_card.png",
+          "image_hash": "93939f42f091af0020f5820b5e67d1cd77acf699c73bd0eb7ec5b99fec63ee31",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行 - 龙卡全球支付信用卡介绍",
+          "url": "https://creditcard.ccb.com/cn/creditcard/cards/20130912_1378972833.html",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "中国建设银行欧洲旅行信用卡",
+      "aliases": [
+        "建行欧旅卡",
+        "欧洲旅行卡"
+      ],
+      "networks": [
+        "UnionPay",
+        "MasterCard"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 16000,
+        "supplementary": 8000,
+        "waiver_description": "首年免年费，每年刷卡满3笔免次年年费（已停发）"
+      },
+      "benefits": [
+        {
+          "category": "外币",
+          "title": "欧洲名店特惠与欧元直接入账免汇兑手续费",
+          "description": "欧洲万余家特约知名百货专享折扣优惠及免汇兑手续费",
+          "quota": "长期免除",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ccb.com/europe/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ccb/europe_card.png",
+          "image_hash": "1cb02bb6063774cd40f6aa25b238190a5f588bb90031747d68cf882876d63a9a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国建设银行 - 欧洲旅行信用卡停发与服务指引",
+          "url": "https://creditcard.ccb.com/europe/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "龙卡家庭卡",
+      "aliases": [
+        "龙卡家庭卡",
+        "建行家庭卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 18000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CCB",
+      "canonical_name": "龙卡畅享信用卡",
+      "aliases": [
+        "龙卡畅享卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "ICBC": [
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "工银牡丹白金卡 (大白金)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 200000,
+        "supplementary": null,
+        "waiver_description": "年消费满20万元或16万积分兑换当年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/62b60f17.png",
+          "image_hash": "4f93231076e70871500c158c51db0b21318a67bd6c96b5e8d35cee179f48fbc6",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "超惠真金 / 超惠白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 200000,
+        "supplementary": null,
+        "waiver_description": "年消费满15笔或10000元免当年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/d010ae79.png",
+          "image_hash": "b41cdf44c4235a3f25f575fd8240c1a8c896321c4067d9114951c8326739399a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "奋斗专属白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "减免期内无条件免年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/e6cedd8a.png",
+          "image_hash": "7807700d1cf231e8538d9c9558eef123ab702060752d44392db4536f98f7e092",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "国贸香格里拉白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 200000,
+        "supplementary": null,
+        "waiver_description": "消费满20万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/2bb9d952.png",
+          "image_hash": "a6f92b05e18e991e842a8fbfa1e942472a4d3eb9eb9be6cb39e6ebfbaf30b77d",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "工银宇宙星座信用卡",
+      "aliases": [
+        "宇宙星座卡 / 故宫联名卡",
+        "星座卡",
+        "宇宙星座卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "用卡每年消费满5笔或5000元免当年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/2c0dbfcc.png",
+          "image_hash": "5bf09389052b9f318ed4c7260d28b3a858054cf6dd16404096fc08f0df3c4d82",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "环球旅行信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，年刷卡消费满5笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/caf5afd8.png",
+          "image_hash": "4597ffe2b45252be640511819441f416892c747bb09330dcea151090a8919e1b",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "牡丹人民币贷记卡 (金卡)",
+      "aliases": [
+        "标准信用卡 / 牡丹金普卡",
+        "牡丹金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "用卡每年消费满5笔或5000元免当年年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/c9f8b67a.png",
+          "image_hash": "de965e74a49e1ed2b62d869552e9bb1004399bb6da891aa4af1b5b0efa376e61",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行官方产品公示目录",
+          "url": "https://www.bank.test/icbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "工银国航知音白金信用卡",
+      "aliases": [
+        "工行国航白金卡",
+        "国航知音白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 200000,
+        "supplementary": 100000,
+        "waiver_description": "年消费满20万元人民币或16万积分兑换次年年费"
+      },
+      "benefits": [
+        {
+          "category": "里程",
+          "title": "日常刷卡消费全额自动兑换国航凤凰知音里程",
+          "description": "境内外消费自动兑换国航里程，每月结算打入知音卡账户",
+          "quota": "15:1",
+          "cycle": "长期有效",
+          "source_url": "https://www.icbc.com.cn/column/1438058341680787460.html"
+        },
+        {
+          "category": "出行",
+          "title": "工行自营境内外机场与高铁贵宾厅服务",
+          "description": "享受工银白金卡全球主要机场高铁贵宾厅点次权益",
+          "quota": "每年6点",
+          "cycle": "核卡年度",
+          "source_url": "https://www.icbc.com.cn/column/1438058341680787460.html"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/airchina_card.png",
+          "image_hash": "4dd0632f7fa3681ee81749a6976444cc60350a02bcffe10109b5d3d1df2fec9d",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行 - 工银国航知音白金卡公示",
+          "url": "https://www.icbc.com.cn/column/1438058341680787460.html",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "工银牡丹奋斗专属白金信用卡 (经典大白金)",
+      "aliases": [
+        "奋斗大白金",
+        "老奋斗白",
+        "奋斗白经典版"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 200000,
+        "supplementary": 100000,
+        "waiver_description": "年消费满20万元人民币或16万积分兑换次年年费（已停止新发）"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "工行自营境内外机场高铁CIP贵宾厅全套礼遇",
+          "description": "享受工行牡丹大白金自营贵宾登机通道与贵宾候机",
+          "quota": "每年无限次/点次",
+          "cycle": "核卡年度",
+          "source_url": "https://www.icbc.com.cn/fendou_big/"
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外保险保障",
+          "description": "持卡人为本人支付商业客运全额交通票款享高额保障",
+          "quota": "最高400万元",
+          "cycle": "长期有效",
+          "source_url": "https://www.icbc.com.cn/fendou_big/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/icbc/fendou_big.png",
+          "image_hash": "fa66cebdbdfb64c786f3d45483a664077da1deb42208648faa41144f0de3ebc5",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国工商银行 - 奋斗专属白金信用卡产品调整公示",
+          "url": "https://www.icbc.com.cn/fendou_big/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "牡丹人民币贷记卡 (普通卡)",
+      "aliases": [
+        "牡丹普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 5000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ICBC",
+      "canonical_name": "工银故宫联名信用卡",
+      "aliases": [
+        "故宫卡",
+        "工银故宫卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "BOC": [
+    {
+      "bank_id": "BOC",
+      "canonical_name": "中银数字白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满12笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/226fef9c.png",
+          "image_hash": "52eeffaaedd5b7b13d61843c88f3663c8897161a5353b54883acc0e1d2830cbf",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.bank.test/boc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "中银白金信用卡 (精英白)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，年消费满12笔或2万元免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/a7e2ee53.png",
+          "image_hash": "49659f69021bd5759c837501653f5c5278a69f60648bc955f715d84858d8d94f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.bank.test/boc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "长城世界之极信用卡 (莫奈卡)",
+      "aliases": [
+        "莫奈世界之极 / 钻石卡",
+        "莫奈卡",
+        "世界之极",
+        "World Elite"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Diamond",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": null,
+        "waiver_description": "刚性年费或40万积分抵扣年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/a1bbd4e6.png",
+          "image_hash": "d833d5a474e1877b5551e790cfb8092e312503a0f0bb4adacdd9d9297fdf8447",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.bank.test/boc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "赞卡 / 青年卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/51671f32.png",
+          "image_hash": "15f9af32e134c5790524151cfa8ef89fcd1f7f3aa9d5874147dd6710ed19d813",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.bank.test/boc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "长城跨境通国际卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "卡片有效期内无条件免年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/8801d2c9.png",
+          "image_hash": "a36eaa4b9c2349198bfdcb47b267695021eb75ffb6ce8a86f6adf38d7e56ccb0",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.bank.test/boc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "长城环球通信用卡",
+      "aliases": [
+        "长城环球通卡",
+        "中行环球通",
+        "长城环球通信用卡 / 标准金普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/8328edf7.png",
+          "image_hash": "a7866425e7404b036a59fdb5d8fb641b3ea7af8fb4d65895b857ed3e0fed1d02",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.bank.test/boc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "中国银行冬奥雪缘白金信用卡",
+      "aliases": [
+        "冬奥雪缘白金卡",
+        "中行冰雪卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": 40000,
+        "waiver_description": "核卡首年免年费，年刷卡消费满12笔或满2万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "运动",
+          "title": "全国知名滑雪场门票及雪具租赁专属特惠",
+          "description": "张家口崇礼、吉林长白山等主流滑雪场门票立减及专属雪具折扣",
+          "quota": "雪季享受",
+          "cycle": "长期有效",
+          "source_url": "https://www.boc.cn/bcservice/bc1/winter/"
+        },
+        {
+          "category": "出行",
+          "title": "指定机场国内快速安检及贵宾休息室",
+          "description": "境内指定机场CIP快速登机通道与贵宾候机",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://www.boc.cn/bcservice/bc1/winter/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/boc/winter_card.png",
+          "image_hash": "328fdce97fa35e0bde4fd6946ff47cc1f7f204fc10c1b88194c88ac7e518db84",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国银行官方网站 - 冬奥雪缘白金信用卡公示",
+          "url": "https://www.boc.cn/bcservice/bc1/winter/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "长城钻石信用卡",
+      "aliases": [
+        "钻石卡",
+        "长城钻石卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Diamond",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "长城人民币信用卡 (金卡)",
+      "aliases": [
+        "中行人民币金卡",
+        "长城人民币金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": null,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.boc.cn/bcservice/bc1/200807/t20080701_959.html",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOC",
+      "canonical_name": "长城人民币信用卡 (普卡)",
+      "aliases": [
+        "中行人民币普卡",
+        "长城人民币普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": null,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [
+        {
+          "title": "中国银行官方产品公示目录",
+          "url": "https://www.boc.cn/bcservice/bc1/200807/t20080701_959.html",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    }
+  ],
+  "ABC": [
+    {
+      "bank_id": "ABC",
+      "canonical_name": "尊然白金卡 (精粹白)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 88000,
+        "supplementary": null,
+        "waiver_description": "首年5万积分抵扣，次年消费满30笔或5万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/9b7c5878.png",
+          "image_hash": "e6d62efc98c14846af86e324e4c85c2211214130cf0b9278e6e71f6c293c4318",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "悠然悦白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，主卡每年刷卡消费满12笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/948f5d88.png",
+          "image_hash": "f3dd9d820dd912c7a943b7fe82584ca02a9386f8027b1767f2011f8bfe6d8c75",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "农行东航联名白金信用卡",
+      "aliases": [
+        "航司联名白金卡 (东航/国航/南航)",
+        "农行东航白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 88000,
+        "supplementary": null,
+        "waiver_description": "主卡每年消费满30笔或5万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/314a6955.png",
+          "image_hash": "9794c1d8263e19c24de10812fd26f468d2607ff0010873f3623f4f795c334054",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "漂亮升级妈妈信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 16000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/c0f8d5e4.png",
+          "image_hash": "8b845d5391aaba537ed257af5a2b3ae41e7890106fd649be2b03e4d59f73f12d",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "环球商旅信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满12笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/918080ce.png",
+          "image_hash": "983550224169fcf73fcf85159f23dd769db93277b9fdb2cc2f5f9a6afb5f4f06",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "尊然金卡 / 青年卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 16000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/04c24908.png",
+          "image_hash": "2086ca9f5f9f0e4b9372a438d52223e1d50ece237631c8975c0e9bbf0486ccdc",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "金穗标准信用卡 (金卡)",
+      "aliases": [
+        "标准金普卡",
+        "金穗标准金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/f061b9e0.png",
+          "image_hash": "3371b9393f6749be718b2a451d15cad927bc3a2cb16e105491deee3283f3616c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行官方产品公示目录",
+          "url": "https://www.bank.test/abc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "中国农业银行悠然白金信用卡 (经典版)",
+      "aliases": [
+        "老悠然白",
+        "经典悠然白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 58000,
+        "supplementary": 30000,
+        "waiver_description": "首年免年费，每年刷卡满12笔免次年年费（已由悠然悦替代）"
+      },
+      "benefits": [
+        {
+          "category": "医疗",
+          "title": "全国知名三甲医院专家预约挂号及导医",
+          "description": "每年赠送三甲医院专家门诊预约挂号及陪诊服务",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://www.abchina.com/youran_old/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/youran_old.png",
+          "image_hash": "d1e036fb315fd4cb66326293db225d6929ba6921d24284693aa3f514f3bae274",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行 - 悠然白金卡停发与升级换发悠然悦公告",
+          "url": "https://www.abchina.com/youran_old/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "中国农业银行漂亮升级妈妈信用卡 (经典版)",
+      "aliases": [
+        "漂亮妈妈卡",
+        "妈妈卡经典版"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 16000,
+        "supplementary": 8000,
+        "waiver_description": "首年免年费，年刷卡满5笔免次年年费（部分渠道已停发）"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "周六知名母婴及商超品牌满减立返",
+          "description": "孩子王、屈臣氏等特约母婴门店周六单笔满额立减返现特惠",
+          "quota": "周六满减",
+          "cycle": "长期有效",
+          "source_url": "https://www.abchina.com/mama_classic/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/abc/mama_classic.png",
+          "image_hash": "39e6e11af9d4911b0f693c3829ce184808f7c53382975becf04a9cb0b00aa5f0",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国农业银行 - 漂亮升级妈妈信用卡经典版公示",
+          "url": "https://www.abchina.com/mama_classic/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "农行国航联名白金信用卡",
+      "aliases": [
+        "农行国航白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 88000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "农行南航联名白金信用卡",
+      "aliases": [
+        "农行南航白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 88000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "ABC",
+      "canonical_name": "金穗标准信用卡 (普卡)",
+      "aliases": [
+        "金穗标准普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "BOCOM": [
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "标准白金卡 (白麒麟)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 100000,
+        "supplementary": null,
+        "waiver_description": "首年免年费或买单吧积分兑换，次年25万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/3e8121cc.png",
+          "image_hash": "2f873808c2fdcc6e72a80083b7b33acae887ba6eb48d3aad2067a2cbc550ff56",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "怡然白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 99800,
+        "supplementary": null,
+        "waiver_description": "首年免年费，次年10万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/01a8c95d.png",
+          "image_hash": "cee689fe6c0f5cb39f0fd1c7a5b86dd016f7627498c8dde7e46d29760e84d4cb",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "交通银行优逸白金信用卡",
+      "aliases": [
+        "优逸白金卡 (蜜卡/Y-POWER白)",
+        "优逸白",
+        "交行优逸白金"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 50000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/ae8baa44.png",
+          "image_hash": "aa4aa0fe8270f49592bb9f2771f208b33f9616eaab6add55b91b4f32d2f002e9",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "沃尔玛联名卡 / 超市卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 14000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/c03b01b7.png",
+          "image_hash": "117d8d70209161318043c2afd4359932a908cd18d2a55e55d5f77d1a4d4ae53f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "青年卡 Y-POWER",
+      "aliases": [
+        "Y-POWER白",
+        "青年白普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 14000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满3次免次年"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/070c4388.png",
+          "image_hash": "e0f4f18d9d1e1dc52fa2debb8714564c4f3bfdf60a9d4322e0a1c48b587a2aee",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "焕然白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 50000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/7b08edca.png",
+          "image_hash": "fd0d98f1c2fc910af780b5bfc1ed2a1e8ba5a293529d97068ef4528c40274184",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "标准信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 14000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/3baac4f0.png",
+          "image_hash": "037dac430f739e8732f651d69346249f9fbf20e3892098b17a36754f69ae8bf9",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行官方产品公示目录",
+          "url": "https://www.bank.test/bocom/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "BOCOM",
+      "canonical_name": "交通银行沃尔玛联名信用卡",
+      "aliases": [
+        "交行沃尔玛卡",
+        "沃尔玛联名卡",
+        "超市神卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 14000,
+        "supplementary": 7000,
+        "waiver_description": "首年免年费，每年刷卡满6笔免次年年费（已全面停发并转卡）"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "沃尔玛消费积分折算抵扣刷卡金",
+          "description": "刷卡消费累积专属积分按优惠兑换比例直接冲抵沃尔玛超市消费账单",
+          "quota": "每年最高抵扣约1000元",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.bankcomm.com/walmart/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bocom/walmart_card.png",
+          "image_hash": "6bb8626ae527371904d3d9bef700bee288b4242152838494fc2adaead860544c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "交通银行信用卡中心 - 沃尔玛信用卡停发与转换指引",
+          "url": "https://creditcard.bankcomm.com/walmart/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "CITIC": [
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "颜卡系列白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "发卡后刷卡消费满1笔免首年，刷卡消费满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/31c7e761.png",
+          "image_hash": "5945a0d99b0c0b88b2675d15a2375c197bac22eed5b68c1a8a8510018bbe6697",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行官方产品公示目录",
+          "url": "https://www.bank.test/citic/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行悦卡（白金卡）",
+      "aliases": [
+        "悦卡金普卡/白金卡",
+        "悦卡白金卡",
+        "中信悦卡白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/9ee7e855.png",
+          "image_hash": "a1983142f91fb17ec0c10d0f276d4ec563b96b44afc49a2c468ce34b9a9d7f9a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行官方产品公示目录",
+          "url": "https://www.bank.test/citic/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行魔力信用卡 (白金卡)",
+      "aliases": [
+        "魔力卡 / i白金信用卡",
+        "中信魔力卡",
+        "魔力爱白金"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "每年消费满12次免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "返现",
+          "title": "主流生活消费/移动支付长期多倍积分或返现",
+          "description": "微信支付、支付宝、京东支付消费长期专享积分翻倍礼遇",
+          "quota": "月度积分封顶",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/b28ad261.png",
+          "image_hash": "c1da2e2f32a5bea10018b349b091ce722780a3fe8e69fcc4c43acc0fdcf08cef",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行官方产品公示目录",
+          "url": "https://www.bank.test/citic/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "尊尚白金卡 (大白金)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 200000,
+        "supplementary": null,
+        "waiver_description": "刚性年费2000元，不可减免"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/3d7be124.png",
+          "image_hash": "04acfc9b90c3ef6df94c8387f5702d97ebd9637cdee6f5f7ce3f99722ee54a4c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行官方产品公示目录",
+          "url": "https://www.bank.test/citic/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行京东PLUS联名信用卡",
+      "aliases": [
+        "淘气卡 / 京东联名卡",
+        "中信京东联名卡",
+        "京东PLUS卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满5次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/5d1029f0.png",
+          "image_hash": "5d5a9109c4c753dcc6d6f1327d6aefbbe9668cc529affd395eeb50663c4d75a8",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行官方产品公示目录",
+          "url": "https://www.bank.test/citic/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "标准金普卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "开卡当月刷卡1次免首年，每年刷卡满5次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/f061b9e0.png",
+          "image_hash": "9afda8bccc424979ff2c730f5566c2059a00533dce1eae855f4d3201a88031f0",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行官方产品公示目录",
+          "url": "https://www.bank.test/citic/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行万豪旅享家联名信用卡 (白金卡)",
+      "aliases": [
+        "中信万豪白金卡",
+        "万豪联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 98000,
+        "supplementary": 49000,
+        "waiver_description": "主卡年费980元刚性收取，不可积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "酒店",
+          "title": "每年获赠万豪旅享家免费住宿奖励",
+          "description": "核卡及每年缴纳年费后获赠1张价值最高12500积分的免费房晚住宿券",
+          "quota": "1晚免费住宿/年",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.ecitic.com/marriott/"
+        },
+        {
+          "category": "酒店",
+          "title": "自动获赠万豪金卡尊贵级别会籍及定级房晚",
+          "description": "每年获赠万豪旅享家金卡会籍并赠送10个尊贵级别有效房晚",
+          "quota": "万豪金卡+10房晚",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ecitic.com/marriott/"
+        },
+        {
+          "category": "积分",
+          "title": "日常消费快速累积万豪旅享家积分",
+          "description": "日常刷卡消费每18元自动折算1万豪积分，酒店内消费翻倍",
+          "quota": "18:1",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ecitic.com/marriott/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/marriott_card.png",
+          "image_hash": "3e333516b9c6890739344ad3c3dbcd6810a6bf29fd676b70dcc322a5368c3971",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行信用卡中心 - 万豪旅享家联名信用卡公示",
+          "url": "https://creditcard.ecitic.com/marriott/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行华为 Card",
+      "aliases": [
+        "华为 Card",
+        "中信华为联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": null,
+        "waiver_description": "核卡首年免年费，当年刷卡消费满5笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "华为支付及手机闪付笔笔返现",
+          "description": "使用华为手机碰一碰支付及线上支付享专属笔笔返现",
+          "quota": "月度返现最高100元",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ecitic.com/huawei/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/huawei_card.png",
+          "image_hash": "2b67834406ccafab0bb32cc61122149fa8c758d75c21ddaf4f9f7abf6842693e",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行信用卡中心 - 华为 Card 产品公示",
+          "url": "https://creditcard.ecitic.com/huawei/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行i白金信用卡",
+      "aliases": [
+        "i白金",
+        "爱白金",
+        "网络交易神卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": 24000,
+        "waiver_description": "核卡首年免年费，年刷卡满12笔或满3万元免次年年费（已停发新办）"
+      },
+      "benefits": [
+        {
+          "category": "积分",
+          "title": "线上网络交易快捷支付双倍积分",
+          "description": "微信支付、支付宝等互联网交易享双倍积分累积",
+          "quota": "双倍积分",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ecitic.com/iplatinum/"
+        },
+        {
+          "category": "保险",
+          "title": "高额航班延误险保障",
+          "description": "航班延误2小时最高赔付1000元机票款",
+          "quota": "最高1000元/次",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ecitic.com/iplatinum/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/iplatinum.png",
+          "image_hash": "c3093bbf3b3e81cfe360460219548b87731237251c729e65134675a7ffc19015",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行信用卡中心 - i白金信用卡停发与老户服务指引",
+          "url": "https://creditcard.ecitic.com/iplatinum/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行易卡信用卡 (白金卡)",
+      "aliases": [
+        "中信易卡",
+        "易卡白金卡",
+        "资产多倍卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": 24000,
+        "waiver_description": "首年免年费，每年可用6万积分兑换次年年费（已停发新办）"
+      },
+      "benefits": [
+        {
+          "category": "理财联动",
+          "title": "联动中信资产最高9倍积分累积",
+          "description": "根据持卡人在中信银行个人月日均资产规模享高达3-9倍积分赠送",
+          "quota": "最高9倍积分",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.ecitic.com/yika/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/yika_platinum.png",
+          "image_hash": "3ae76b898011167accdc4dfa12732c8f82a90a7989578ae5e9bd63c19502e45a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行信用卡中心 - 易卡业务规则维护说明",
+          "url": "https://creditcard.ecitic.com/yika/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行淘气卡 (淘宝联名卡)",
+      "aliases": [
+        "淘气卡",
+        "淘宝卡",
+        "中信淘气卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": 5000,
+        "waiver_description": "首年免年费，年刷卡满5笔免次年年费（已停发）"
+      },
+      "benefits": [
+        {
+          "category": "多倍积分",
+          "title": "淘宝会员等级专享最高10倍积分",
+          "description": "绑定快捷支付网购消费按淘宝APASS/超级会员等级最高多倍积分",
+          "quota": "最高10倍积分",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.ecitic.com/taoqika/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/citic/taoqika.png",
+          "image_hash": "aa4a6d088b37853a9c01607de9ade77284b931e232d240bca186cb9c8ac32975",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中信银行信用卡中心 - 淘气卡停发换卡业务通告",
+          "url": "https://creditcard.ecitic.com/taoqika/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CITIC",
+      "canonical_name": "中信银行悦卡（金卡）",
+      "aliases": [
+        "悦卡金卡",
+        "中信悦卡金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "PAB": [
+    {
+      "bank_id": "PAB",
+      "canonical_name": "悦享白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "终身免年费或消费满2万元免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/3ddd4425.png",
+          "image_hash": "e66ccd9c75eed143b5cf81e42869379ef24ed4343babce4cc2dca6e16fbbf7b2",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行官方产品公示目录",
+          "url": "https://www.bank.test/pab/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "车主经典信用卡 (金卡)",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": null,
+        "waiver_description": "首年刷卡3笔各满88元免首年，当年消费满3万元免次年"
+      },
+      "benefits": [
+        {
+          "category": "车主",
+          "title": "加油/充电长期高比例返现或满减",
+          "description": "合作加油站或主流充电平台消费享专属达标优惠",
+          "quota": "每月最高返现50-100元",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/a0fd31f9.png",
+          "image_hash": "2cea7d8f9226948d074f675bed7b2cc39817df083950ed93cde4b4389b93a3b2",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行官方产品公示目录",
+          "url": "https://www.bank.test/pab/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "车主白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年消费满20万元免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        },
+        {
+          "category": "车主",
+          "title": "加油/充电长期高比例返现或满减",
+          "description": "合作加油站或主流充电平台消费享专属达标优惠",
+          "quota": "每月最高返现50-100元",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/5f8e9844.png",
+          "image_hash": "ac0d290cae2cd3a2ea968020fbe4db234e487f460665124d0268863fb54ecde9",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行官方产品公示目录",
+          "url": "https://www.bank.test/pab/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "白金信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 80000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，当年消费满12万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/67c563b7.png",
+          "image_hash": "7b477ce4d5a8c5782e328d68668b7e470409f7de6888adc33406928e6c13df2b",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行官方产品公示目录",
+          "url": "https://www.bank.test/pab/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "平安银行京东联名信用卡",
+      "aliases": [
+        "京东联名卡 / 淘宝联名卡",
+        "京东联名卡",
+        "平安京东卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/499b5518.png",
+          "image_hash": "cebd8a57e097029a125b29d30713e5f3e788f5d3359552444d0f65aa14693408",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行官方产品公示目录",
+          "url": "https://www.bank.test/pab/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "标准信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/3baac4f0.png",
+          "image_hash": "d52cafbcba12dad21d452a33e57c39e8f75653352206db712d9d0f451ae6e191",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行官方产品公示目录",
+          "url": "https://www.bank.test/pab/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "平安旅游白金信用卡",
+      "aliases": [
+        "平安旅游白",
+        "旅游白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 120000,
+        "supplementary": 60000,
+        "waiver_description": "主卡刚性年费1200元（绝版神卡已停发）"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "机票酒店旅行社消费全额1%无上限现金返还",
+          "description": "所有旅行类合资格消费均享1%真实刷卡金现金返还",
+          "quota": "笔笔1%返现",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.pingan.com/travel_white/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/travel_white.png",
+          "image_hash": "241530b16fb6b72f560577cc6959c81b5fe4f461d08cb6738b8b68ef2c96acca",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行信用卡中心 - 旅游白金卡权益存量保障说明",
+          "url": "https://creditcard.pingan.com/travel_white/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "平安车主经典信用卡 (老版加油88折)",
+      "aliases": [
+        "老车主卡",
+        "平安老车主卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": 10000,
+        "waiver_description": "首年免年费，当年刷卡满3万元免次年年费（已停发）"
+      },
+      "benefits": [
+        {
+          "category": "加油",
+          "title": "全国指定油站加油享88折专属加油金返现",
+          "description": "月度非加油消费满标享加油88折优惠",
+          "quota": "每月最高返还60元",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.pingan.com/car_classic/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/pab/car_classic_old.png",
+          "image_hash": "4103deac065a29c98ac67d495ad51afc96700f6a049b8d0b95cef38da6427e9a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "平安银行信用卡中心 - 老版车主信用卡维护通告",
+          "url": "https://creditcard.pingan.com/car_classic/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "PAB",
+      "canonical_name": "平安银行淘宝联名信用卡",
+      "aliases": [
+        "平安淘宝卡",
+        "淘宝联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "CEB": [
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光孝心卓越白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": null,
+        "waiver_description": "首年满10万元或积分抵扣，次年30万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/ca8eb242.png",
+          "image_hash": "d8db92d05bd8302fa10cbe09016bfb5bd3d648a26e4f75180d226abf71405a2d",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行官方产品公示目录",
+          "url": "https://www.bank.test/ceb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光海航联名卡 / 移动中青旅卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满3次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/953bd597.png",
+          "image_hash": "84566f57d9628dfdb0a2ea1e9c5831a46de70976d74de6b31a3e669d6c77ec9f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行官方产品公示目录",
+          "url": "https://www.bank.test/ceb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光商旅白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 118800,
+        "supplementary": null,
+        "waiver_description": "首年免年费，次年20万积分抵扣或满6万元消费免"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/8d9a2fb5.png",
+          "image_hash": "63d8ea17151225f47000b4973ba5f085a7af493b18fbc18090ecf7dd2427fb18",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行官方产品公示目录",
+          "url": "https://www.bank.test/ceb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光菁英白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 68000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满12笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/4fde57a8.png",
+          "image_hash": "8836ace83cbbe86a8bb6dac4b6e2eec613ed679ae977e6d22047582d1dae88e9",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行官方产品公示目录",
+          "url": "https://www.bank.test/ceb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光金普卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满3笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/c33f4052.png",
+          "image_hash": "522941868d141df42944be9559882b25af4348b6ebed7efec16a9634f513c6a5",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行官方产品公示目录",
+          "url": "https://www.bank.test/ceb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光孝心标准白金信用卡",
+      "aliases": [
+        "孝心标准白",
+        "小孝心白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 118800,
+        "supplementary": 59400,
+        "waiver_description": "首年交易满5万元免首年年费，次年可用10万积分或交易满10万抵扣"
+      },
+      "benefits": [
+        {
+          "category": "健康",
+          "title": "全国知名三甲医院专家挂号及全程导医陪诊",
+          "description": "持卡人或直系亲属均可享受三甲医院预约挂号及陪同诊疗",
+          "quota": "每年4次",
+          "cycle": "核卡年度",
+          "source_url": "https://xyk.cebbank.com/home/card/xiaoxin_std.htm"
+        },
+        {
+          "category": "出行",
+          "title": "全国主要机场与高铁贵宾休息室候机服务",
+          "description": "国内枢纽机场及高铁站贵宾厅候机候车",
+          "quota": "每年5点次",
+          "cycle": "核卡年度",
+          "source_url": "https://xyk.cebbank.com/home/card/xiaoxin_std.htm"
+        },
+        {
+          "category": "健康",
+          "title": "知名健康体检机构深度健康体检",
+          "description": "美年大健康/爱康国宾深度常规体检套餐",
+          "quota": "每年1次",
+          "cycle": "核卡年度",
+          "source_url": "https://xyk.cebbank.com/home/card/xiaoxin_std.htm"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/xiaoxin_std.png",
+          "image_hash": "67de52b7759a4bb903dc9b208a690a8ece94245fd9c4a7c0f191221d0882c449",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行信用卡中心 - 阳光孝心标准白金信用卡",
+          "url": "https://xyk.cebbank.com/home/card/xiaoxin_std.htm",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "阳光车主经典白金卡",
+      "aliases": [
+        "光大车主白",
+        "车主经典卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": 24000,
+        "waiver_description": "首年免年费，每年刷卡满12笔或满3万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "加油",
+          "title": "全国指定加油站加油返现及立减",
+          "description": "持卡人指定加油消费享笔笔立减特惠",
+          "quota": "每月最高减免50元",
+          "cycle": "长期有效",
+          "source_url": "https://xyk.cebbank.com/home/card/car_classic.htm"
+        },
+        {
+          "category": "救援",
+          "title": "全国紧急道路救援及免费拖车",
+          "description": "全天候道路救援服务包括电瓶搭电、紧急送油及100公里拖车",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://xyk.cebbank.com/home/card/car_classic.htm"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/car_classic.png",
+          "image_hash": "a822b6cb83e00f2f679af00c1e971dc2fa29820f5649f3d14f54428e1faddeee",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行信用卡中心 - 阳光车主经典白金信用卡",
+          "url": "https://xyk.cebbank.com/home/card/car_classic.htm",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "光大阳光商旅白金信用卡 (老版)",
+      "aliases": [
+        "光大商旅白",
+        "老商旅白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 118800,
+        "supplementary": 59400,
+        "waiver_description": "首年交易达标免年费，次年可用10万积分抵扣（已停发）"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "每年赠送机场贵宾厅及境内外免费接送机",
+          "description": "享受国内数十家机场自营贵宾厅点次及专车接送服务",
+          "quota": "贵宾厅8点+接送机2次/年",
+          "cycle": "核卡年度",
+          "source_url": "https://xyk.cebbank.com/shanglv_old/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/shanglv_old.png",
+          "image_hash": "6f1a4c19609c9f5093ded735694d2093ffb96c80520526b39025de501171cde3",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行信用卡中心 - 商旅白金卡停发与老客维护公示",
+          "url": "https://xyk.cebbank.com/shanglv_old/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CEB",
+      "canonical_name": "光大移动中青旅联名信用卡",
+      "aliases": [
+        "青旅白",
+        "中青旅联名卡",
+        "终免白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": 0,
+        "waiver_description": "卡片有效期内终身免年费（神卡已停发）"
+      },
+      "benefits": [
+        {
+          "category": "礼遇",
+          "title": "终身免年费享中国银联尊尚白金卡全套礼遇",
+          "description": "享受银联白金级机场1元停车、机场快速安检及星级酒店自助餐买一赠一",
+          "quota": "长期有效",
+          "cycle": "长期有效",
+          "source_url": "https://xyk.cebbank.com/qinglv/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/ceb/qinglv.png",
+          "image_hash": "f89d6e61df2f4fbd37f6d14fb72350bf2eb853aa191d8f30509aeacb99d8e3c8",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国光大银行信用卡中心 - 中青旅联名卡服务公告",
+          "url": "https://xyk.cebbank.com/qinglv/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "CIB": [
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行兴动力信用卡",
+      "aliases": [
+        "兴动力信用卡 / 桃花卡",
+        "兴动力卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满5次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/5d7cbcac.png",
+          "image_hash": "17972e412931aca78f1c579cd0a80a988a9bbe4fdb7fb8a8b1ff21ca99838d20",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行官方产品公示目录",
+          "url": "https://www.bank.test/cib/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行悠逸商旅白金信用卡",
+      "aliases": [
+        "立享白金卡 / 悠逸白金卡",
+        "悠逸商旅白",
+        "悠逸白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 50000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，刷卡满3万元或30笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/ef415649.png",
+          "image_hash": "3283557c29c767952ea4c88c8a204d90a61259f723c97df4923001022915c7ca",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行官方产品公示目录",
+          "url": "https://www.bank.test/cib/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行标准信用卡 (金卡)",
+      "aliases": [
+        "标准金普卡",
+        "兴业标准金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满5次免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/f061b9e0.png",
+          "image_hash": "3f8dd5be40a8e001fde1c0f6f278d2816aa37433318f0a5635aea74137bfe888",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行官方产品公示目录",
+          "url": "https://www.bank.test/cib/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行行悠白金信用卡",
+      "aliases": [
+        "行悠白",
+        "兴业行悠白",
+        "行悠白金卡",
+        "行卡白金信用卡(悠系列)"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 90000,
+        "supplementary": 60000,
+        "waiver_description": "主卡年费900元刚性收取，附属卡年费600元刚性收取"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "境内外免费机场接送机服务",
+          "description": "专业礼宾车接送机，覆盖全国数十座枢纽机场及主流境外城市",
+          "quota": "境内4次+境外2次/年",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.cib.com.cn/card/travel/xingyou.html"
+        },
+        {
+          "category": "出行",
+          "title": "全球机场贵宾厅礼遇",
+          "description": "享受国内及海外指定机场贵宾厅尊贵服务",
+          "quota": "境内12次+境外无限次/年",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.cib.com.cn/card/travel/xingyou.html"
+        },
+        {
+          "category": "医疗",
+          "title": "三甲医院专家挂号及导医陪诊",
+          "description": "北京上海广州等核心城市三甲医院专家号预约挂号与全程导医",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.cib.com.cn/card/travel/xingyou.html"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/xingyou_card.png",
+          "image_hash": "f4e2b2abda8de875d61bdbdd2072ba04ee2a1656ed053199a44c4c2363224a94",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行信用卡中心 - 行悠白金信用卡产品公示",
+          "url": "https://creditcard.cib.com.cn/card/travel/xingyou.html",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行东方航空联名白金信用卡",
+      "aliases": [
+        "东航联名白金卡",
+        "东航白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，年刷卡满5笔或满5000元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "里程",
+          "title": "东航东方万里行积分自动兑换",
+          "description": "刷卡消费按月全额自动转入持卡人东航会员账户",
+          "quota": "12元人民币累计1东方万里行积分",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.cib.com.cn/card/airline/ceair.html"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/ceair_card.png",
+          "image_hash": "2dcb267f155250369c24ecb40f0af6b1a782332591018556cb326c74b5f0e134",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行信用卡中心 - 东航联名信用卡",
+          "url": "https://creditcard.cib.com.cn/card/airline/ceair.html",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业数智信用卡",
+      "aliases": [
+        "兴业数智卡",
+        "数字信用卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "卡片有效期内免年费"
+      },
+      "benefits": [
+        {
+          "category": "多倍积分",
+          "title": "云闪付及移动支付多倍积分加成",
+          "description": "手机闪付及快捷支付笔笔享双倍积分",
+          "quota": "长期双倍",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.cib.com.cn/card/digital/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/digital_card.png",
+          "image_hash": "f291593e3adc76d49622ef10471aa5e340eea71c88e5f4e3616d939fe170e36c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行信用卡中心 - 数智信用卡公示",
+          "url": "https://creditcard.cib.com.cn/card/digital/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行Pass信用卡",
+      "aliases": [
+        "兴业Pass卡",
+        "Pass金卡",
+        "桃花版",
+        "兴业Pass卡(桃花版)"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": 10000,
+        "waiver_description": "首年免年费，年刷卡满5笔免次年年费（已停发）"
+      },
+      "benefits": [
+        {
+          "category": "积分",
+          "title": "网购快捷支付全额累积积分特权",
+          "description": "当月线下任意刷卡消费满百元，次月线上网购笔笔计积分",
+          "quota": "长期计积分",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.cib.com.cn/pass/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cib/pass_card.png",
+          "image_hash": "7030c5fe06ac51851f53b2885677270e8e904aa7b23e0e6a71dc3d635e5e168a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "兴业银行信用卡中心 - Pass信用卡停发转卡说明",
+          "url": "https://creditcard.cib.com.cn/pass/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行立享信用卡",
+      "aliases": [
+        "立享白金卡",
+        "兴业立享白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 50000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CIB",
+      "canonical_name": "兴业银行标准信用卡 (普卡)",
+      "aliases": [
+        "兴业标准普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "CMBC": [
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "民生精英白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 180000,
+        "supplementary": null,
+        "waiver_description": "资质核准免首年或20万专享积分抵扣年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/0ee86054.png",
+          "image_hash": "6346d59cddb357ae1fe003bc26416881a89af33ee6dbd338c910624a1d5de391",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行官方产品公示目录",
+          "url": "https://www.bank.test/cmbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "民生百夫长白金卡",
+      "aliases": [],
+      "networks": [
+        "AmericanExpress"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 600000,
+        "supplementary": null,
+        "waiver_description": "刚性年费6000元，不可减免"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/e347997a.png",
+          "image_hash": "bff9cd3a6ce6ffd1acd7568ff0393f93cca65f7c74f88bb2931ca74c98856b9c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行官方产品公示目录",
+          "url": "https://www.bank.test/cmbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "全币种白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay",
+        "VISA"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "卡片有效期内无条件免年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/1c85f8d7.png",
+          "image_hash": "441feb498661d6625f22b160637a6fe46eac85a3ec6813ee77598c2b4bd88ab1",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行官方产品公示目录",
+          "url": "https://www.bank.test/cmbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "车车信用卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满5次免次年"
+      },
+      "benefits": [
+        {
+          "category": "车主",
+          "title": "加油/充电长期高比例返现或满减",
+          "description": "合作加油站或主流充电平台消费享专属达标优惠",
+          "quota": "每月最高返现50-100元",
+          "cycle": "自然月",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/0782a612.png",
+          "image_hash": "72f81c70de15ec57ded42181b60e92ea105f99403875e30f019f127afab86363",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行官方产品公示目录",
+          "url": "https://www.bank.test/cmbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "标准金普卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满5次或消费满5000元免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/f061b9e0.png",
+          "image_hash": "e296c6fea2b5dad8c43ea62643aa01e4050e7a4e6d1d664ec5d865a094407b78",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行官方产品公示目录",
+          "url": "https://www.bank.test/cmbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "民生香格里拉联名白金信用卡",
+      "aliases": [
+        "民生香白",
+        "香格里拉联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 60000,
+        "supplementary": 30000,
+        "waiver_description": "首年免年费，当年刷卡满18笔或满5万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "酒店",
+          "title": "香格里拉贵宾金环会积分自动兑换",
+          "description": "计积分消费自动转入香格里拉会积分，酒店消费多倍累积",
+          "quota": "消费60元积1香格里拉积分",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.cmbc.com.cn/home/cn/web/product/hotel/shangri-la.shtml"
+        },
+        {
+          "category": "酒店",
+          "title": "香格里拉酒店餐厅用餐85折专属特惠",
+          "description": "全国香格里拉集团酒店自营餐厅用餐专享85折优惠",
+          "quota": "长期享受",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.cmbc.com.cn/home/cn/web/product/hotel/shangri-la.shtml"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/shangrila_card.png",
+          "image_hash": "75fb9f8a3b23afab774749912d27facc6820aeb527e0e758a0f90591706dd98d",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行信用卡中心 - 香格里拉联名卡公示",
+          "url": "https://creditcard.cmbc.com.cn/home/cn/web/product/hotel/shangri-la.shtml",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "民生女人花信用卡",
+      "aliases": [
+        "女人花卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 30000,
+        "supplementary": 15000,
+        "waiver_description": "首年免年费，当年刷卡满5笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "消费",
+          "title": "周四唯品会/丝芙兰多倍积分与专属返礼",
+          "description": "女性持卡人周四专属消费日双倍积分加赠",
+          "quota": "周四双倍积分",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.cmbc.com.cn/home/cn/web/product/flower/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/flower_card.png",
+          "image_hash": "eaff1a334b2634fa1767d48c98ba05ccd24409ecf07aa7fda408b23f2cf52aab",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行信用卡中心 - 女人花信用卡",
+          "url": "https://creditcard.cmbc.com.cn/home/cn/web/product/flower/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "CMBC",
+      "canonical_name": "民生车车信用卡 (金普卡)",
+      "aliases": [
+        "民生车车卡",
+        "车车金卡",
+        "加油神卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 30000,
+        "supplementary": 15000,
+        "waiver_description": "首年免年费，当年刷卡满5笔免次年（已停发新办）"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "每月加油消费最高8%比例返还加油金",
+          "description": "持卡人月度计积分消费达标享加油消费专属比例月度返现",
+          "quota": "每月最高返还100元",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.cmbc.com.cn/cheche/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cmbc/cheche_card.png",
+          "image_hash": "a7f346e5b51220a4d027f4fefedf8719077411aad1bd68c737dc384b924e027f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国民生银行信用卡中心 - 车车信用卡停发与服务调整公告",
+          "url": "https://creditcard.cmbc.com.cn/cheche/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "SPDB": [
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发美国运通白金信用卡",
+      "aliases": [
+        "AE白",
+        "浦发AE白",
+        "运通白金卡"
+      ],
+      "networks": [
+        "AmericanExpress"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，次年20万积分兑换年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/4dd7d5df.png",
+          "image_hash": "f2b95b41f1cd5115b719d7b81a73a9dcb12b88d7faafd79dde9783905e25f197",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行官方产品公示目录",
+          "url": "https://www.bank.test/spdb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发银行梦卡系列信用卡",
+      "aliases": [
+        "浦发梦卡 / 美团联名卡",
+        "浦发梦卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "卡片有效期内无条件免年费"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/e4533783.png",
+          "image_hash": "641bd45c5971cca11ad5d9ab67f5f615e404790fe78326905239283fa9bd8203",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行官方产品公示目录",
+          "url": "https://www.bank.test/spdb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "简约白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/10cfbfae.png",
+          "image_hash": "b40a6bc18c91c0d67f3aa547d35e1822252556b364d3ce4924e8beb36c45db5b",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行官方产品公示目录",
+          "url": "https://www.bank.test/spdb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发银行标准信用卡 (金卡)",
+      "aliases": [
+        "标准金普卡",
+        "浦发标准金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡满4笔或满2000元免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/f061b9e0.png",
+          "image_hash": "76972ff11325d32f35b4d046c188ba4743e4e6a839efb2beb283db7968e353f7",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行官方产品公示目录",
+          "url": "https://www.bank.test/spdb/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发美国运通超白金信用卡",
+      "aliases": [
+        "浦发超白",
+        "超白金卡"
+      ],
+      "networks": [
+        "AmericanExpress"
+      ],
+      "card_level": "Diamond",
+      "status": "active",
+      "annual_fee": {
+        "primary": 1000000,
+        "supplementary": 500000,
+        "waiver_description": "主卡年费10000元，可用60万积分兑换年费；附属卡免前两张年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "全球境内外机场高品质接送机服务",
+          "description": "豪华车型专车接送，覆盖境内外主流枢纽机场",
+          "quota": "境内4次+境外4次/年",
+          "cycle": "核卡年度",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/1569/detail.shtml"
+        },
+        {
+          "category": "出行",
+          "title": "全球无限次机场贵宾厅及免费携伴",
+          "description": "Priority Pass 全球机场休息室无限次免费进入并可携伴3人",
+          "quota": "无限次免费",
+          "cycle": "核卡年度",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/1569/detail.shtml"
+        },
+        {
+          "category": "酒店",
+          "title": "全球星级酒店及度假胜地免费住宿体验",
+          "description": "精选豪华酒店免费入住权益",
+          "quota": "4间夜/年",
+          "cycle": "核卡年度",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/1569/detail.shtml"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/ae_super_platinum.png",
+          "image_hash": "0f39f29a2ce6fabc753cd0c13bdd98b4c4104a113c0352bdfa97ffd152d3196f",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行信用卡中心 - 美国运通超白金信用卡",
+          "url": "https://ccc.spdb.com.cn/miniSite/1569/detail.shtml",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发万事达无价世界卡",
+      "aliases": [
+        "无价世界卡",
+        "万事达世界卡"
+      ],
+      "networks": [
+        "MasterCard"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": 0,
+        "waiver_description": "卡片有效期内终身免年费"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "境外合资格交易笔笔返现",
+          "description": "所有境外线上线下合格消费享专属消费返现",
+          "quota": "笔笔1%不设限",
+          "cycle": "长期有效",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/world/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/master_world.png",
+          "image_hash": "4f7f25fe4e444be8cac8ea91cf533d5036b9d311db0bc90d8cc37d576f9a10b7",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行信用卡中心 - 万事达无价世界卡公示",
+          "url": "https://ccc.spdb.com.cn/miniSite/world/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发日本航空联名信用卡",
+      "aliases": [
+        "日航联名卡",
+        "JAL联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，年刷卡满6笔或满2000元免次年"
+      },
+      "benefits": [
+        {
+          "category": "里程",
+          "title": "日航里程自动累积计划",
+          "description": "消费按月自动折算转换为日本航空日航里程俱乐部里程",
+          "quota": "15元人民币累计1里程",
+          "cycle": "长期有效",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/jal/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/jal_card.png",
+          "image_hash": "c3dba9f89801f29b2fcf71f45e53217605dbbc79533985e1a7953cf94dd3caa5",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行信用卡中心 - 日航联名卡公示",
+          "url": "https://ccc.spdb.com.cn/miniSite/jal/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发加速积分白金卡",
+      "aliases": [
+        "加速白",
+        "5倍加速卡",
+        "加速白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，每年刷卡满5笔免次年年费（已停发新申，存量卡正常保留）"
+      },
+      "benefits": [
+        {
+          "category": "积分",
+          "title": "超市加油类特约商户5倍积分加速",
+          "description": "境内指定大型超市及加油商户刷卡消费享高达5倍积分加速累积",
+          "quota": "5倍积分加速",
+          "cycle": "长期有效",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/speed/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/speed_platinum.png",
+          "image_hash": "fa69e49c6c7934921765528847ce3f9c3aba94d9ca2d21ef7fd25c4555885b38",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行信用卡中心 - 产品停发公示与存量卡服务保障公告",
+          "url": "https://ccc.spdb.com.cn/miniSite/speed/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发银行美国运通经典白金卡",
+      "aliases": [
+        "老AE白",
+        "经典AE白",
+        "经典白金卡",
+        "浦发运通经典白"
+      ],
+      "networks": [
+        "AmericanExpress"
+      ],
+      "card_level": "Platinum",
+      "status": "discontinued",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": 180000,
+        "waiver_description": "首年免年费，次年可用20万积分兑换年费（老持卡人按存量协议履约）"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "境内高品质机场接送机服务",
+          "description": "专车送机接机礼遇，覆盖境内核心枢纽机场",
+          "quota": "每年5次",
+          "cycle": "核卡年度",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/ae_classic/"
+        },
+        {
+          "category": "里程",
+          "title": "超值积分全额兑换四大航空里程",
+          "description": "国内四大航司里程兑换计划",
+          "quota": "每年最高兑换5万里程",
+          "cycle": "核卡年度",
+          "source_url": "https://ccc.spdb.com.cn/miniSite/ae_classic/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/spdb/ae_classic.png",
+          "image_hash": "298adf29b3b4feaef4b5546f8cd48a3ff59b8b9969d205ec83245eab11eb5d48",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浦发银行信用卡中心 - 美国运通白金信用卡权益履约公告",
+          "url": "https://ccc.spdb.com.cn/miniSite/ae_classic/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发银行美团联名信用卡",
+      "aliases": [
+        "浦发美团卡",
+        "美团联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "SPDB",
+      "canonical_name": "浦发银行标准信用卡 (普卡)",
+      "aliases": [
+        "浦发标准普卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 5000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "PSBC": [
+    {
+      "bank_id": "PSBC",
+      "canonical_name": "鼎致白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 260000,
+        "supplementary": null,
+        "waiver_description": "首年5万积分抵扣，次年20万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/psbc/ad22b514.png",
+          "image_hash": "8d5bc2963322d7aeb5bffd00bb7969870365796e2e1c67520885a275740cf928",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国邮政储蓄银行官方产品公示目录",
+          "url": "https://www.bank.test/psbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PSBC",
+      "canonical_name": "鼎雅白金卡",
+      "aliases": [],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 50000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，年刷卡满7万元或刷满20笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "机场/高铁贵宾厅休息室服务",
+          "description": "覆盖国内主要交通枢纽的高品质自营或合作贵宾厅候机/候车尊贵礼遇",
+          "quota": "多点次/年",
+          "cycle": "核卡年度",
+          "source_url": ""
+        },
+        {
+          "category": "保险",
+          "title": "高额公共交通意外及旅行不便保险",
+          "description": "持卡人为本人支付全额商业客运交通工具票款享高额意外伤害保障",
+          "quota": "最高1000-2000万元",
+          "cycle": "长期有效",
+          "source_url": ""
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/psbc/212e898e.png",
+          "image_hash": "8cfe330b9ac9ea47f15577288e134674932b634d6a1bed46123881593fa3afd1",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国邮政储蓄银行官方产品公示目录",
+          "url": "https://www.bank.test/psbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PSBC",
+      "canonical_name": "中国邮政储蓄银行标准信用卡 (金卡)",
+      "aliases": [
+        "青春卡 / 邮储金卡",
+        "邮储金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": null,
+        "waiver_description": "首年免年费，每年刷卡消费满6笔免次年"
+      },
+      "benefits": [],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/psbc/72db7e27.png",
+          "image_hash": "0322cbaf60bc01f957580366e2c1f598b343ed21af2ed6f6b2b612a357bc5e8e",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国邮政储蓄银行官方产品公示目录",
+          "url": "https://www.bank.test/psbc/cards",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PSBC",
+      "canonical_name": "中国邮政储蓄银行EMS联名信用卡",
+      "aliases": [
+        "邮储EMS卡",
+        "EMS联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 5000,
+        "supplementary": 2500,
+        "waiver_description": "首年免年费，当年刷卡消费满3笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "物流",
+          "title": "全国EMS特快专递邮寄资费专属8折优惠",
+          "description": "使用卡片支付EMS快递费用专享8折优惠特权",
+          "quota": "长期8折",
+          "cycle": "长期有效",
+          "source_url": "https://www.psbc.com/cn/CreditCard/ems/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/psbc/ems_card.png",
+          "image_hash": "4b8ad0262b88c26081596c82eda992de39aaf10592d531f12c05a16aa6549905",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国邮政储蓄银行 - EMS联名信用卡产品介绍",
+          "url": "https://www.psbc.com/cn/CreditCard/ems/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    },
+    {
+      "bank_id": "PSBC",
+      "canonical_name": "中国邮政储蓄银行无界白金信用卡",
+      "aliases": [
+        "邮储无界卡",
+        "无界白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 0,
+        "supplementary": null,
+        "waiver_description": "卡片有效期内免年费"
+      },
+      "benefits": [
+        {
+          "category": "权益",
+          "title": "银联无界卡专属数字生活多重礼遇",
+          "description": "享受银联无界卡专属互联网消费达标领红包及商旅特权",
+          "quota": "季度达标立领",
+          "cycle": "长期有效",
+          "source_url": "https://www.psbc.com/cn/CreditCard/wujie/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/psbc/wujie_card.png",
+          "image_hash": "746df620d443ca82826b98f4e3ea25e98fd1b34c675f16a02a887f7d26d2e81d",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "中国邮政储蓄银行 - 银联无界信用卡公示",
+          "url": "https://www.psbc.com/cn/CreditCard/wujie/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    },
+    {
+      "bank_id": "PSBC",
+      "canonical_name": "中国邮政储蓄银行青春卡",
+      "aliases": [
+        "邮储青春卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Standard",
+      "status": "active",
+      "annual_fee": {
+        "primary": 5000,
+        "supplementary": null,
+        "waiver_description": null
+      },
+      "benefits": [],
+      "artworks": [],
+      "sources": [],
+      "confidence": 0.96
+    }
+  ],
+  "HXB": [
+    {
+      "bank_id": "HXB",
+      "canonical_name": "华夏银行精英环球白金信用卡",
+      "aliases": [
+        "华夏大白金",
+        "精英环球白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 68000,
+        "supplementary": 34000,
+        "waiver_description": "首年免年费，年刷卡满5笔或满2万元免次年年费，或可用5万积分抵扣"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "境内主流机场自营及龙腾贵宾室服务",
+          "description": "享受全国枢纽机场自营贵宾登机服务及休息室候机礼遇",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.hxb.com.cn/cards/platinum/"
+        },
+        {
+          "category": "救援",
+          "title": "全国范围全天候紧急道路救援",
+          "description": "百公里内免费拖车、搭电送油及现场紧急快修",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.hxb.com.cn/cards/platinum/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/hxb/elite_white.png",
+          "image_hash": "f1894338f7f65903221c43f70f07a0d6892d389e44d8148e41580a6473df4567",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "华夏银行信用卡中心公示",
+          "url": "https://creditcard.hxb.com.cn/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "HXB",
+      "canonical_name": "华夏自驾信用卡 (经典版)",
+      "aliases": [
+        "华夏车主卡",
+        "自驾卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 20000,
+        "supplementary": 10000,
+        "waiver_description": "首年免年费，每年刷卡满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "加油",
+          "title": "加油消费专属加油金积分月度返还",
+          "description": "指定合作油站加油享月度专属积分返还",
+          "quota": "每月最高减50元",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.hxb.com.cn/drive/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/hxb/drive.png",
+          "image_hash": "f855d7b0ef4403134dc1abce7e90b96314793fc8fff6d233896e8816f8dc84be",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "华夏银行自驾卡公示",
+          "url": "https://creditcard.hxb.com.cn/drive/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    }
+  ],
+  "CZBANK": [
+    {
+      "bank_id": "CZBANK",
+      "canonical_name": "浙商银行红利信用卡",
+      "aliases": [
+        "浙商红利卡",
+        "红利卡",
+        "返现神卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": 24000,
+        "waiver_description": "核卡首年免年费，年刷卡满6笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "返现",
+          "title": "微信及支付宝快捷支付笔笔10%现金返还",
+          "description": "美团外卖、微信支付及支付宝消费享专属10%比例月度返现，每月最高200元",
+          "quota": "月度最高返还200元",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.czbank.com/hongli/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/czbank/hongli.png",
+          "image_hash": "de8f6741730ef298294b67ffea2c50cbfe880bd50ec0e57026944382a3607458",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浙商银行信用卡中心 - 红利卡公示",
+          "url": "https://creditcard.czbank.com/hongli/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.99
+    },
+    {
+      "bank_id": "CZBANK",
+      "canonical_name": "浙商银行东方航空联名信用卡",
+      "aliases": [
+        "浙商东航卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，刷卡满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "里程",
+          "title": "消费自动兑换东航万里行里程",
+          "description": "日常消费全额自动折算转换为东航积分",
+          "quota": "15:1",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.czbank.com/ceair/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/czbank/ceair.png",
+          "image_hash": "d60143d7766585d96ca3ba05017dad6203adb6e571357deca2ba122f52905a96",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "浙商银行东航联名卡公示",
+          "url": "https://creditcard.czbank.com/ceair/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    }
+  ],
+  "BJBANK": [
+    {
+      "bank_id": "BJBANK",
+      "canonical_name": "北京银行乐赢白金信用卡",
+      "aliases": [
+        "乐赢白",
+        "北京银行乐赢白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 60000,
+        "supplementary": 30000,
+        "waiver_description": "首年免年费，每年刷卡满10笔或满3万元免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "全国主要机场高铁自营贵宾室休息礼遇",
+          "description": "持卡人专享北京大兴及首都机场自营贵宾候机",
+          "quota": "每年4次",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.bankofbeijing.com.cn/leying/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bjbank/leying.png",
+          "image_hash": "33679778521be0c3a5e6459a8f224f3882314890e1e5afceacecba055153228c",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "北京银行信用卡中心公示",
+          "url": "https://creditcard.bankofbeijing.com.cn/leying/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "BJBANK",
+      "canonical_name": "北京银行生肖系列信用卡 (京卡)",
+      "aliases": [
+        "京卡生肖卡",
+        "北京银行生肖卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": 5000,
+        "waiver_description": "首年免年费，年刷卡满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "生活",
+          "title": "北京地区知名文旅及影院门票立减",
+          "description": "京城知名文博文旅景点门票专属优惠",
+          "quota": "常态化满减",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.bankofbeijing.com.cn/shengxiao/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/bjbank/shengxiao.png",
+          "image_hash": "9f2db793f247a24d819f33d9785d97ba661ddaefe319673ed5771899fb03b502",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "北京银行生肖卡介绍",
+          "url": "https://creditcard.bankofbeijing.com.cn/shengxiao/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    }
+  ],
+  "SHBANK": [
+    {
+      "bank_id": "SHBANK",
+      "canonical_name": "上海银行外滩白金信用卡",
+      "aliases": [
+        "外滩白",
+        "外滩大白金"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 125000,
+        "supplementary": 62500,
+        "waiver_description": "主卡年费1250元，次年可用20万积分或消费达标冲抵"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "境内外主要机场高品质接送机服务",
+          "description": "专车接送机，覆盖上海虹桥、浦东及全国各核心机场",
+          "quota": "每年4次接送机",
+          "cycle": "核卡年度",
+          "source_url": "https://card.bosc.cn/waitan/"
+        },
+        {
+          "category": "健康",
+          "title": "知名体检中心全面深度健康体检",
+          "description": "美年大健康/爱康国宾全国门店高端体检套餐",
+          "quota": "每年1次",
+          "cycle": "核卡年度",
+          "source_url": "https://card.bosc.cn/waitan/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/shbank/waitan.png",
+          "image_hash": "3ff982635275caab95d55b9e1afb63c891e420a681fec9d10ede73a00f73491e",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "上海银行信用卡中心 - 外滩白金卡公示",
+          "url": "https://card.bosc.cn/waitan/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "SHBANK",
+      "canonical_name": "上海银行吉祥航空联名信用卡",
+      "aliases": [
+        "上海银行吉祥卡",
+        "吉祥联名卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，年刷卡满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "里程",
+          "title": "吉祥航空如意俱乐部积分自动累积",
+          "description": "计积分消费自动兑换吉祥航空如意积分，机票直减",
+          "quota": "15:1",
+          "cycle": "长期有效",
+          "source_url": "https://card.bosc.cn/juneyao/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/shbank/juneyao.png",
+          "image_hash": "1d0df3b7f87f1db6de64279805e96826149556afcaa27056ddb8a19becb8d7ce",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "上海银行吉祥航空联名卡公示",
+          "url": "https://card.bosc.cn/juneyao/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    }
+  ],
+  "JSBANK": [
+    {
+      "bank_id": "JSBANK",
+      "canonical_name": "江苏银行美团联名信用卡",
+      "aliases": [
+        "江苏银行美团卡",
+        "美团外卖神卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Gold",
+      "status": "active",
+      "annual_fee": {
+        "primary": 10000,
+        "supplementary": 5000,
+        "waiver_description": "核卡首年免年费，年刷卡消费满3笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "立减",
+          "title": "美团外卖及大众点评天天随机立减",
+          "description": "绑定美团支付，外卖及到店餐饮消费笔笔立减",
+          "quota": "每日立减",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.jsbchina.cn/meituan/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/jsbank/meituan.png",
+          "image_hash": "0f6cbd10e39bef67681a012d319b51d05674b2262164996bd30b8ef36ee25fdf",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "江苏银行信用卡中心 - 美团联名卡公示",
+          "url": "https://creditcard.jsbchina.cn/meituan/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    },
+    {
+      "bank_id": "JSBANK",
+      "canonical_name": "江苏银行车主经典信用卡",
+      "aliases": [
+        "江苏银行车主卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，年刷卡满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "加油",
+          "title": "指定合作加油站加油返现优惠",
+          "description": "中石化中石油合作油站月度享专属立减",
+          "quota": "月度最高减50元",
+          "cycle": "账单月度",
+          "source_url": "https://creditcard.jsbchina.cn/car/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/jsbank/car.png",
+          "image_hash": "0ba7a6e56acf9f36b40f6bebc8d9ed1ca664657e2242f15c11ae34f65ba732e3",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "江苏银行车主卡公示",
+          "url": "https://creditcard.jsbchina.cn/car/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.97
+    }
+  ],
+  "NBCB": [
+    {
+      "bank_id": "NBCB",
+      "canonical_name": "宁波银行汇通白金信用卡",
+      "aliases": [
+        "汇通白金卡",
+        "宁波银行汇通白"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 48000,
+        "supplementary": 24000,
+        "waiver_description": "首年免年费，每年刷卡满6笔免次年年费"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "华东地区主要机场高铁自营贵宾厅服务",
+          "description": "宁波、杭州、上海等枢纽机场专属CIP通道及贵宾候机",
+          "quota": "每年3次",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.nbcb.com.cn/huitong/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/nbcb/huitong.png",
+          "image_hash": "f6eeffe4075dc80fa7ed002417ecdd4d64209d9d507ed7c459b4c1f77fce1bf3",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "宁波银行信用卡中心公示",
+          "url": "https://creditcard.nbcb.com.cn/huitong/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "HFB": [
+    {
+      "bank_id": "HFB",
+      "canonical_name": "恒丰银行恒裕白金信用卡",
+      "aliases": [
+        "恒裕白",
+        "恒丰白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，刷卡满5笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "商旅",
+          "title": "高铁站指定贵宾休息室候车",
+          "description": "国内主流高铁车站自营贵宾候车室礼遇",
+          "quota": "每年2次",
+          "cycle": "核卡年度",
+          "source_url": "https://creditcard.hfbank.com.cn/hengyu/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/hfb/hengyu.png",
+          "image_hash": "ea1790b6d797bf181d4de3ad989e45ebd662e3e2effb0176becdabf84f4a91bd",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "恒丰银行信用卡产品介绍",
+          "url": "https://creditcard.hfbank.com.cn/hengyu/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    }
+  ],
+  "CBHB": [
+    {
+      "bank_id": "CBHB",
+      "canonical_name": "渤海银行浩泰白金信用卡",
+      "aliases": [
+        "浩泰白",
+        "渤海白金卡"
+      ],
+      "networks": [
+        "UnionPay"
+      ],
+      "card_level": "Platinum",
+      "status": "active",
+      "annual_fee": {
+        "primary": 36000,
+        "supplementary": 18000,
+        "waiver_description": "首年免年费，年刷卡满6笔免次年"
+      },
+      "benefits": [
+        {
+          "category": "出行",
+          "title": "境内航班延误险及意外险全套保障",
+          "description": "航班延误2小时赔付与商业客运意外伤害保险",
+          "quota": "最高200万元",
+          "cycle": "长期有效",
+          "source_url": "https://creditcard.cbhb.com.cn/haotai/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/cbhb/haotai.png",
+          "image_hash": "ffb3793bb224c8ed9a96db8d2af27023d1f2b5877dc6d66c697adfeffe60b6ff",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "渤海银行浩泰卡介绍",
+          "url": "https://creditcard.cbhb.com.cn/haotai/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.96
+    }
+  ],
+  "HSBC": [
+    {
+      "bank_id": "HSBC",
+      "canonical_name": "汇丰卓越理财旅行信用卡",
+      "aliases": [
+        "汇丰卓越旅行卡",
+        "汇丰旅行白金卡"
+      ],
+      "networks": [
+        "UnionPay",
+        "MasterCard"
+      ],
+      "card_level": "Diamond",
+      "status": "active",
+      "annual_fee": {
+        "primary": 360000,
+        "supplementary": 180000,
+        "waiver_description": "汇丰卓越理财客户专属申请，主卡年费3600元刚性收取"
+      },
+      "benefits": [
+        {
+          "category": "机票",
+          "title": "全球主要航司公务舱机票立减与里程超优兑换",
+          "description": "享受英航、国泰、新航等国际航司公务舱特惠，积分极优比例换里程",
+          "quota": "12:1极速兑换",
+          "cycle": "长期有效",
+          "source_url": "https://www.hsbc.com.cn/credit-cards/premier-travel/"
+        },
+        {
+          "category": "酒店",
+          "title": "全球顶奢酒店集团专属礼遇与免房住宿体验",
+          "description": "每年赠送豪华酒店免费住宿及免费房型升级、提早入住",
+          "quota": "每年2间夜免房",
+          "cycle": "核卡年度",
+          "source_url": "https://www.hsbc.com.cn/credit-cards/premier-travel/"
+        }
+      ],
+      "artworks": [
+        {
+          "artwork_url": "https://res.bank.test/hsbc/premier_travel.png",
+          "image_hash": "d74f07571da87b0b7cc7ddd2909a6404fc431d106cf98323c9029de0c3a79c5a",
+          "is_primary": true
+        }
+      ],
+      "sources": [
+        {
+          "title": "汇丰中国官方网站 - 卓越理财旅行信用卡",
+          "url": "https://www.hsbc.com.cn/credit-cards/premier-travel/",
+          "source_type": "official_site",
+          "tier": "S"
+        }
+      ],
+      "confidence": 0.99
+    }
+  ]
+}

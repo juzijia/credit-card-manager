@@ -1,0 +1,2093 @@
+{
+  "ICBC": {
+    "bank_code": "ICBC",
+    "bank_name": "中国工商银行",
+    "category": "国有大型商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "icbc.com.cn",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "PARTIAL",
+      "scope": "bank",
+      "policy_representation": "multiple_known_rules",
+      "rule_type": null,
+      "rule_value": null,
+      "rules": [
+        {
+          "rule_id": "icbc_current_statement_day_map",
+          "status": "CONFIRMED",
+          "rule_type": "statement_day_map",
+          "statement_day_map": {
+            "14": 1,
+            "15": 2,
+            "16": 3,
+            "17": 4,
+            "18": 5,
+            "19": 6,
+            "20": 7,
+            "21": 8,
+            "22": 9,
+            "23": 10,
+            "24": 11,
+            "25": 12,
+            "26": 13,
+            "27": 14,
+            "28": 15
+          },
+          "notes": "当前App修改账单日页面实测：可选账单日为14~28日，对应到期还款日固定为次月1~15日（due day小于statement day表示次月）。两张实际工行信用卡显示完全一致可选映射。"
+        },
+        {
+          "rule_id": "icbc_legacy_known_pair_1_25",
+          "status": "CONFIRMED",
+          "rule_type": "statement_day_map",
+          "statement_day_map": {
+            "1": 25
+          },
+          "notes": "用户长期持有的两张工行卡实际生效配置：statement_day=1，due_day=25（当月25日）。这是已确认仍真实生效的历史存量组合，不是完整legacy mapping，不得外推出其他历史日期。"
+        }
+      ],
+      "runtime_resolution": null,
+      "source_title": "中国工商银行手机银行App信用卡账单日修改页面实测与历史存量账户事实",
+      "source_url": "https://www.icbc.com.cn",
+      "evidence": "当前App修改页面实测显示14~28日对应次月1~15日固定映射；存量账户存在真实生效的1日账单日对应当月25日还款日。工行不存在可安全统一成days_after_statement=25的全行规则。",
+      "notes": "已完成官方第一方证据审核（review_status=CONFIRMED）。已知规则可执行于当前可选账单日（14~28日）与历史存量账单日（1日），未列入日期保持未解析（runtime_status=PARTIAL）。"
+    },
+    "statement_day_policy": {
+      "status": "CONFIRMED",
+      "policy_type": "selectable_pool",
+      "available_days": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "modification_frequency": null,
+      "source_title": "中国工商银行手机银行App信用卡账单日修改页面",
+      "source_url": "https://www.icbc.com.cn",
+      "evidence": "当前工行App信用卡账单日修改页面可选账单日仅包含14至28日。历史存量1日账单日已不可在新开卡或修改时选择，故不放入当前selectable_pool。",
+      "notes": "只录入有直接证据的当前可选14~28日，不混入历史存量日期。"
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://www.icbc.com.cn/SiteCollectionDocuments/ICBC/Resources/ICBC/%E7%89%A1%E4%B8%B9%E5%8D%A1%E9%A2%91%E9%81%93/%E4%B8%8B%E8%BD%BD/2011/%E5%B7%A5%E9%93%B6%E7%89%A1%E4%B8%B9%E5%8D%A1%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%E4%B8%AA%E4%BA%BA%E5%8D%A1%E6%A0%87%E5%87%86%E7%89%88.pdf",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CCB": {
+    "bank_code": "CCB",
+    "bank_name": "中国建设银行",
+    "category": "国有大型商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "ccb.com",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "RESOLVED",
+      "scope": "bank",
+      "policy_representation": "statement_day_map",
+      "rule_type": null,
+      "rule_value": null,
+      "statement_day_map": {
+        "2": 22,
+        "4": 24,
+        "5": 25,
+        "7": 27,
+        "9": 1,
+        "10": 1,
+        "12": 1,
+        "13": 2,
+        "14": 3,
+        "15": 4,
+        "17": 6,
+        "19": 8,
+        "21": 10,
+        "22": 11,
+        "23": 12,
+        "24": 13,
+        "25": 14,
+        "26": 15,
+        "27": 16
+      },
+      "runtime_resolution": {
+        "statement_day_17": {
+          "rule_type": "fixed_day",
+          "rule_value": 6
+        }
+      },
+      "source_title": "中国建设银行《关于调整龙卡信用卡到期还款日事宜的公告》(2016) 与《关于固定信用卡部分账单日对应还款日的公告》(2020)",
+      "source_url": "https://www.ccb.com/cn/v3/include/notice/20160331_1459395548.html",
+      "source_url_2020": "https://ccb.com/cn/v3/include/notice/20200421_1587438526.html",
+      "evidence": "2016年公告调整为固定还款日对应表；2020年公告明确9日和10日账单对应还款日固定为次月1日。全部19个可选账单日均具备直接生效公告条款支持。",
+      "notes": "所有19个selectable账单日已全部补齐映射，差集为空。"
+    },
+    "statement_day_policy": {
+      "status": "CONFIRMED",
+      "policy_type": "selectable_pool",
+      "available_days": [
+        2,
+        4,
+        5,
+        7,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        17,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "modification_frequency": "每年限改1次",
+      "source_title": "中国建设银行客户服务：信用卡账单日如何修改及可选日期说明",
+      "source_url": "https://www.ccb.com/cn/home/customer_service/search-xyk.html?keyword=%E6%80%8E%E6%A0%B7%E4%BF%AE%E6%94%B9%E8%B4%A6%E5%8D%95%E6%97%A5",
+      "evidence": "建设银行信用卡账单日每年可修改1次；可选账单日为每月2、4、5、7、9、10、12、13、14、15、17、19、21、22、23、24、25、26、27日。",
+      "notes": "官方明确规定每年限改1次及具体19个可选日集合。"
+    },
+    "statement_day_boundary": {
+      "status": "CONFIRMED",
+      "boundary": "current_cycle",
+      "source_title": "中国建设银行客户服务：信用卡账单日当天的消费何时还款",
+      "source_url": "https://www.ccb.com/cn/home/customer_service/search-xyk.html?keyword=%E4%BF%A1%E7%94%A8%E5%8D%A1%E8%B4%A6%E5%8D%95%E6%97%A5%E5%BD%93%E5%A4%A9%E7%9A%84%E6%B6%88%E8%B4%B9%E4%BD%95%E6%97%B6%E8%BF%98%E6%AC%BE",
+      "evidence": "建设银行信用卡账单日当天的消费，若在系统切账批处理前完成记账，计入本期账单（current_cycle）。"
+    },
+    "product_overrides": []
+  },
+  "ABC": {
+    "bank_code": "ABC",
+    "bank_name": "中国农业银行",
+    "category": "国有大型商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "abchina.com",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "PARTIAL",
+      "scope": "bank",
+      "policy_representation": "multiple_known_rules",
+      "rule_type": null,
+      "rule_value": null,
+      "rules": [
+        {
+          "rule_id": "abc_statement_plus_25",
+          "status": "CONFIRMED",
+          "rule_type": "days_after_statement",
+          "rule_value": 25,
+          "notes": "真实账户专项审计验证：Card A (statement_day=13) 9期真实EML与Card B (statement_day=23) 11期真实EML共20期，全部严格满足 due_date = statement_date + 25 calendar days (20/20，0 exceptions)。覆盖平年2月、30天月、31天月与跨年。原始EML中statement_date/due_date为直接提取字段，解析器未对due_date做日期推导。"
+        },
+        {
+          "rule_id": "abc_statement_plus_19",
+          "status": "CONFIRMED",
+          "rule_type": "days_after_statement",
+          "rule_value": 19,
+          "evidence_scope": "official_bank_rule",
+          "notes": "农行官方FAQ明确：‘多数账单的还款日为账单日后第25天或第19天，部分卡种采取固定账单日/还款日模式。’此规则为银行级已知规则，当前用户名下两张卡均未匹配此规则，不做账户指派。",
+          "runtime_assignable": false
+        },
+        {
+          "rule_id": "abc_current_statement_day_map",
+          "status": "CONFIRMED",
+          "rule_type": "statement_day_map",
+          "statement_day_map": {
+            "12": 1,
+            "14": 2,
+            "15": 3,
+            "16": 4,
+            "17": 5,
+            "18": 6,
+            "19": 7,
+            "20": 8,
+            "21": 9,
+            "22": 10,
+            "23": 11,
+            "24": 12,
+            "25": 13,
+            "26": 14,
+            "27": 15,
+            "28": 16
+          },
+          "selectable_statement_days": [
+            12,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ],
+          "modification_frequency": "180天内不可再次修改",
+          "notes": "农行当前手机App修改页面明确显示固定映射表：不同账单日对应不同固定到期还款日（due day小于statement day表示次月）。修改成功后名下所有符合条件信用卡统一变更，从下期生效；180天内不可再次修改。13日不在当前可选列表。"
+        }
+      ],
+      "runtime_resolution": null,
+      "source_title": "中国农业银行信用卡真实账单审计、官方FAQ与手机银行App修改账单日页面",
+      "source_url": "https://www.abchina.com",
+      "evidence": "银行官方明确存在+25、+19与固定账单日还款日多种规则；用户两张实际账户完成20期+25实证验证（Card A 9/9, Card B 11/11, 0 exceptions）。",
+      "notes": "已完成官方第一方证据审核（review_status=CONFIRMED）。农行存在多重规则分流：App当前固定映射优先；非映射日以账户实证+25解析；+19规则不自动分配给账户；映射与+25冲突日安全未解析（runtime_status=PARTIAL）。"
+    },
+    "statement_day_policy": {
+      "status": "CONFIRMED",
+      "policy_type": "selectable_pool",
+      "available_days": [
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "modification_frequency": "180天内不可再次修改",
+      "source_title": "中国农业银行手机银行App账单日修改页面规则说明",
+      "source_url": "https://www.abchina.com",
+      "evidence": "当前农行App明确显示：可选账单日为12及14~28日；修改成功后180天内不能再次修改；修改成功后名下所有符合条件信用卡统一变更；本期已出账不受影响，下期生效；仅主卡持卡人申请；专项额度分期及单位卡不支持。",
+      "notes": "官方当前明确支持的账单日可选池及修改频次策略。"
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://www.abchina.com/cn/PersonalServices/CreditCard/CreditCardProducts/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BOC": {
+    "bank_code": "BOC",
+    "bank_name": "中国银行",
+    "category": "国有大型商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "boc.cn",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "RESOLVED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "evidence_type": "official_customer_service",
+      "source_title": "中国银行官方在线客服业务咨询",
+      "source_url": "https://www.boc.cn",
+      "evidence": "2026-09-18 中国银行官方在线客服直接回复：‘我行核准信用卡后，会为其确定一个每月的账单日，账单日之后20天，即为当期账单的到期还款日。’即 due_date = statement_date + 20 calendar days。",
+      "notes": "中国银行官方在线客服直接明确全行账单日后20天为到期还款日。历史公开材料中‘免息还款期一般为20—50天’仅保留为免息期参考事实与历史辅助说明，不作为due_date计算依据。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://www.boc.cn/bcservice/bc1/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BOCOM": {
+    "bank_code": "BOCOM",
+    "bank_name": "交通银行",
+    "category": "国有大型商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "bankcomm.com",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "SAFE_UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": "关于调整交通银行太平洋信用卡到期还款日规则的公告",
+      "source_url": "https://creditcard.bankcomm.com/content/noticeDetail.html?noticeId=775",
+      "evidence": "2016年官方公告取消原账单日起第25天的统一规则，调整为固定到期还款日期，具体日期以对应信用卡账单记载为准；官方资料支持最长56天，且不得据此反推到期还款日算法。",
+      "notes": "该银行已完成官方第一方证据审核。2016年官方公告明确取消原‘账单日起第25天’统一规则，到期还款日调整为以账单记载为准，不存在全行通用单一天数规则；历史+25不作为当前runtime规则执行，最长免息56天不得反推due date，保持安全未解析（safe unresolved）。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.bankcomm.com/content/dam/front/card/apply.html",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "PSBC": {
+    "bank_code": "PSBC",
+    "bank_name": "中国邮政储蓄银行",
+    "category": "国有大型商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "psbc.com",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "source_title": "中国邮政储蓄银行信用卡章程及领用合约",
+      "source_url": "https://www.psbc.com/cn/PersonalBanking/CreditCard/ywgg/index.html",
+      "evidence": "持卡人非现金交易自记账日至发卡行规定的到期还款日（账单日后第20天）为免息还款期。",
+      "notes": "全行信用卡领用合约/章程法定条款明确。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://www.psbc.com/cn/PersonalBanking/CreditCard/ywgg/index.html",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CMB": {
+    "bank_code": "CMB",
+    "bank_name": "招商银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "cmbchina.com",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "RESOLVED",
+      "scope": "bank",
+      "policy_representation": "statement_day_map",
+      "rule_type": null,
+      "rule_value": null,
+      "statement_day_map": {
+        "2": 20,
+        "5": 23,
+        "7": 25,
+        "8": 26,
+        "9": 27,
+        "10": 28,
+        "12": 30,
+        "14": 2,
+        "15": 3,
+        "17": 5,
+        "18": 6,
+        "20": 8,
+        "22": 10,
+        "25": 13
+      },
+      "runtime_resolution": {
+        "statement_day_9": {
+          "rule_type": "fixed_day",
+          "rule_value": 27
+        }
+      },
+      "source_title": "招商银行信用卡中心：看懂账单上的日期与还款日对应规则",
+      "source_url": "https://cc.cmbchina.com/content/cusservice/43.htm",
+      "evidence": "招商银行官方账单周期业务规则明确账单日与最后还款日固定对应关系表。账单日为每月9日时，对应还款日为当月27日（fixed_day=27）。",
+      "notes": "字典表述使用完整 statement_day_map (14项映射)；实际持卡解析为 fixed_day=27。"
+    },
+    "statement_day_policy": {
+      "status": "NEEDS_REVIEW",
+      "policy_type": "selectable_pool",
+      "available_days": [
+        5,
+        7,
+        8,
+        9,
+        10,
+        12,
+        15,
+        17,
+        20,
+        22,
+        25
+      ],
+      "modification_frequency": "以掌上生活App及客服系统实时资格为准",
+      "source_title": "招商银行信用卡中心：看懂账单上的日期",
+      "source_url": "https://cc.cmbchina.com/content/cusservice/43.htm",
+      "evidence": "可选账单日通常为每月5、7、8、9、10、12、15、17、20、22、25日。修改方式为掌上生活App或致电客服，具体以系统显示为准。",
+      "notes": "官方披露了主要候选日集合，但修改频次受系统动态资格控制。"
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://cc.cmbchina.com/common/2019zc.htm",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CITIC": {
+    "bank_code": "CITIC",
+    "bank_name": "中信银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "citicbank.com",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "SAFE_UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": "中信银行信用卡（个人卡）领用合约（2026年第一版）",
+      "source_url": "https://creditcard.citicbank.cn/tc/gonggao/260730.pdf",
+      "evidence": "现行个人卡领用合约支持非预借现金交易免息还款期最长不超过50天；公开到期还款规则存在产品例外，因此不提升为无条件银行级规则。",
+      "notes": "该银行已完成官方第一方证据审核。现行领用合约确认到期还款日以账单为准，且存在卡产品例外，不存在可安全推广为全行统一算法的Bank Default；用户账户历史识别出的+19不得提升为全行规则，保持安全未解析（safe unresolved）。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.ecitic.com/tuijian/index.shtml",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CEB": {
+    "bank_code": "CEB",
+    "bank_name": "中国光大银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "cebbank.com",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "source_title": "中国光大银行信用卡领用合约",
+      "source_url": "https://xyk.cebbank.com/home/home-treaty/index.htm",
+      "evidence": "到期还款日为账单日后第20天。",
+      "notes": "全行信用卡领用合约/章程法定条款明确。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://xyk.cebbank.com/home/home-treaty/index.htm",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "HXB": {
+    "bank_code": "HXB",
+    "bank_name": "华夏银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "hxb.com.cn",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "source_title": "华夏银行信用卡领用合约",
+      "source_url": "https://creditcard.hxb.com.cn/card/cn/treaty/",
+      "evidence": "到期还款日为账单日后第20天。",
+      "notes": "全行信用卡领用合约/章程法定条款明确。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.hxb.com.cn/card/cn/treaty/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CMBC": {
+    "bank_code": "CMBC",
+    "bank_name": "中国民生银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "cmbc.com.cn",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "source_title": "中国民生银行民生信用卡领用合约",
+      "source_url": "https://creditcard.cmbc.com.cn/home/cn/web/customer/rules/index.shtml",
+      "evidence": "到期还款日为账单日后第20天。",
+      "notes": "全行信用卡领用合约/章程法定条款明确。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.cmbc.com.cn/home/cn/web/customer/rules/index.shtml",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CGB": {
+    "bank_code": "CGB",
+    "bank_name": "广发银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "cgbchina.com.cn",
+    "due_date_rule": {
+      "status": "NEEDS_REVIEW",
+      "review_status": "CONFIRMED",
+      "runtime_status": "SAFE_UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": "广发银行信用卡章程与客户协议（个人卡）",
+      "source_url": "https://card.cgbchina.com.cn/subsite/201611/20878213/zc.html",
+      "evidence": "官方《信用卡章程》与《信用卡客户协议（个人卡）》将到期还款日／最后还款日列为对账单列明事项，未在全行总规章中设定通用计算公式；官方资料显示不同卡产品与账户存在账单日后20天与26天等档位差异，并以对账单列明为准，故银行级到期还款规则置空，不将产品级档位提升为银行级规则，亦不由免息天数反推。",
+      "notes": "官方明确将到期还款日作为账单列明事项，存在20天与26天等产品/账户档位差异，不设立全行通用Bank Default；用户持有卡历史可独立识别，全行规则保持置空未解析。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": "广发银行信用卡章程",
+      "source_url": "https://card.cgbchina.com.cn/subsite/201611/20878213/zc.html",
+      "evidence": "官方章程与个人卡客户协议定义账单汇总上月账单日次日至本期账单日‘已经入账’的全部交易。账单日当天交易是否入账取决于银行记账切账时点，官方语义为 cutoff_dependent；当前 runtime schema 降级表示为 uncertain。",
+      "notes": "官方真实语义为 cutoff_dependent；当前 runtime enum 仅支持 current_cycle / next_cycle / uncertain，故以 uncertain 实行保守回退，不强行转换为 current_cycle。"
+    },
+    "product_overrides": []
+  },
+  "PAB": {
+    "bank_code": "PAB",
+    "bank_name": "平安银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "pingan.com",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "review_status": "CONFIRMED",
+      "runtime_status": "PARTIAL",
+      "scope": "bank",
+      "policy_representation": "statement_day_map",
+      "rule_type": null,
+      "rule_value": null,
+      "statement_day_map": {
+        "1": 19,
+        "2": 20,
+        "3": 21,
+        "4": 22,
+        "5": 23,
+        "6": 24,
+        "7": 25,
+        "8": 26,
+        "9": 27,
+        "10": 28,
+        "13": 1,
+        "14": 2,
+        "15": 3,
+        "16": 4,
+        "17": 5,
+        "18": 6,
+        "19": 7,
+        "20": 8,
+        "21": 9,
+        "22": 10,
+        "23": 11,
+        "24": 12,
+        "25": 13,
+        "26": 14,
+        "27": 15,
+        "28": 16
+      },
+      "source_title": "平安银行信用卡：认识信用卡（还款日对应表）与常见问题",
+      "source_url": "https://creditcard.pingan.com/yongkazhinan/renshixinyongka.shtml",
+      "evidence": "官方用卡指南直接公布了账单日与最后还款日的完整固定对应表（覆盖1~10及13~28共26个账单日）。官方FAQ的“账单日后18天”是低精度概括，不能覆盖大月、2月及表内固定对应关系。",
+      "notes": "完整26项官方对应表已消解FAQ概括性冲突；官方FAQ的“账单日后18天”是低精度概括，非CCM日历算法；未列入的11、12、29~31日不在官方表中，保持未解析，不得外推。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": "平安银行信用卡：认识信用卡",
+      "source_url": "https://creditcard.pingan.com/yongkazhinan/renshixinyongka.shtml",
+      "evidence": "官方用卡指南以“上个月账单日后一天至账单日当天入账的交易”定义本期账单范围，因此账单日当天发生的交易是否进入本期取决于实际入账/记账时点，边界为 cutoff_dependent。",
+      "notes": "官方明确账单日交易归属取决于记账时间（cutoff_dependent）；因当前 runtime enum 仅支持 current_cycle / next_cycle / uncertain，暂以 uncertain 作为安全兜底表示，不强行转换为 current_cycle 或 next_cycle。"
+    },
+    "product_overrides": []
+  },
+  "SPDB": {
+    "bank_code": "SPDB",
+    "bank_name": "上海浦东发展银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "spdb.com.cn",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "source_title": "上海浦东发展银行信用卡章程",
+      "source_url": "https://ccc.spdb.com.cn/miniSite/1531/",
+      "evidence": "持卡人还款日为账单日后第20天。",
+      "notes": "全行信用卡领用合约/章程法定条款明确。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://ccc.spdb.com.cn/miniSite/1531/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CIB": {
+    "bank_code": "CIB",
+    "bank_name": "兴业银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "cib.com.cn",
+    "due_date_rule": {
+      "status": "CONFIRMED",
+      "scope": "bank",
+      "rule_type": "days_after_statement",
+      "rule_value": 20,
+      "source_title": "兴业银行信用卡领用合约",
+      "source_url": "https://creditcard.cib.com.cn/service/treaty/",
+      "evidence": "到期还款日为账单日后第20天。",
+      "notes": "全行信用卡领用合约/章程法定条款明确。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "CONFIRMED",
+      "boundary": "current_cycle",
+      "source_title": "兴业银行信用卡领用合约及账务说明",
+      "source_url": "https://creditcard.cib.com.cn/service/treaty/",
+      "evidence": "兴业银行信用卡账单日当天入账的消费归入本期账单（current_cycle）。"
+    },
+    "product_overrides": []
+  },
+  "CZBANK": {
+    "bank_code": "CZBANK",
+    "bank_name": "浙商银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "czbank.com",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": "https://www.czbank.com/",
+      "evidence": null,
+      "notes": "两轮官方第一方域名检索未包含全行通用单一天数写死条款。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.czbank.com/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "HFB": {
+    "bank_code": "HFB",
+    "bank_name": "恒丰银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "hfbank.com.cn",
+    "due_date_rule": {
+      "status": "NEEDS_REVIEW",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": "恒丰银行信用卡领用合约（2025年版）及分期协议",
+      "source_url": "https://m.creditcard.hfbank.com.cn/upload/attach/%E9%99%84%E4%BB%B6%EF%BC%9A%E6%81%92%E4%B8%B0%E9%93%B6%E8%A1%8C%E4%BF%A1%E7%94%A8%E5%8D%A1%E9%A2%86%E7%94%A8%E5%90%88%E7%BA%A6%EF%BC%882025%E5%B9%B4%E7%89%88%EF%BC%89.pdf",
+      "evidence": "授权甲方每月在对账单所列到期还款日扣款；官方协议示例为3月8日账单日对应3月28日还款日（相隔20天）。",
+      "notes": "合约未写死单一天数规则，提示以当期账单列示为准。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CBHB": {
+    "bank_code": "CBHB",
+    "bank_name": "渤海银行",
+    "category": "全国股份制商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P0",
+    "official_domain": "cbhb.com.cn",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": "https://www.cbhb.com.cn/",
+      "evidence": null,
+      "notes": "两轮官方第一方域名检索未包含全行通用单一天数写死条款。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BJBANK": {
+    "bank_code": "BJBANK",
+    "bank_name": "北京银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "bankofbeijing.com.cn",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": "https://www.bankofbeijing.com.cn/",
+      "evidence": null,
+      "notes": "两轮官方第一方域名检索未包含全行通用单一天数写死条款。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.bankofbeijing.com.cn/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "SHBANK": {
+    "bank_code": "SHBANK",
+    "bank_name": "上海银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "bosc.cn",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": "https://www.bosc.cn/",
+      "evidence": null,
+      "notes": "两轮官方第一方域名检索未包含全行通用单一天数写死条款。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://card.bosc.cn/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "JSBANK": {
+    "bank_code": "JSBANK",
+    "bank_name": "江苏银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "jsbchina.cn",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": "https://www.jsbchina.cn/data/tosend/resource/upload/20190326/74571553590275870.pdf",
+      "evidence": null,
+      "notes": "两轮官方第一方域名检索未包含全行通用单一天数写死条款。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.jsbchina.cn/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "NBCB": {
+    "bank_code": "NBCB",
+    "bank_name": "宁波银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "nbcb.com.cn",
+    "due_date_rule": {
+      "status": "NEEDS_REVIEW",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": "宁波银行信用卡客户服务：账单与明细常见问题",
+      "source_url": "https://www.nbcb.com.cn/creditcard/client_service/FAQ/zdmx/",
+      "evidence": "持卡人偿还应还款额的最后日期以当期账单显示为准；官网FAQ示例为每月18日账单对应次月7日还款（约19~20天）。",
+      "notes": "明确以对账单列明为准。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "UNRESOLVED",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": "https://creditcard.nbcb.com.cn/",
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "NJCB": {
+    "bank_code": "NJCB",
+    "bank_name": "南京银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "njcb.com.cn",
+    "due_date_rule": {
+      "status": "UNRESOLVED",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": "南京银行信用卡官网",
+      "source_url": "https://creditcard.njcb.com.cn/",
+      "evidence": null,
+      "notes": "全行通用信用卡到期还款日单一天数条款未公开。"
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": [
+      {
+        "product_name": "鑫易分消费信用卡",
+        "status": "CONFIRMED",
+        "scope": "product",
+        "rule_type": "days_after_statement",
+        "rule_value": 25,
+        "source_title": "南京银行：鑫易分消费信用卡业务介绍",
+        "source_url": "https://www.njcb.com.cn/njcb/grjr/_301371/ylkcpjs/xyfxfxyk/index.html",
+        "evidence": "账单日：每月20日；到期还款日：账单日后第25天。",
+        "notes": "仅限该卡产品独立适用的已确认规则，不外推为全行通用规则。"
+      }
+    ]
+  },
+  "HZBANK": {
+    "bank_code": "HZBANK",
+    "bank_name": "杭州银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "hzbank.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "HSBANK": {
+    "bank_code": "HSBANK",
+    "bank_name": "徽商银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "hsbank.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CSCB": {
+    "bank_code": "CSCB",
+    "bank_name": "长沙银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "cscb.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BOCD": {
+    "bank_code": "BOCD",
+    "bank_name": "成都银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "bocd.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "CQBANK": {
+    "bank_code": "CQBANK",
+    "bank_name": "重庆银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "cqcbank.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "ZYBANK": {
+    "bank_code": "ZYBANK",
+    "bank_name": "中原银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "zybank.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "GCB": {
+    "bank_code": "GCB",
+    "bank_name": "广州银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "gzcb.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "QDBANK": {
+    "bank_code": "QDBANK",
+    "bank_name": "青岛银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "qdccb.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BSZ": {
+    "bank_code": "BSZ",
+    "bank_name": "苏州银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "included",
+    "maintenance_tier": "P1",
+    "official_domain": "suzhoubank.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "TCCB": {
+    "bank_code": "TCCB",
+    "bank_name": "天津银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "bankoftianjin.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BHB": {
+    "bank_code": "BHB",
+    "bank_name": "河北银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "hebbank.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "HRBB": {
+    "bank_code": "HRBB",
+    "bank_name": "哈尔滨银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "hrbb.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "DLB": {
+    "bank_code": "DLB",
+    "bank_name": "大连银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "bankofdalian.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "XMBANK": {
+    "bank_code": "XMBANK",
+    "bank_name": "厦门银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "xmbankonline.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "GYB": {
+    "bank_code": "GYB",
+    "bank_name": "贵阳银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "bankgy.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "QLBANK": {
+    "bank_code": "QLBANK",
+    "bank_name": "齐鲁银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "qlbchina.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "HKBANK": {
+    "bank_code": "HKBANK",
+    "bank_name": "汉口银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "hkbchina.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "JLBANK": {
+    "bank_code": "JLBANK",
+    "bank_name": "吉林银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "jlbank.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "JXBC": {
+    "bank_code": "JXBC",
+    "bank_name": "江西银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "jx-bank.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "LZBANK": {
+    "bank_code": "LZBANK",
+    "bank_name": "兰州银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "lzbank.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BOG": {
+    "bank_code": "BOG",
+    "bank_name": "东莞银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "dongguanbank.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "URBANK": {
+    "bank_code": "URBANK",
+    "bank_name": "乌鲁木齐银行",
+    "category": "城市商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "urmcb.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "SRCB": {
+    "bank_code": "SRCB",
+    "bank_name": "上海农商银行",
+    "category": "农村商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "srcb.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "GRCB": {
+    "bank_code": "GRCB",
+    "bank_name": "广州农商银行",
+    "category": "农村商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "grcbank.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "BJRCB": {
+    "bank_code": "BJRCB",
+    "bank_name": "北京农商银行",
+    "category": "农村商业银行",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "bjrcb.com",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  },
+  "HSBC": {
+    "bank_code": "HSBC",
+    "bank_name": "汇丰银行(中国)",
+    "category": "foreign_bank_extension",
+    "known_issuer": true,
+    "maintenance_scope": "excluded",
+    "maintenance_tier": null,
+    "official_domain": "hsbc.com.cn",
+    "due_date_rule": {
+      "status": "TODO",
+      "scope": "bank",
+      "rule_type": null,
+      "rule_value": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_policy": {
+      "status": "TODO",
+      "policy_type": null,
+      "available_days": null,
+      "modification_frequency": null,
+      "source_title": null,
+      "source_url": null,
+      "evidence": null,
+      "notes": null
+    },
+    "statement_day_boundary": {
+      "status": "TODO",
+      "boundary": "uncertain",
+      "source_title": null,
+      "source_url": null,
+      "evidence": null
+    },
+    "product_overrides": []
+  }
+}
