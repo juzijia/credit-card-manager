@@ -34,6 +34,7 @@ logger = logging.getLogger(__name__)
 
 BACKUP_FILENAME_PATTERN = re.compile(r"^ccm-\d{8}-\d{6}\.sqlite$")
 BACKUP_OPERATION_LOCK = threading.Lock()
+PLAIN_REMOTE_DIR = "ccm-backups-plain"
 
 
 class BackupBusyError(RuntimeError):
@@ -157,7 +158,7 @@ def obscure_password(plaintext: str) -> str:
 
 
 def build_rclone_env(
-    backup_password: str,
+    backup_password: str | None,
     webdav_url: str,
     webdav_username: str | None = None,
     webdav_password: str | None = None,
@@ -175,13 +176,24 @@ def build_rclone_env(
         "RCLONE_CONFIG_CCM_WEBDAV_VENDOR": "other",
         "RCLONE_CONFIG_CCM_WEBDAV_USER": webdav_username or "",
         "RCLONE_HEADER": "Referer:",
-        "RCLONE_CONFIG_CCM_WEBDAV_CRYPT_TYPE": "crypt",
-        "RCLONE_CONFIG_CCM_WEBDAV_CRYPT_REMOTE": f"CCM_WEBDAV:{subfolder}" if subfolder else "CCM_WEBDAV:",
-        "RCLONE_CONFIG_CCM_WEBDAV_CRYPT_PASSWORD": obscure_password(backup_password),
     }
     if webdav_password:
         env["RCLONE_CONFIG_CCM_WEBDAV_PASS"] = obscure_password(webdav_password)
+    if backup_password:
+        env["RCLONE_CONFIG_CCM_WEBDAV_CRYPT_TYPE"] = "crypt"
+        env["RCLONE_CONFIG_CCM_WEBDAV_CRYPT_REMOTE"] = f"CCM_WEBDAV:{subfolder}" if subfolder else "CCM_WEBDAV:"
+        env["RCLONE_CONFIG_CCM_WEBDAV_CRYPT_PASSWORD"] = obscure_password(backup_password)
     return env
+
+
+def _remote_target(env: dict[str, str]) -> str:
+    if env.get("RCLONE_CONFIG_CCM_WEBDAV_CRYPT_TYPE"):
+        return "CCM_WEBDAV_CRYPT:"
+    return f"CCM_WEBDAV:{PLAIN_REMOTE_DIR}/"
+
+
+def _ensure_remote_dir(env: dict[str, str]) -> None:
+    run_rclone(["--config", "", "mkdir", _remote_target(env).rstrip("/")], env=env)
 
 
 def get_backup_setting(session: Session, *, create: bool = True) -> BackupSetting | None:
@@ -194,14 +206,21 @@ def get_backup_setting(session: Session, *, create: bool = True) -> BackupSettin
     return setting
 
 
-def _remote_env(setting: BackupSetting) -> dict[str, str]:
-    crypt_password = get_secret("backup", "crypt_password")
-    if not crypt_password:
-        raise ValueError("未配置备份密码")
+def _remote_env(
+    setting: BackupSetting,
+    *,
+    encrypted: bool | None = None,
+    crypt_password: str | None = None,
+) -> dict[str, str]:
     if not setting.webdav_url or not setting.webdav_url.strip():
         raise ValueError("未配置 WebDAV，无法执行备份")
+    password: str | None = None
+    if encrypted is not False:
+        password = crypt_password or get_secret("backup", "crypt_password")
+        if encrypted and not password:
+            raise ValueError("未配置备份密码")
     return build_rclone_env(
-        crypt_password,
+        password,
         setting.webdav_url,
         setting.webdav_username,
         get_secret("backup", "webdav_password"),
@@ -217,7 +236,7 @@ def _backup_time(name: str, timezone: str) -> datetime:
 def list_remote_backups(env: dict[str, str], timezone: str) -> list[dict[str, Any]]:
     try:
         output = run_rclone(
-            ["--config", "", "lsjson", "--files-only", "CCM_WEBDAV_CRYPT:"], env=env
+            ["--config", "", "lsjson", "--files-only", _remote_target(env)], env=env
         ).stdout
     except RuntimeError as exc:
         message = str(exc).lower()
@@ -270,7 +289,7 @@ def _cleanup_remote(
     for backup in backups[retention_count:]:
         try:
             run_rclone(
-                ["--config", "", "deletefile", f"CCM_WEBDAV_CRYPT:{backup['name']}"],
+                ["--config", "", "deletefile", f"{_remote_target(env)}{backup['name']}"],
                 env=env,
             )
             deleted += 1
@@ -302,13 +321,20 @@ def delete_backup(session: Session, settings: Settings, backup_name: str) -> Non
         setting = get_backup_setting(session, create=False)
         if setting is None:
             raise ValueError("未配置 WebDAV")
+        env = _remote_env(setting)
         run_rclone(
-            ["--config", "", "deletefile", f"CCM_WEBDAV_CRYPT:{backup_name}"],
-            env=_remote_env(setting),
+            ["--config", "", "deletefile", f"{_remote_target(env)}{backup_name}"],
+            env=env,
         )
 
 
-def execute_backup(session: Session, settings: Settings) -> dict[str, Any]:
+def execute_backup(
+    session: Session,
+    settings: Settings,
+    *,
+    encrypted: bool | None = None,
+    backup_password: str | None = None,
+) -> dict[str, Any]:
     with backup_operation():
         setting = get_backup_setting(session)
         assert setting is not None
@@ -319,12 +345,15 @@ def execute_backup(session: Session, settings: Settings) -> dict[str, Any]:
         setting.last_attempt_at = now
         staging_file: Path | None = None
         try:
-            env = _remote_env(setting)
+            env = _remote_env(
+                setting, encrypted=encrypted, crypt_password=backup_password
+            )
             filename = f"ccm-{now.strftime('%Y%m%d-%H%M%S')}.sqlite"
             staging_file = paths.staging_dir / filename
             sqlite_backup(paths.database_file, staging_file)
+            _ensure_remote_dir(env)
             run_rclone(
-                ["--config", "", "copyto", str(staging_file), f"CCM_WEBDAV_CRYPT:{filename}"],
+                ["--config", "", "copyto", str(staging_file), f"{_remote_target(env)}{filename}"],
                 env=env,
             )
             staging_file.unlink()
@@ -364,14 +393,15 @@ def test_webdav_connection(session: Session, settings: Settings) -> dict[str, An
         source = Path(td) / "probe.bin"
         target = Path(td) / "probe-downloaded.bin"
         source.write_bytes(content)
+        _ensure_remote_dir(env)
         try:
             try:
                 run_rclone(
-                    ["--config", "", "copyto", str(source), f"CCM_WEBDAV_CRYPT:{probe_name}"],
+                    ["--config", "", "copyto", str(source), f"{_remote_target(env)}{probe_name}"],
                     env=env,
                 )
                 run_rclone(
-                    ["--config", "", "copyto", f"CCM_WEBDAV_CRYPT:{probe_name}", str(target)],
+                    ["--config", "", "copyto", f"{_remote_target(env)}{probe_name}", str(target)],
                     env=env,
                 )
                 if not target.is_file() or target.read_bytes() != content:
@@ -386,7 +416,7 @@ def test_webdav_connection(session: Session, settings: Settings) -> dict[str, An
         finally:
             try:
                 run_rclone(
-                    ["--config", "", "deletefile", f"CCM_WEBDAV_CRYPT:{probe_name}"], env=env
+                    ["--config", "", "deletefile", f"{_remote_target(env)}{probe_name}"], env=env
                 )
             except Exception as exc:
                 logger.warning("Failed to delete WebDAV probe (%s)", type(exc).__name__)
@@ -394,7 +424,8 @@ def test_webdav_connection(session: Session, settings: Settings) -> dict[str, An
         tzinfo=None
     )
     session.commit()
-    return {"success": True, "message": "WebDAV 连接与加密读写测试通过"}
+    mode = "加密" if env.get("RCLONE_CONFIG_CCM_WEBDAV_CRYPT_TYPE") else "明文"
+    return {"success": True, "message": f"WebDAV 连接与{mode}读写测试通过"}
 
 
 def backup_due(setting: BackupSetting | None, now: datetime, timezone: str) -> bool:
@@ -428,7 +459,7 @@ def download_restore_candidate(
     candidate.touch(mode=0o600, exist_ok=True)
     _chmod(candidate, 0o600)
     run_rclone(
-        ["--config", "", "copyto", f"CCM_WEBDAV_CRYPT:{backup_name}", str(candidate)],
+        ["--config", "", "copyto", f"{_remote_target(env)}{backup_name}", str(candidate)],
         env=env,
     )
     _chmod(candidate, 0o600)
@@ -544,7 +575,7 @@ def apply_restore_offline(database_url: str) -> bool:
 def prepare_pending_restore_with_credentials(
     database_url: str,
     backup_name: str,
-    backup_password: str,
+    backup_password: str | None,
     webdav_url: str,
     webdav_username: str | None = None,
     webdav_password: str | None = None,

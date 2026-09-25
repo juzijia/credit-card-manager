@@ -23,12 +23,19 @@ def main() -> None:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("verify")
-    subparsers.add_parser("rclone-backup", help="执行一次 WebDAV 加密备份")
-    rclone_restore_parser = subparsers.add_parser("rclone-restore", help="从 WebDAV 加密备份恢复数据库")
+    rclone_backup_parser = subparsers.add_parser("rclone-backup", help="执行一次 WebDAV 备份（可选加密）")
+    rclone_backup_parser.add_argument("--no-encryption", action="store_true", help="强制明文备份，忽略已保存的备份密码")
+    rclone_backup_parser.add_argument("--encrypted", action="store_true", help="强制加密备份（保险库/环境变量/交互提示）")
+    rclone_restore_parser = subparsers.add_parser("rclone-restore", help="从 WebDAV 备份恢复数据库（可选加密）")
     rclone_restore_parser.add_argument("backup_name", help="备份文件逻辑名称 (如 ccm-20260909-120000.sqlite)")
     rclone_restore_parser.add_argument("--yes", action="store_true", help="确认服务已停止并替换数据库")
+    rclone_restore_parser.add_argument("--no-encryption", action="store_true", help="强制从明文备份目录恢复")
+    rclone_restore_parser.add_argument("--encrypted", action="store_true", help="强制从加密备份恢复（保险库/环境变量/交互提示）")
     subparsers.add_parser("apply-pending-restore-if-any")
     args = parser.parse_args()
+
+    if getattr(args, "encrypted", False) and getattr(args, "no_encryption", False):
+        raise SystemExit("--encrypted 与 --no-encryption 不能同时使用")
 
     target = database_path(args.database_url)
     if args.command == "verify":
@@ -40,12 +47,38 @@ def main() -> None:
         from app.db.session import create_database_engine, create_session_factory
         from app.services.backup import execute_backup
 
+        encrypted: bool | None = None
+        if args.no_encryption:
+            encrypted = False
+        elif args.encrypted:
+            encrypted = True
+        cli_password: str | None = None
+        if encrypted:
+            import getpass
+
+            from app.core.plain_secrets import get_secret
+
+            cli_password = get_secret("backup", "crypt_password") or os.getenv(
+                "CCM_BACKUP_PASSWORD"
+            )
+            if not cli_password:
+                cli_password = (
+                    getpass.getpass("请输入备份密码 (Backup Password): ").strip() or None
+                )
+            if not cli_password:
+                raise SystemExit("未提供备份密码，无法加密备份")
+
         settings = Settings(database_url=args.database_url)
         engine = create_database_engine(settings.database_url)
         session_factory = create_session_factory(engine, settings.timezone)
         try:
             with session_factory() as session:
-                result = execute_backup(session, settings)
+                result = execute_backup(
+                    session,
+                    settings,
+                    encrypted=encrypted,
+                    backup_password=cli_password,
+                )
         finally:
             engine.dispose()
         print(
@@ -90,13 +123,16 @@ def main() -> None:
             except Exception:
                 pass
 
-        resolved_pass = get_secret("backup", "crypt_password")
-        if not resolved_pass:
-            resolved_pass = os.getenv("CCM_BACKUP_PASSWORD")
-
-        if not resolved_pass:
-            resolved_pass = getpass.getpass("请输入备份密码 (Backup Password): ").strip()
-            if not resolved_pass:
+        resolved_pass: str | None = None
+        if not args.no_encryption:
+            resolved_pass = get_secret("backup", "crypt_password") or os.getenv(
+                "CCM_BACKUP_PASSWORD"
+            )
+            if not resolved_pass and args.encrypted:
+                resolved_pass = (
+                    getpass.getpass("请输入备份密码 (Backup Password): ").strip() or None
+                )
+            if args.encrypted and not resolved_pass:
                 raise SystemExit("未提供备份密码，无法恢复")
 
         webdav_pass = get_secret("backup", "webdav_password")

@@ -108,10 +108,14 @@ def update_settings_endpoint(
 ) -> BackupSettingsRead:
     setting = get_backup_setting(session)
     assert setting is not None
-    backup_password_changed = bool(
-        payload.backup_password is not None
-        and payload.backup_password.get_secret_value().strip()
+    backup_password_provided = payload.backup_password is not None
+    backup_password_value = (
+        payload.backup_password.get_secret_value().strip()
+        if backup_password_provided
+        else ""
     )
+    backup_password_changed = bool(backup_password_value)
+    backup_password_cleared = backup_password_provided and not backup_password_value
     webdav_password_changed = bool(
         payload.webdav_password is not None
         and payload.webdav_password.get_secret_value().strip()
@@ -127,6 +131,7 @@ def update_settings_endpoint(
     )
     connection_changed = (
         backup_password_changed
+        or backup_password_cleared
         or webdav_password_changed
         or (webdav_url is not None and webdav_url != (setting.webdav_url or ""))
         or (
@@ -156,14 +161,16 @@ def update_settings_endpoint(
             detail="Cron 表达式无效，请输入标准 5 段格式（如 0 3 * * *）",
         )
     if setting.schedule_type == "cron":
-        if not (backup_password_changed or get_secret(BACKUP_SECRET_NS, "crypt_password")) or not (setting.webdav_url or "").strip():
+        if not (setting.webdav_url or "").strip():
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail="启用 Cron 前必须设置备份密码和 WebDAV 地址",
+                detail="启用 Cron 前必须设置 WebDAV 地址",
             )
 
     if backup_password_changed:
         set_secret(BACKUP_SECRET_NS, "crypt_password", payload.backup_password.get_secret_value())
+    elif backup_password_cleared:
+        set_secret(BACKUP_SECRET_NS, "crypt_password", None)
     if webdav_password_changed:
         set_secret(BACKUP_SECRET_NS, "webdav_password", payload.webdav_password.get_secret_value())
     session.commit()

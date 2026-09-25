@@ -48,6 +48,6 @@ docker compose up --build -d
 
 - 纯局域网用户无需配置域名，直接通过内网 IP（如 `http://192.168.x.x:8000`）访问即可。
 - 邮箱与备份凭据在 Web 设置页配置，明文存储于 `./data/config/secrets.json`（目录 700 / 文件 600，请勿泄露该文件）。
-- 备份上传仍强制经 rclone crypt 加密，远端存储看不到明文数据库。
-- 数据全部保存在 `./data` 目录，备份该目录即可整体迁移。
+- WebDAV 备份加密可选：设置备份密码时经 rclone crypt 加密上传；清除密码后直接上传未加密的 SQLite 备份。两种模式存放于不同的远端目录，切换模式不影响已有备份，列表与恢复仅针对当前模式。
+- WebDAV 备份仅上传 SQLite 数据库文件，不包含 `./data/config` 下的配置（含 secrets.json）；数据全部保存在 `./data` 目录，整体迁移请备份该目录。
 - 如需挂在公网，建议配置反向代理（HTTPS），并在 `CCM_ALLOWED_HOST` 填入对应域名。

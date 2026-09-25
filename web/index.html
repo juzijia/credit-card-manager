@@ -2623,7 +2623,7 @@
           <div class="bg-white dark:bg-[#111625] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800/80 shadow-xs space-y-5">
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">系统备份</h3>
-              <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">备份加密后上传到 WebDAV</p>
+              <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">可选加密后上传到 WebDAV，未设置密码时直接上传原始数据库文件</p>
             </div>
 
             <div class="grid sm:grid-cols-2 gap-4">
@@ -2650,11 +2650,17 @@
             <template v-if="backupForm.schedule_type !== 'off'">
             <div>
               <div class="flex items-center justify-between mb-1.5">
-                <label class="block text-xs text-slate-600 dark:text-slate-300">备份加密密码（必填）</label>
-                <span :class="backupSettings.backup_password_set ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'" class="text-[11px] font-medium">{{ backupSettings.backup_password_set ? '已设置' : '未设置' }}</span>
+                <label class="block text-xs text-slate-600 dark:text-slate-300">备份加密密码（可选）</label>
+                <span :class="backupPasswordEffective ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'" class="text-[11px] font-medium">{{ backupPasswordEffective ? '已设置' : (backupPasswordClear ? '待清除' : '未设置') }}</span>
               </div>
-              <input v-model="backupForm.backup_password" @input="backupConnectionVerified = false" type="password" autocomplete="off" :placeholder="backupSettings.backup_password_set ? '已配置 — 输入新密码可替换' : '请设置并在外部密码管理器保存'" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-              <p class="mt-1.5 text-[11px] text-amber-600 dark:text-amber-400">请妥善保管：丢失或忘记此密码后，已有备份将无法恢复。</p>
+              <input v-model="backupForm.backup_password" @input="backupConnectionVerified = false; backupPasswordClear = false" type="password" autocomplete="off" :placeholder="backupSettings.backup_password_set ? '已配置 — 输入新密码可替换' : '留空则不加密直接上传'" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+              <div class="mt-1.5 flex items-center justify-between gap-2">
+                <p v-if="backupPasswordEffective" class="text-[11px] text-amber-600 dark:text-amber-400">请妥善保管：丢失或忘记此密码后，已有备份将无法恢复。</p>
+                <p v-else class="text-[11px] text-amber-600 dark:text-amber-400">未设置密码时备份将以未加密 SQLite 直接上传，请确认 WebDAV 存储可信。</p>
+                <button v-if="backupSettings.backup_password_set && !backupForm.backup_password && !backupPasswordClear" @click="backupPasswordClear = true; backupConnectionVerified = false" class="shrink-0 text-[11px] text-rose-600 dark:text-rose-400 hover:underline">清除密码</button>
+                <button v-else-if="backupPasswordClear" @click="backupPasswordClear = false; backupConnectionVerified = false" class="shrink-0 text-[11px] text-slate-500 hover:underline">取消清除</button>
+              </div>
+              <p class="mt-1 text-[11px] text-slate-400">加密与未加密备份存放于不同的远端目录，切换模式不影响已有备份；列表与恢复仅针对当前模式。</p>
             </div>
 
             <div>
@@ -5904,10 +5910,12 @@ const IconDictionary = {
         const backupRestoreItem = ref(null);
         const backupRestoring = ref(false);
         const backupRestarting = ref(false);
-        const backupReady = computed(() => Boolean(
-          backupForm.value.webdav_url.trim()
-          && (backupSettings.value.backup_password_set || backupForm.value.backup_password)
+        const backupPasswordClear = ref(false);
+        const backupPasswordEffective = computed(() => Boolean(
+          backupForm.value.backup_password
+          || (backupSettings.value.backup_password_set && !backupPasswordClear.value)
         ));
+        const backupReady = computed(() => Boolean(backupForm.value.webdav_url.trim()));
 
         // Singleton Agent Token state. Saved plaintext is loaded only on Owner request.
         const agentToken = ref('');
@@ -7933,6 +7941,7 @@ const IconDictionary = {
             const data = await api('/backups/settings');
             backupSettings.value = data;
             backupConnectionVerified.value = Boolean(data.connection_verified);
+            backupPasswordClear.value = false;
             backupForm.value.webdav_url = data.webdav_url || '';
             backupForm.value.webdav_username = data.webdav_username || '';
             backupForm.value.schedule_type = data.schedule_type || 'off';
@@ -8031,6 +8040,7 @@ const IconDictionary = {
         function backupFormChanged() {
           return Boolean(
             backupForm.value.backup_password
+            || backupPasswordClear.value
             || backupForm.value.webdav_password
             || backupForm.value.webdav_url !== backupSettings.value.webdav_url
             || backupForm.value.webdav_username !== backupSettings.value.webdav_username
@@ -8042,7 +8052,7 @@ const IconDictionary = {
 
         async function saveBackupSettings(silent = false) {
           if (backupForm.value.schedule_type === 'cron' && !backupReady.value) {
-            showToast('启用 Cron 前请先设置备份密码和 WebDAV 地址');
+            showToast('启用 Cron 前请先设置 WebDAV 地址');
             return;
           }
           backupSaving.value = true;
@@ -8056,6 +8066,8 @@ const IconDictionary = {
             };
             if (backupForm.value.backup_password) {
               payload.backup_password = backupForm.value.backup_password;
+            } else if (backupPasswordClear.value) {
+              payload.backup_password = '';
             }
             if (backupForm.value.webdav_password) {
               payload.webdav_password = backupForm.value.webdav_password;
@@ -8068,6 +8080,7 @@ const IconDictionary = {
             backupSettings.value = updated;
             backupForm.value.backup_password = '';
             backupForm.value.webdav_password = '';
+            backupPasswordClear.value = false;
             await loadBackupList();
             if (!silent) {
               showToast('备份设置已保存');
@@ -10619,6 +10632,8 @@ const IconDictionary = {
           backupRestoring,
           backupRestarting,
           backupReady,
+          backupPasswordClear,
+          backupPasswordEffective,
           loadBackupSettings,
           saveBackupSettings,
           testBackupConnection,
