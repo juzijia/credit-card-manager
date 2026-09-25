@@ -50,6 +50,7 @@ class NotificationSettingReadDTO(BaseModel):
     configured: bool
     chat_id_configured: bool
     only_if_unpaid: bool
+    provider_config: dict[str, Any] = {}
 
 
 class NotificationProviderReadDTO(BaseModel):

@@ -5,9 +5,11 @@ from pydantic import BaseModel, Field, SecretStr
 
 class BackupSettingsRead(BaseModel):
     backup_password_set: bool
+    backup_password: str = ""
     webdav_url: str
     webdav_username: str
     webdav_password_set: bool
+    webdav_password: str = ""
     schedule_type: Literal["off", "cron"]
     cron_expr: str
     retention_count: int

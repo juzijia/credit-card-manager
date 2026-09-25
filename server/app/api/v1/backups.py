@@ -56,15 +56,19 @@ def _to_read_dto(setting: BackupSetting, request: Request) -> BackupSettingsRead
     last_backup_at = setting.last_remote_backup_at
     if last_backup_at and last_backup_at.tzinfo is None:
         last_backup_at = last_backup_at.replace(tzinfo=ZoneInfo(timezone))
+    backup_pw = get_secret(BACKUP_SECRET_NS, "crypt_password") or ""
+    webdav_pw = get_secret(BACKUP_SECRET_NS, "webdav_password") or ""
     return BackupSettingsRead(
-        backup_password_set=get_secret(BACKUP_SECRET_NS, "crypt_password") is not None,
+        backup_password_set=bool(backup_pw),
+        backup_password=backup_pw,
         webdav_url=(
             ""
             if setting.webdav_url and _webdav_url_has_credentials(setting.webdav_url)
             else setting.webdav_url or ""
         ),
         webdav_username=setting.webdav_username or "",
-        webdav_password_set=get_secret(BACKUP_SECRET_NS, "webdav_password") is not None,
+        webdav_password_set=bool(webdav_pw),
+        webdav_password=webdav_pw,
         schedule_type=setting.schedule_type or "off",
         cron_expr=setting.cron_expr or "0 3 * * *",
         retention_count=(

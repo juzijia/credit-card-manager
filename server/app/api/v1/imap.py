@@ -141,6 +141,7 @@ def _status_payload(account: EmailAccount | None) -> dict[str, object]:
         "port": account.port,
         "username_configured": bool(account.username),
         "username": account.username,
+        "password": get_secret("imap", account.id) or "",
         "mailbox": account.mailbox,
         "all_folders": account.all_folders,
         "schedule_type": account.schedule_type,

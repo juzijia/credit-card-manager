@@ -69,7 +69,9 @@ def get_settings_and_providers(session: SessionDep) -> dict[str, Any]:
         public_conf = json.loads(setting.public_config_json or "{}")
     except Exception:
         public_conf = {}
-    configured = bool(get_secret_json("notification", setting.id) or public_conf)
+    secret_conf = get_secret_json("notification", setting.id) or {}
+    combined_conf = {**public_conf, **secret_conf}
+    configured = bool(combined_conf)
 
     is_enabled = bool(setting.enabled) and setting.provider != "disabled"
     current_provider = setting.provider if (is_enabled and setting.provider in PROVIDERS) else "disabled"
@@ -83,9 +85,10 @@ def get_settings_and_providers(session: SessionDep) -> dict[str, Any]:
             "configured": configured,
             "chat_id_configured": bool(
                 setting.provider == "telegram"
-                and str(public_conf.get("chat_id", "")).strip()
+                and str(combined_conf.get("chat_id", "")).strip()
             ),
             "only_if_unpaid": setting.only_if_unpaid,
+            "provider_config": combined_conf,
         },
         "providers": providers_list,
     }

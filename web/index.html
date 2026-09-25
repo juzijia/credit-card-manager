@@ -2460,7 +2460,13 @@
                     <span v-if="notificationForm.provider_config.bot_token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.bot_token" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.bot_token, 'Bot Token')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.bot_token" :type="notifFieldVisible['bot_token'] ? 'text' : 'password'" autocomplete="off" placeholder="Bot Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['bot_token'] = !notifFieldVisible['bot_token']" :title="notifFieldVisible['bot_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['bot_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
                <div>
                  <div class="flex items-center justify-between mb-1">
@@ -2487,7 +2493,13 @@
                     <span v-if="notificationForm.provider_config.key || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.key" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.key, 'Bark Key')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.key" :type="notifFieldVisible['bark_key'] ? 'text' : 'password'" autocomplete="off" placeholder="Bark Key" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['bark_key'] = !notifFieldVisible['bark_key']" :title="notifFieldVisible['bark_key'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['bark_key']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
                <div>
                  <label class="block text-xs text-slate-600 dark:text-slate-300 mb-1">服务地址（可选）</label>
@@ -2502,7 +2514,13 @@
                     <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.token" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.token, 'PushPlus Token')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['pushplus_token'] ? 'text' : 'password'" autocomplete="off" placeholder="PushPlus Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['pushplus_token'] = !notifFieldVisible['pushplus_token']" :title="notifFieldVisible['pushplus_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['pushplus_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
              </template>
 
@@ -2513,7 +2531,13 @@
                     <span v-if="notificationForm.provider_config.key || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.key" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.key, 'Key或Token')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.key" :type="notifFieldVisible['feishu_key'] ? 'text' : 'password'" autocomplete="off" placeholder="Key或Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['feishu_key'] = !notifFieldVisible['feishu_key']" :title="notifFieldVisible['feishu_key'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['feishu_key']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
              </template>
 
@@ -2524,7 +2548,13 @@
                     <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.token" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.token, 'Access Token')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['ding_token'] ? 'text' : 'password'" autocomplete="off" placeholder="Access Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['ding_token'] = !notifFieldVisible['ding_token']" :title="notifFieldVisible['ding_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['ding_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
                <div>
                   <div class="flex items-center justify-between mb-1">
@@ -2532,7 +2562,13 @@
                     <span v-if="notificationForm.provider_config.secret || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.secret" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.secret, '加签 Secret')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.secret" :type="notifFieldVisible['ding_secret'] ? 'text' : 'password'" autocomplete="off" placeholder="加签 Secret" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['ding_secret'] = !notifFieldVisible['ding_secret']" :title="notifFieldVisible['ding_secret'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['ding_secret']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
              </template>
 
@@ -2551,7 +2587,13 @@
                     <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
                     <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.token" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.token, 'Access Token')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['ntfy_token'] ? 'text' : 'password'" autocomplete="off" placeholder="Access Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['ntfy_token'] = !notifFieldVisible['ntfy_token']" :title="notifFieldVisible['ntfy_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['ntfy_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
              </template>
 
@@ -2562,7 +2604,13 @@
                     <span v-if="notificationForm.provider_config.am || notificationConfigured" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">已配置</span>
                     <span v-else class="text-[10px] text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-1.5 py-0.5 rounded">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.am" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.am, '应用参数(corpid,corpsecret,...)')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.am" :type="notifFieldVisible['qywx_am'] ? 'text' : 'password'" autocomplete="off" placeholder="应用参数(corpid,corpsecret,...)" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['qywx_am'] = !notifFieldVisible['qywx_am']" :title="notifFieldVisible['qywx_am'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['qywx_am']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
              </template>
 
@@ -2577,7 +2625,13 @@
                     <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">已配置</span>
                     <span v-else class="text-[10px] text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-1.5 py-0.5 rounded">未配置</span>
                   </div>
-                  <input v-model.trim="notificationForm.provider_config.token" type="password" autocomplete="off" :placeholder="getSecretPlaceholder(notificationForm.provider_config.token, 'App Token')" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                  <div class="relative">
+                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['gotify_token'] ? 'text' : 'password'" autocomplete="off" placeholder="App Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
+                    <button type="button" @click="notifFieldVisible['gotify_token'] = !notifFieldVisible['gotify_token']" :title="notifFieldVisible['gotify_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                      <svg v-if="!notifFieldVisible['gotify_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+                    </button>
+                  </div>
                </div>
              </template>
 
@@ -5571,6 +5625,7 @@ const IconDictionary = {
         const backupPasswordVisible = ref(false);
         const webdavPasswordVisible = ref(false);
         const imapPasswordVisible = ref(false);
+        const notifFieldVisible = ref({});
         const mobileMoreExpanded = ref(false);
 
         function toggleMobileMore() {
@@ -7003,6 +7058,7 @@ const IconDictionary = {
               editImap.value.poll_seconds = imap.poll_seconds || 1800;
               editImap.value.daily_time = imap.daily_time || '08:00';
               editImap.value.cron_expr = imap.cron_expr || '0 8 * * *';
+              editImap.value.password = imap.password || '';
               editImap.value.initial_sync_months = (imap.initial_sync_months === 0 || imap.initial_sync_months === 'all') ? 'all' : (imap.initial_sync_months || 3);
               syncRangeMonths.value = (imap.initial_sync_months === 0 || imap.initial_sync_months === 'all') ? 'all' : (imap.initial_sync_months || 3);
             }
@@ -8010,13 +8066,15 @@ const IconDictionary = {
            const setting = data.setting || {};
            const isEnabled = Boolean(setting.enabled) && setting.provider !== 'disabled';
            const currentProvider = isEnabled ? (setting.provider || 'disabled') : 'disabled';
+           const savedConf = setting.provider_config || {};
            notificationForm.value = {
              ...notificationForm.value,
              ...setting,
              enabled: isEnabled,
              provider: currentProvider,
              provider_config: {
-               ...(notificationConfigDefaults[currentProvider] || {})
+               ...(notificationConfigDefaults[currentProvider] || {}),
+               ...savedConf
              }
            };
          } catch (e) {
@@ -8068,6 +8126,8 @@ const IconDictionary = {
             backupPasswordClear.value = false;
             backupForm.value.webdav_url = data.webdav_url || '';
             backupForm.value.webdav_username = data.webdav_username || '';
+            backupForm.value.webdav_password = data.webdav_password || '';
+            backupForm.value.backup_password = data.backup_password || '';
             backupForm.value.schedule_type = data.schedule_type || 'off';
             backupForm.value.cron_expr = data.cron_expr || '0 3 * * *';
             backupForm.value.retention_count = data.retention_count ?? 14;
@@ -10211,7 +10271,7 @@ const IconDictionary = {
             editImap.value.cron_expr = imapStatus.value.cron_expr || '0 8 * * *';
             editImap.value.initial_sync_months = (imapStatus.value.initial_sync_months === 0 || imapStatus.value.initial_sync_months === 'all') ? 'all' : (imapStatus.value.initial_sync_months || 3);
           }
-          editImap.value.password = '';
+          editImap.value.password = imapStatus.value?.password || '';
           showImapModal.value = true;
           testResult.value = null;
         }
@@ -10429,6 +10489,7 @@ const IconDictionary = {
           backupPasswordVisible,
           webdavPasswordVisible,
           imapPasswordVisible,
+          notifFieldVisible,
           mobileMoreExpanded,
           toggleMobileMore,
           selectMobileTab,
