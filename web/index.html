@@ -219,21 +219,37 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
         </button>
         <div v-if="!sidebarCollapsed" class="px-1 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
-          <button
-            @click="checkAppVersion"
-            :disabled="checkingVersion"
-            title="点击检测版本更新"
-            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 transition cursor-pointer shadow-xs disabled:opacity-60"
-          >
-            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            <span>GitHub</span>
-          </button>
+          <div class="relative inline-flex items-center">
+            <button
+              @click="checkAppVersion"
+              :disabled="checkingVersion"
+              title="点击检测版本更新"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 transition cursor-pointer shadow-xs disabled:opacity-60"
+            >
+              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              <span>GitHub</span>
+            </button>
+            <div
+              v-if="versionPrompt"
+              class="absolute bottom-full left-0 mb-1.5 px-2.5 py-1 rounded-lg bg-slate-900 text-white dark:bg-slate-800 dark:border dark:border-slate-700 text-[11px] shadow-lg whitespace-nowrap flex items-center gap-1.5 z-50 pointer-events-none"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>{{ versionPrompt }}</span>
+            </div>
+          </div>
           <span class="font-medium text-slate-400 dark:text-slate-400">{{ cards.length }} 张卡</span>
         </div>
-        <div v-else class="flex justify-center py-1">
+        <div v-else class="relative flex justify-center py-1">
           <button @click="checkAppVersion" :disabled="checkingVersion" title="点击检测版本更新" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
           </button>
+          <div
+            v-if="versionPrompt"
+            class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2.5 py-1 rounded-lg bg-slate-900 text-white dark:bg-slate-800 dark:border dark:border-slate-700 text-[11px] shadow-lg whitespace-nowrap flex items-center gap-1.5 z-50 pointer-events-none"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>{{ versionPrompt }}</span>
+          </div>
         </div>
       </div>
     </aside>
@@ -2752,7 +2768,7 @@
               </div>
               <div class="flex justify-between py-1">
                 <span>数据库</span>
-                <span class="text-slate-900 dark:text-white font-medium">本地 SQLite (WAL)</span>
+                <span class="text-slate-900 dark:text-white font-medium">SQLite</span>
               </div>
             </div>
           </div>
@@ -5543,6 +5559,16 @@ const IconDictionary = {
 
         const checkingVersion = ref(false);
         const appVersion = 'v1.0.0';
+        const versionPrompt = ref(null);
+        let versionPromptTimer = null;
+
+        function showVersionPrompt(msg) {
+          versionPrompt.value = msg;
+          if (versionPromptTimer) clearTimeout(versionPromptTimer);
+          versionPromptTimer = setTimeout(() => {
+            versionPrompt.value = null;
+          }, 3000);
+        }
 
         async function checkAppVersion() {
           if (checkingVersion.value) return;
@@ -5561,15 +5587,15 @@ const IconDictionary = {
               const cleanLatest = latestTag.replace(/^v/, '');
               const cleanCurrent = appVersion.replace(/^v/, '');
               if (cleanLatest && cleanLatest !== cleanCurrent && cleanLatest > cleanCurrent) {
-                showToast('发现新版本 ' + latestTag + '（当前 ' + appVersion + '）', 'info');
+                showVersionPrompt('新版本 ' + latestTag);
               } else {
-                showToast('已是最新版 (' + appVersion + ')', 'info');
+                showVersionPrompt('已是最新版 (' + appVersion + ')');
               }
             } else {
-              showToast('已是最新版 (' + appVersion + ')', 'info');
+              showVersionPrompt('已是最新版 (' + appVersion + ')');
             }
           } catch (e) {
-            showToast('已是最新版 (' + appVersion + ')', 'info');
+            showVersionPrompt('已是最新版 (' + appVersion + ')');
           } finally {
             checkingVersion.value = false;
           }
@@ -10437,6 +10463,8 @@ const IconDictionary = {
           checkAppVersion,
           checkingVersion,
           appVersion,
+          versionPrompt,
+          showVersionPrompt,
           bankServiceSearchQuery,
           filteredBankServices,
           copyPhone,
