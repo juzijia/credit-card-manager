@@ -120,10 +120,14 @@ def update_settings_endpoint(
     )
     backup_password_changed = bool(backup_password_value)
     backup_password_cleared = backup_password_provided and not backup_password_value
-    webdav_password_changed = bool(
-        payload.webdav_password is not None
-        and payload.webdav_password.get_secret_value().strip()
+    webdav_password_provided = payload.webdav_password is not None
+    webdav_password_value = (
+        payload.webdav_password.get_secret_value().strip()
+        if webdav_password_provided
+        else ""
     )
+    webdav_password_changed = bool(webdav_password_value)
+    webdav_password_cleared = webdav_password_provided and not webdav_password_value
     webdav_url = payload.webdav_url.strip() if payload.webdav_url is not None else None
     if webdav_url and _webdav_url_has_credentials(webdav_url):
         raise HTTPException(
@@ -137,6 +141,7 @@ def update_settings_endpoint(
         backup_password_changed
         or backup_password_cleared
         or webdav_password_changed
+        or webdav_password_cleared
         or (webdav_url is not None and webdav_url != (setting.webdav_url or ""))
         or (
             webdav_username is not None
@@ -177,6 +182,8 @@ def update_settings_endpoint(
         set_secret(BACKUP_SECRET_NS, "crypt_password", None)
     if webdav_password_changed:
         set_secret(BACKUP_SECRET_NS, "webdav_password", payload.webdav_password.get_secret_value())
+    elif webdav_password_cleared:
+        set_secret(BACKUP_SECRET_NS, "webdav_password", None)
     session.commit()
     session.refresh(setting)
     return _to_read_dto(setting, request)
