@@ -90,7 +90,7 @@
     </div>
 
     <!-- Sidebar Navigation (Desktop) -->
-    <aside :class="sidebarCollapsed ? 'w-20 p-3' : 'w-64 p-5'" class="hidden md:flex flex-col bg-white/80 dark:bg-[#111625]/90 border-r border-slate-200/80 dark:border-slate-800/80 shrink-0 backdrop-blur-md transition-[width,padding] duration-200">
+    <aside :class="sidebarCollapsed ? 'w-20 p-3' : 'w-52 p-3.5'" class="hidden md:flex flex-col bg-white/80 dark:bg-[#111625]/90 border-r border-slate-200/80 dark:border-slate-800/80 shrink-0 backdrop-blur-md transition-[width,padding] duration-200">
       <!-- App Brand -->
       <div :class="sidebarCollapsed ? 'justify-center px-0' : 'px-2'" class="flex items-center gap-3 mb-8">
         <div class="w-9 h-9 rounded-xl bg-slate-900 text-white dark:bg-slate-800 dark:text-slate-200 dark:border dark:border-slate-700/80 flex items-center justify-center font-bold shadow-sm">
@@ -180,12 +180,11 @@
       <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3">
         <!-- Theme Mode Switcher -->
         <div v-if="!sidebarCollapsed">
-          <label class="block text-[11px] font-medium text-slate-400 mb-1.5 px-1">界面外观</label>
-          <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 dark:bg-slate-800/60 rounded-xl border border-slate-200/60 dark:border-slate-700/50 text-xs text-slate-600 dark:text-slate-400">
+          <div class="grid grid-cols-3 gap-0.5 p-0.5 bg-slate-100 dark:bg-slate-800/70 rounded-xl border border-slate-200/70 dark:border-slate-700/60 text-[11px] text-slate-500 dark:text-slate-400">
             <button
               @click="setTheme('light')"
-              :class="themeMode === 'light' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-900 dark:hover:text-white'"
-              class="py-1 rounded-lg flex items-center justify-center gap-1 transition"
+              :class="themeMode === 'light' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-800 dark:hover:text-slate-200'"
+              class="py-1 rounded-lg flex items-center justify-center gap-1 transition-all"
               title="亮色日间模式"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
@@ -193,8 +192,8 @@
             </button>
             <button
               @click="setTheme('dark')"
-              :class="themeMode === 'dark' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-900 dark:hover:text-white'"
-              class="py-1 rounded-lg flex items-center justify-center gap-1 transition"
+              :class="themeMode === 'dark' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-800 dark:hover:text-slate-200'"
+              class="py-1 rounded-lg flex items-center justify-center gap-1 transition-all"
               title="暗色夜间模式"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -202,8 +201,8 @@
             </button>
             <button
               @click="setTheme('system')"
-              :class="themeMode === 'system' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-900 dark:hover:text-white'"
-              class="py-1 rounded-lg flex items-center justify-center gap-1 transition"
+              :class="themeMode === 'system' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-800 dark:hover:text-slate-200'"
+              class="py-1 rounded-lg flex items-center justify-center gap-1 transition-all"
               title="跟随操作系统外观"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -215,12 +214,12 @@
         <button v-else @click="cycleTheme" title="切换界面外观" aria-label="切换界面外观" class="w-full h-9 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 dark:hover:text-white dark:hover:bg-slate-800 flex items-center justify-center transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
         </button>
-        <div v-if="!sidebarCollapsed" class="px-2 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
-          <span class="flex items-center gap-1.5">
+        <div v-if="!sidebarCollapsed" class="px-1.5 py-1 flex items-center justify-between text-[11px] text-slate-400">
+          <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>本地 SQLite</span>
           </span>
-          <span class="font-mono text-slate-400">{{ cards.length }} 张卡</span>
+          <span class="font-medium text-slate-400">{{ cards.length }} 张卡</span>
         </div>
       </div>
     </aside>
@@ -2730,24 +2729,29 @@
           </div>
 
           <!-- Environment Card -->
-          <div class="bg-white dark:bg-[#111625] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800/80 shadow-xs space-y-3">
-            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">关于系统</h3>
-            <div class="space-y-2 text-xs font-mono text-slate-600 dark:text-slate-400">
-              <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60">
-                <span>版本</span>
-                <span class="text-slate-900 dark:text-white font-medium">v0.1.0</span>
+          <div class="bg-white dark:bg-[#111625] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800/80 shadow-xs space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900 dark:text-white">关于系统</h3>
+                <p class="text-xs text-slate-400 mt-0.5">信用卡管家 (Credit Card Manager)</p>
               </div>
-              <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60">
-                <span>数据库</span>
-                <span class="text-slate-900 dark:text-white font-medium">SQLite</span>
+              <a href="https://github.com/juzijia/credit-card-manager" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200/70 dark:bg-slate-800 dark:hover:bg-slate-700/80 transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                <span>GitHub 仓库</span>
+              </a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80">
+                <div class="text-[11px] text-slate-400">运行版本</div>
+                <div class="mt-1 font-mono font-medium text-slate-900 dark:text-white">v1.0.0</div>
               </div>
-              <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60">
-                <span>时区</span>
-                <span class="text-slate-900 dark:text-white font-medium">Asia/Shanghai</span>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80">
+                <div class="text-[11px] text-slate-400">存储引擎</div>
+                <div class="mt-1 font-medium text-slate-900 dark:text-white">本地 SQLite (WAL)</div>
               </div>
-              <div class="flex justify-between py-1">
-                <span>项目文档</span>
-                <a href="https://github.com/juzijia/credit-card-manager/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">GitHub README &rarr;</a>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80">
+                <div class="text-[11px] text-slate-400">服务时区</div>
+                <div class="mt-1 font-medium text-slate-900 dark:text-white">Asia/Shanghai</div>
               </div>
             </div>
           </div>
@@ -3892,18 +3896,18 @@
       </div>
     </main>
 
-    <!-- Mobile Bottom Navigation Bar -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-[#111625]/95 border-t border-slate-200 dark:border-slate-800 px-2 py-2 flex justify-around z-40 backdrop-blur-md overflow-x-auto">
-      <button
-        v-for="item in mobileNavItems"
-        :key="item.id"
-        @click="setActiveTab(item.id)"
-        :class="[item.isActive ? 'text-slate-900 dark:text-white font-bold' : 'text-slate-400', 'flex flex-col items-center gap-1 p-1 text-[10px] shrink-0 min-w-[50px]']"
-      >
-        <component :is="item.icon" class="w-5 h-5"></component>
-        <span>{{ item.label }}</span>
-      </button>
-    </nav>
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-[#111625]/95 border-t border-slate-200/80 dark:border-slate-800/80 px-2 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] grid grid-cols-5 z-40 backdrop-blur-md">
+        <button
+          v-for="item in mobileNavItems"
+          :key="item.id"
+          @click="setActiveTab(item.id)"
+          :class="[item.isActive ? 'text-slate-900 dark:text-white font-semibold' : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300', 'flex flex-col items-center justify-center gap-1 py-1 rounded-xl transition-all']"
+        >
+          <component :is="item.icon" class="w-5 h-5 shrink-0"></component>
+          <span class="text-[11px] leading-none tracking-tight">{{ item.label }}</span>
+        </button>
+      </nav>
 
     <!-- Backup Restore Confirmation -->
     <div v-if="backupRestoreItem" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50" @click.self="backupRestoreItem = null">
@@ -5466,22 +5470,19 @@ const IconDictionary = {
         }
 
         const mobileNavItems = computed(() => {
-          return navItems.map(item => {
-            if (item.children && item.children.length > 0) {
-              return {
-                id: item.children[0].id,
-                label: item.children[0].label,
-                icon: item.children[0].icon || item.icon,
-                isActive: isMenuGroupActive(item)
-              };
+          // 移动端精简至 5 个核心按键：待还、卡片、账单、分析、设置
+          return [
+            { id: 'dashboard', label: '待还', icon: IconDashboard, isActive: activeTab.value === 'dashboard' },
+            { id: 'cards', label: '卡片', icon: IconCards, isActive: activeTab.value === 'cards' || activeTab.value === 'annual_fee' },
+            { id: 'statements', label: '账单', icon: IconStatements, isActive: activeTab.value === 'statements' },
+            { id: 'analytics', label: '分析', icon: IconAnalytics, isActive: activeTab.value === 'analytics' },
+            {
+              id: 'settings',
+              label: '设置',
+              icon: IconSettings,
+              isActive: activeTab.value === 'settings' || activeTab.value === 'sync' || activeTab.value.startsWith('tools/')
             }
-            return {
-              id: item.id,
-              label: item.label,
-              icon: item.icon,
-              isActive: activeTab.value === item.id
-            };
-          });
+          ];
         });
 
         // Installment Calculator State & Computed
