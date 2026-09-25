@@ -51,6 +51,7 @@ class ImapStatusReadDTO(BaseModel):
     port: int
     username_configured: bool
     username: str | None = None
+    password: str = ""
     mailbox: str
     all_folders: bool
     schedule_type: str
