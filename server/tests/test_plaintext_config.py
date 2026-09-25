@@ -64,7 +64,7 @@ class PlaintextConfigTest(unittest.TestCase):
                     self.assertEqual(client.get("/api/v1/cards", headers={"Authorization": f"Bearer {second}"}).status_code, 200)
                 self.assertNotIn(second, database.read_bytes().decode("latin1"))
                 with closing(sqlite3.connect(database)) as conn:
-                    self.assertEqual(conn.execute("select version_num from alembic_version").fetchone()[0], "0002")
+                    self.assertEqual(conn.execute("select version_num from alembic_version").fetchone()[0], "0001")
                     self.assertNotIn("agent_tokens", {r[0] for r in conn.execute("select name from sqlite_master")})
                 if os.name == "posix":
                     self.assertEqual(secrets_file.parent.stat().st_mode & 0o777, 0o700)
