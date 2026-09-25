@@ -359,7 +359,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
         @app.get("/", include_in_schema=False)
         def index() -> FileResponse:
-            return FileResponse(web_dir / "index.html")
+            return FileResponse(
+                web_dir / "index.html",
+                headers={
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                },
+            )
 
         @app.get("/favicon.ico", include_in_schema=False)
         def favicon() -> FileResponse:

@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>信用卡管家 · Credit Card Manager</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230f172a'/%3E%3Cg transform='translate(4, 4)' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="alternate icon" href="/static/favicon.svg">
@@ -90,7 +93,7 @@
     </div>
 
     <!-- Sidebar Navigation (Desktop) -->
-    <aside :class="sidebarCollapsed ? 'w-20 p-3' : 'w-52 p-3.5'" class="hidden md:flex flex-col bg-white/80 dark:bg-[#111625]/90 border-r border-slate-200/80 dark:border-slate-800/80 shrink-0 backdrop-blur-md transition-[width,padding] duration-200">
+    <aside :class="sidebarCollapsed ? 'w-20 p-3' : 'w-64 p-5'" class="hidden md:flex flex-col bg-white/80 dark:bg-[#111625]/90 border-r border-slate-200/80 dark:border-slate-800/80 shrink-0 backdrop-blur-md transition-[width,padding] duration-200">
       <!-- App Brand -->
       <div :class="sidebarCollapsed ? 'justify-center px-0' : 'px-2'" class="flex items-center gap-3 mb-8">
         <div class="w-9 h-9 rounded-xl bg-slate-900 text-white dark:bg-slate-800 dark:text-slate-200 dark:border dark:border-slate-700/80 flex items-center justify-center font-bold shadow-sm">
@@ -180,11 +183,12 @@
       <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3">
         <!-- Theme Mode Switcher -->
         <div v-if="!sidebarCollapsed">
-          <div class="grid grid-cols-3 gap-0.5 p-0.5 bg-slate-100 dark:bg-slate-800/70 rounded-xl border border-slate-200/70 dark:border-slate-700/60 text-[11px] text-slate-500 dark:text-slate-400">
+          <label class="block text-[11px] font-medium text-slate-400 mb-1.5 px-1">界面外观</label>
+          <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 dark:bg-slate-800/60 rounded-xl border border-slate-200/60 dark:border-slate-700/50 text-xs text-slate-600 dark:text-slate-400">
             <button
               @click="setTheme('light')"
-              :class="themeMode === 'light' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-800 dark:hover:text-slate-200'"
-              class="py-1 rounded-lg flex items-center justify-center gap-1 transition-all"
+              :class="themeMode === 'light' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-900 dark:hover:text-white'"
+              class="py-1 rounded-lg flex items-center justify-center gap-1 transition"
               title="亮色日间模式"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
@@ -192,8 +196,8 @@
             </button>
             <button
               @click="setTheme('dark')"
-              :class="themeMode === 'dark' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-800 dark:hover:text-slate-200'"
-              class="py-1 rounded-lg flex items-center justify-center gap-1 transition-all"
+              :class="themeMode === 'dark' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-900 dark:hover:text-white'"
+              class="py-1 rounded-lg flex items-center justify-center gap-1 transition"
               title="暗色夜间模式"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -201,12 +205,12 @@
             </button>
             <button
               @click="setTheme('system')"
-              :class="themeMode === 'system' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-800 dark:hover:text-slate-200'"
-              class="py-1 rounded-lg flex items-center justify-center gap-1 transition-all"
+              :class="themeMode === 'system' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium' : 'hover:text-slate-900 dark:hover:text-white'"
+              class="py-1 rounded-lg flex items-center justify-center gap-1 transition"
               title="跟随操作系统外观"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              <span>跟随</span>
+              <span>自动</span>
             </button>
           </div>
         </div>
@@ -214,12 +218,22 @@
         <button v-else @click="cycleTheme" title="切换界面外观" aria-label="切换界面外观" class="w-full h-9 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 dark:hover:text-white dark:hover:bg-slate-800 flex items-center justify-center transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
         </button>
-        <div v-if="!sidebarCollapsed" class="px-1.5 py-1 flex items-center justify-between text-[11px] text-slate-400">
-          <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>本地 SQLite</span>
-          </span>
-          <span class="font-medium text-slate-400">{{ cards.length }} 张卡</span>
+        <div v-if="!sidebarCollapsed" class="px-1 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
+          <button
+            @click="checkAppVersion"
+            :disabled="checkingVersion"
+            title="点击检测版本更新"
+            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 transition cursor-pointer shadow-xs disabled:opacity-60"
+          >
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span>GitHub</span>
+          </button>
+          <span class="font-medium text-slate-400 dark:text-slate-400">{{ cards.length }} 张卡</span>
+        </div>
+        <div v-else class="flex justify-center py-1">
+          <button @click="checkAppVersion" :disabled="checkingVersion" title="点击检测版本更新" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </button>
         </div>
       </div>
     </aside>
@@ -2740,7 +2754,7 @@
                 <span>GitHub 仓库</span>
               </a>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-xs">
               <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80">
                 <div class="text-[11px] text-slate-400">运行版本</div>
                 <div class="mt-1 font-mono font-medium text-slate-900 dark:text-white">v1.0.0</div>
@@ -2748,10 +2762,6 @@
               <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80">
                 <div class="text-[11px] text-slate-400">存储引擎</div>
                 <div class="mt-1 font-medium text-slate-900 dark:text-white">本地 SQLite (WAL)</div>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80">
-                <div class="text-[11px] text-slate-400">服务时区</div>
-                <div class="mt-1 font-medium text-slate-900 dark:text-white">Asia/Shanghai</div>
               </div>
             </div>
           </div>
@@ -3896,18 +3906,86 @@
       </div>
     </main>
 
-      <!-- Mobile Bottom Navigation Bar -->
-      <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-[#111625]/95 border-t border-slate-200/80 dark:border-slate-800/80 px-2 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] grid grid-cols-5 z-40 backdrop-blur-md">
+      <!-- Mobile Bottom Navigation Bar (6 Keys: 待还 / 卡片 / 账单 / 分析 / 设置 / 更多) -->
+      <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-[#111625]/95 border-t border-slate-200/80 dark:border-slate-800/80 px-1 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] grid grid-cols-6 z-40 backdrop-blur-md">
         <button
           v-for="item in mobileNavItems"
           :key="item.id"
-          @click="setActiveTab(item.id)"
+          @click="item.isMore ? toggleMobileMore() : selectMobileTab(item.id)"
           :class="[item.isActive ? 'text-slate-900 dark:text-white font-semibold' : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300', 'flex flex-col items-center justify-center gap-1 py-1 rounded-xl transition-all']"
         >
           <component :is="item.icon" class="w-5 h-5 shrink-0"></component>
           <span class="text-[11px] leading-none tracking-tight">{{ item.label }}</span>
         </button>
       </nav>
+
+      <!-- Mobile More Drawer Backdrop -->
+      <div
+        v-if="mobileMoreExpanded"
+        class="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-xs transition-opacity"
+        @click="mobileMoreExpanded = false"
+      ></div>
+
+      <!-- Mobile More Drawer Panel (Folded secondary entries: 年费管理, 同步推送, 分期/房贷计算器, 信用卡字典, 银行服务) -->
+      <div
+        v-if="mobileMoreExpanded"
+        class="md:hidden fixed bottom-[calc(3.75rem+max(0.5rem,env(safe-area-inset-bottom)))] left-3 right-3 z-50 bg-white/95 dark:bg-[#151b2d]/95 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-2xl p-3.5 backdrop-blur-md space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-150"
+      >
+        <div class="flex items-center justify-between px-1 pb-1.5 border-b border-slate-100 dark:border-slate-800/60">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">全部功能与工具</span>
+          <button @click="mobileMoreExpanded = false" class="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 px-1 py-0.5">收起</button>
+        </div>
+        <div class="grid grid-cols-3 gap-2 pt-1 text-xs">
+          <button
+            @click="selectMobileTab('annual_fee')"
+            :class="activeTab === 'annual_fee' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 font-semibold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
+            class="p-2.5 rounded-xl flex flex-col items-center gap-1.5 transition text-center"
+          >
+            <component :is="IconAnnualFee" class="w-5 h-5 text-amber-500" />
+            <span class="text-[11px]">年费管理</span>
+          </button>
+          <button
+            @click="selectMobileTab('sync')"
+            :class="activeTab === 'sync' ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-semibold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
+            class="p-2.5 rounded-xl flex flex-col items-center gap-1.5 transition text-center"
+          >
+            <component :is="IconSync" class="w-5 h-5 text-indigo-500" />
+            <span class="text-[11px]">同步推送</span>
+          </button>
+          <button
+            @click="selectMobileTab('tools/installment-calculator')"
+            :class="activeTab === 'tools/installment-calculator' ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 font-semibold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
+            class="p-2.5 rounded-xl flex flex-col items-center gap-1.5 transition text-center"
+          >
+            <component :is="IconCalculator" class="w-5 h-5 text-blue-500" />
+            <span class="text-[11px]">分期计算</span>
+          </button>
+          <button
+            @click="selectMobileTab('tools/mortgage-calculator')"
+            :class="activeTab === 'tools/mortgage-calculator' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-semibold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
+            class="p-2.5 rounded-xl flex flex-col items-center gap-1.5 transition text-center"
+          >
+            <component :is="IconCalculator" class="w-5 h-5 text-emerald-500" />
+            <span class="text-[11px]">房贷计算</span>
+          </button>
+          <button
+            @click="selectMobileTab('tools/card-dictionary')"
+            :class="activeTab === 'tools/card-dictionary' ? 'bg-purple-50 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 font-semibold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
+            class="p-2.5 rounded-xl flex flex-col items-center gap-1.5 transition text-center"
+          >
+            <component :is="IconDictionary" class="w-5 h-5 text-purple-500" />
+            <span class="text-[11px]">信用卡字典</span>
+          </button>
+          <button
+            @click="selectMobileTab('tools/bank-services')"
+            :class="activeTab === 'tools/bank-services' ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 font-semibold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
+            class="p-2.5 rounded-xl flex flex-col items-center gap-1.5 transition text-center"
+          >
+            <component :is="IconPhone" class="w-5 h-5 text-cyan-500" />
+            <span class="text-[11px]">银行服务</span>
+          </button>
+        </div>
+      </div>
 
     <!-- Backup Restore Confirmation -->
     <div v-if="backupRestoreItem" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50" @click.self="backupRestoreItem = null">
@@ -5345,6 +5423,9 @@
 const IconDictionary = {
       template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>'
     };
+    const IconMore = {
+      template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>'
+    };
     createApp({
       setup() {
         const themeMode = ref(localStorage.getItem('ccm_theme_mode') || 'system');
@@ -5469,18 +5550,73 @@ const IconDictionary = {
           return activeTab.value === item.id;
         }
 
+        const checkingVersion = ref(false);
+        const appVersion = 'v1.0.0';
+
+        async function checkAppVersion() {
+          if (checkingVersion.value) return;
+          checkingVersion.value = true;
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+            const res = await fetch('https://api.github.com/repos/juzijia/credit-card-manager/releases/latest', {
+              headers: { 'Accept': 'application/vnd.github.v3+json' },
+              signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            if (res.ok) {
+              const data = await res.json();
+              const latestTag = (data.tag_name || '').trim();
+              const cleanLatest = latestTag.replace(/^v/, '');
+              const cleanCurrent = appVersion.replace(/^v/, '');
+              if (cleanLatest && cleanLatest !== cleanCurrent && cleanLatest > cleanCurrent) {
+                showToast('发现新版本 ' + latestTag + '（当前 ' + appVersion + '）', 'info');
+              } else {
+                showToast('已是最新版 (' + appVersion + ')', 'info');
+              }
+            } else {
+              showToast('已是最新版 (' + appVersion + ')', 'info');
+            }
+          } catch (e) {
+            showToast('已是最新版 (' + appVersion + ')', 'info');
+          } finally {
+            checkingVersion.value = false;
+          }
+        }
+
+        const mobileMoreExpanded = ref(false);
+
+        function toggleMobileMore() {
+          mobileMoreExpanded.value = !mobileMoreExpanded.value;
+        }
+
+        function selectMobileTab(tabId) {
+          mobileMoreExpanded.value = false;
+          setActiveTab(tabId);
+        }
+
+        const isMoreActive = computed(() => {
+          return (
+            activeTab.value === 'annual_fee' ||
+            activeTab.value === 'sync' ||
+            activeTab.value.startsWith('tools/')
+          );
+        });
+
         const mobileNavItems = computed(() => {
-          // 移动端精简至 5 个核心按键：待还、卡片、账单、分析、设置
+          // 移动端 6 键：待还、卡片、账单、分析、设置、更多（折叠其余入口）
           return [
             { id: 'dashboard', label: '待还', icon: IconDashboard, isActive: activeTab.value === 'dashboard' },
-            { id: 'cards', label: '卡片', icon: IconCards, isActive: activeTab.value === 'cards' || activeTab.value === 'annual_fee' },
+            { id: 'cards', label: '卡片', icon: IconCards, isActive: activeTab.value === 'cards' },
             { id: 'statements', label: '账单', icon: IconStatements, isActive: activeTab.value === 'statements' },
             { id: 'analytics', label: '分析', icon: IconAnalytics, isActive: activeTab.value === 'analytics' },
+            { id: 'settings', label: '设置', icon: IconSettings, isActive: activeTab.value === 'settings' },
             {
-              id: 'settings',
-              label: '设置',
-              icon: IconSettings,
-              isActive: activeTab.value === 'settings' || activeTab.value === 'sync' || activeTab.value.startsWith('tools/')
+              id: 'more',
+              label: '更多',
+              icon: IconMore,
+              isMore: true,
+              isActive: isMoreActive.value
             }
           ];
         });
@@ -10298,6 +10434,18 @@ const IconDictionary = {
           catalogProducts,
           catalogBanks,
           IconPhone,
+          IconMore,
+          IconAnnualFee,
+          IconSync,
+          IconCalculator,
+          IconDictionary,
+          mobileMoreExpanded,
+          toggleMobileMore,
+          selectMobileTab,
+          isMoreActive,
+          checkAppVersion,
+          checkingVersion,
+          appVersion,
           bankServiceSearchQuery,
           filteredBankServices,
           copyPhone,
