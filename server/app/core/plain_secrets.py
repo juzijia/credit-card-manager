@@ -18,6 +18,8 @@ def _secrets_file() -> Path:
     configured = os.environ.get("CCM_SECRETS_FILE")
     if configured:
         return Path(configured)
+    if Path("/data").is_dir():
+        return Path("/data/config/secrets.json")
     return Path(__file__).resolve().parents[2] / "data" / "config" / "secrets.json"
 
 
