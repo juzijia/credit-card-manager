@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict, Field, SecretStr
 
 
 class ImapSecretDTO(BaseModel):
-    """Write-only IMAP credential fields."""
+    """IMAP credential fields."""
 
     password: SecretStr | None = None
 
@@ -24,7 +24,7 @@ class ImapConfigWriteDTO(ImapSecretDTO):
     poll_seconds: int = 1800
     daily_time: str = "08:00"
     cron_expr: str = "0 8 * * *"
-    initial_sync_months: int = Field(default=12, ge=1, le=24)
+    initial_sync_months: int = Field(default=12, ge=0, le=24)
 
 
 class ImapConfigUpdateDTO(ImapSecretDTO):
@@ -41,7 +41,7 @@ class ImapConfigUpdateDTO(ImapSecretDTO):
     poll_seconds: int | None = Field(default=None, ge=60)
     daily_time: str | None = None
     cron_expr: str | None = None
-    initial_sync_months: int | None = Field(default=None, ge=1, le=24)
+    initial_sync_months: int | None = Field(default=None, ge=0, le=24)
 
 
 class ImapStatusReadDTO(BaseModel):

@@ -45,11 +45,6 @@ def create_or_update_default_email_account(
 ) -> EmailAccount:
     account = get_default_email_account(session)
     username = payload.username.strip() if payload.username and payload.username.strip() else (account.username if account else "")
-    password = (
-        payload.password.get_secret_value()
-        if payload.password and payload.password.get_secret_value()
-        else None
-    )
     if account is None:
         account = EmailAccount(
             name=DEFAULT_ACCOUNT_NAME,
@@ -81,8 +76,8 @@ def create_or_update_default_email_account(
         account.cron_expr = payload.cron_expr.strip()
         account.initial_sync_months = payload.initial_sync_months
 
-    if password:
-        set_secret("imap", account.id, password)
+    if payload.password is not None:
+        set_secret("imap", account.id, payload.password.get_secret_value() or None)
 
     session.commit()
     session.refresh(account)
