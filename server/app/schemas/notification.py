@@ -5,7 +5,7 @@ from pydantic import BaseModel, RootModel, field_validator
 
 
 class NotificationSecretDTO(RootModel[dict[str, Any]]):
-    """Write-only provider configuration; values must never enter read DTOs."""
+    """Provider configuration dictionary."""
 
     def reveal(self) -> dict[str, Any]:
         return dict(self.root)
@@ -47,6 +47,7 @@ class NotificationSettingReadDTO(BaseModel):
     offset_days: list[int]
     push_time: str
     provider: str
+    saved_provider: str = "disabled"
     configured: bool
     chat_id_configured: bool
     only_if_unpaid: bool

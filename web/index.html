@@ -79,16 +79,7 @@
         </div>
 
         <div class="space-y-4">
-          <div>
-            <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">Owner Token</label>
-            <div class="relative">
-              <input v-model.trim="loginToken" :type="loginTokenVisible ? 'text' : 'password'" @keyup.enter="doLogin" placeholder="请输入服务器生成的 Owner Token" autocomplete="off" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-slate-400">
-              <button type="button" @click="loginTokenVisible = !loginTokenVisible" :title="loginTokenVisible ? '隐藏 Token' : '显示 Token'" class="absolute inset-y-0 right-1 px-2.5 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                <svg v-if="!loginTokenVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-              </button>
-            </div>
-          </div>
+          <secret-field v-model="loginToken" label="Owner Token" placeholder="请输入服务器生成的 Owner Token" :show-status="false" login @enter="doLogin"></secret-field>
           <div v-if="loginError" class="text-xs text-rose-500 font-medium">{{ loginError }}</div>
           <button @click="doLogin" :disabled="loginLoading" class="w-full py-2.5 bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-medium rounded-xl text-sm hover:opacity-90 active:scale-[0.99] transition disabled:opacity-50 flex items-center justify-center gap-2">
             <span v-if="loginLoading" class="inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full animate-spin"></span>
@@ -2460,20 +2451,7 @@
 
            <div class="grid sm:grid-cols-2 gap-3">
             <template v-if="notificationForm.provider === 'telegram'">
-              <div>
-                 <div class="flex items-center justify-between mb-1">
-                   <label class="block text-xs text-slate-600 dark:text-slate-300">Bot Token</label>
-                    <span v-if="notificationForm.provider_config.bot_token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.bot_token" :type="notifFieldVisible['bot_token'] ? 'text' : 'password'" autocomplete="off" placeholder="Bot Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['bot_token'] = !notifFieldVisible['bot_token']" :title="notifFieldVisible['bot_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['bot_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+              <secret-field :key="notificationForm.provider + '.bot_token'" v-model="notificationForm.provider_config.bot_token" :configured="notificationConfiguredFields.includes('bot_token')" label="Bot Token" placeholder="bot_token" ></secret-field>
                <div>
                  <div class="flex items-center justify-between mb-1">
                    <label class="block text-xs text-slate-600 dark:text-slate-300">Chat ID</label>
@@ -2493,20 +2471,7 @@
              </template>
 
             <template v-else-if="notificationForm.provider === 'bark'">
-              <div>
-                 <div class="flex items-center justify-between mb-1">
-                   <label class="block text-xs text-slate-600 dark:text-slate-300">Bark Key</label>
-                    <span v-if="notificationForm.provider_config.key || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.key" :type="notifFieldVisible['bark_key'] ? 'text' : 'password'" autocomplete="off" placeholder="Bark Key" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['bark_key'] = !notifFieldVisible['bark_key']" :title="notifFieldVisible['bark_key'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['bark_key']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+              <secret-field :key="notificationForm.provider + '.key'" v-model="notificationForm.provider_config.key" :configured="notificationConfiguredFields.includes('key')" label="Bark Key" placeholder="key" ></secret-field>
                <div>
                  <label class="block text-xs text-slate-600 dark:text-slate-300 mb-1">服务地址（可选）</label>
                  <input v-model.trim="notificationForm.provider_config.server" placeholder="https://api.day.app" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
@@ -2514,68 +2479,16 @@
              </template>
 
             <template v-else-if="notificationForm.provider === 'pushplus'">
-              <div class="sm:col-span-2">
-                 <div class="flex items-center justify-between mb-1">
-                   <label class="block text-xs text-slate-600 dark:text-slate-300">PushPlus Token</label>
-                    <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['pushplus_token'] ? 'text' : 'password'" autocomplete="off" placeholder="PushPlus Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['pushplus_token'] = !notifFieldVisible['pushplus_token']" :title="notifFieldVisible['pushplus_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['pushplus_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+              <secret-field class="sm:col-span-2" :key="notificationForm.provider + '.token'" v-model="notificationForm.provider_config.token" :configured="notificationConfiguredFields.includes('token')" label="PushPlus Token" placeholder="token" ></secret-field>
              </template>
 
             <template v-else-if="notificationForm.provider === 'qywx' || notificationForm.provider === 'feishu' || notificationForm.provider === 'serverchan' || notificationForm.provider === 'pushdeer'">
-              <div class="sm:col-span-2">
-                 <div class="flex items-center justify-between mb-1">
-                   <label class="block text-xs text-slate-600 dark:text-slate-300">{{ notificationForm.provider === 'feishu' ? 'Webhook URL / Key' : 'API Key / Token' }}</label>
-                    <span v-if="notificationForm.provider_config.key || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.key" :type="notifFieldVisible['feishu_key'] ? 'text' : 'password'" autocomplete="off" placeholder="Key或Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['feishu_key'] = !notifFieldVisible['feishu_key']" :title="notifFieldVisible['feishu_key'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['feishu_key']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+              <secret-field class="sm:col-span-2" :key="notificationForm.provider + '.key'" v-model="notificationForm.provider_config.key" :configured="notificationConfiguredFields.includes('key')" :label="notificationForm.provider === 'feishu' ? 'Webhook URL / Key' : 'API Key / Token'" placeholder="key" ></secret-field>
              </template>
 
             <template v-else-if="notificationForm.provider === 'dingtalk'">
-              <div>
-                 <div class="flex items-center justify-between mb-1">
-                   <label class="block text-xs text-slate-600 dark:text-slate-300">Access Token</label>
-                    <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['ding_token'] ? 'text' : 'password'" autocomplete="off" placeholder="Access Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['ding_token'] = !notifFieldVisible['ding_token']" :title="notifFieldVisible['ding_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['ding_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
-               <div>
-                  <div class="flex items-center justify-between mb-1">
-                    <label class="block text-xs text-slate-600 dark:text-slate-300">加签 Secret（可选）</label>
-                    <span v-if="notificationForm.provider_config.secret || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.secret" :type="notifFieldVisible['ding_secret'] ? 'text' : 'password'" autocomplete="off" placeholder="加签 Secret" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['ding_secret'] = !notifFieldVisible['ding_secret']" :title="notifFieldVisible['ding_secret'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['ding_secret']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+              <secret-field :key="notificationForm.provider + '.token'" v-model="notificationForm.provider_config.token" :configured="notificationConfiguredFields.includes('token')" label="Access Token" placeholder="token" ></secret-field>
+               <secret-field :key="notificationForm.provider + '.secret'" v-model="notificationForm.provider_config.secret" :configured="notificationConfiguredFields.includes('secret')" label="加签 Secret（可选）" placeholder="secret" ></secret-field>
              </template>
 
              <template v-else-if="notificationForm.provider === 'ntfy'">
@@ -2587,37 +2500,11 @@
                  <label class="block text-xs text-slate-600 dark:text-slate-300 mb-1">Server（可选）</label>
                  <input v-model.trim="notificationForm.provider_config.server" placeholder="https://ntfy.sh" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
                </div>
-               <div class="sm:col-span-2">
-                  <div class="flex items-center justify-between mb-1">
-                    <label class="block text-xs text-slate-600 dark:text-slate-300">Access Token（可选）</label>
-                    <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[11px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已配置</span>
-                    <span v-else class="text-[11px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['ntfy_token'] ? 'text' : 'password'" autocomplete="off" placeholder="Access Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['ntfy_token'] = !notifFieldVisible['ntfy_token']" :title="notifFieldVisible['ntfy_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['ntfy_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+               <secret-field class="sm:col-span-2" :key="notificationForm.provider + '.token'" v-model="notificationForm.provider_config.token" :configured="notificationConfiguredFields.includes('token')" label="Access Token（可选）" placeholder="token" ></secret-field>
              </template>
 
              <template v-else-if="notificationForm.provider === 'qywx_am'">
-               <div class="sm:col-span-2">
-                  <div class="flex items-center justify-between mb-1">
-                    <label class="block text-xs text-slate-600 dark:text-slate-300">企业微信应用参数</label>
-                    <span v-if="notificationForm.provider_config.am || notificationConfigured" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">已配置</span>
-                    <span v-else class="text-[10px] text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-1.5 py-0.5 rounded">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.am" :type="notifFieldVisible['qywx_am'] ? 'text' : 'password'" autocomplete="off" placeholder="应用参数(corpid,corpsecret,...)" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['qywx_am'] = !notifFieldVisible['qywx_am']" :title="notifFieldVisible['qywx_am'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['qywx_am']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+              <secret-field class="sm:col-span-2" :key="notificationForm.provider + '.am'" v-model="notificationForm.provider_config.am" :configured="notificationConfiguredFields.includes('am')" label="企业微信应用参数" placeholder="应用参数(corpid,corpsecret,...)" ></secret-field>
              </template>
 
              <template v-else-if="notificationForm.provider === 'gotify'">
@@ -2625,20 +2512,7 @@
                  <label class="block text-xs text-slate-600 dark:text-slate-300 mb-1">Gotify URL</label>
                  <input v-model.trim="notificationForm.provider_config.url" placeholder="https://gotify.example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
                </div>
-               <div>
-                  <div class="flex items-center justify-between mb-1">
-                    <label class="block text-xs text-slate-600 dark:text-slate-300">App Token</label>
-                    <span v-if="notificationForm.provider_config.token || notificationConfigured" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">已配置</span>
-                    <span v-else class="text-[10px] text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-1.5 py-0.5 rounded">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input v-model.trim="notificationForm.provider_config.token" :type="notifFieldVisible['gotify_token'] ? 'text' : 'password'" autocomplete="off" placeholder="App Token" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                    <button type="button" @click="notifFieldVisible['gotify_token'] = !notifFieldVisible['gotify_token']" :title="notifFieldVisible['gotify_token'] ? '隐藏' : '显示'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!notifFieldVisible['gotify_token']" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
-               </div>
+               <secret-field :key="notificationForm.provider + '.token'" v-model="notificationForm.provider_config.token" :configured="notificationConfiguredFields.includes('token')" label="App Token" placeholder="token" ></secret-field>
              </template>
 
 
@@ -2673,27 +2547,12 @@
 
           <!-- Agent Token card -->
           <div class="bg-white dark:bg-[#111625] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800/80 shadow-xs space-y-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Agent Token</h3>
-              <span :class="agentTokenStatusClass" class="text-[11px] font-medium">{{ agentTokenStatus }}</span>
-            </div>
-            <div>
-              <div class="relative">
-                <input id="agent-token" aria-label="Agent Token" v-model="agentToken" @input="markAgentTokenEdited" :type="agentTokenVisible ? 'text' : 'password'" autocomplete="off" spellcheck="false" :placeholder="agentTokenEnabled && !agentTokenDirty ? '已配置 · 生成新 Token 可替换' : '输入或生成 Agent Token'" class="w-full px-3 py-2 pr-28 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                <div class="absolute inset-y-0 right-1 flex items-center">
-                  <button data-agent-action="visibility" type="button" @click="toggleAgentTokenVisibility" :disabled="!agentTokenReadable || agentTokenRevealing" :title="agentTokenVisible ? '隐藏 Token' : '显示 Token'" :aria-label="agentTokenVisible ? '隐藏 Token' : '显示 Token'" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
-                    <svg v-if="!agentTokenVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                    <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                  </button>
-                  <button data-agent-action="copy" type="button" @click="copyAgentToken" :disabled="!agentTokenReadable || agentTokenRevealing" title="复制 Token" aria-label="复制 Token" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V5a2 2 0 012-2h7a2 2 0 012 2v7a2 2 0 01-2 2h-2M7 9h7a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7a2 2 0 012-2z"/></svg>
-                  </button>
-                  <button data-agent-action="generate" type="button" @click="generateAgentToken" :disabled="agentTokenGenerating || agentTokenSaving" title="生成随机 Token" aria-label="生成随机 Token" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 11a8.1 8.1 0 00-15.5-3M4 4v4h4M4 13a8.1 8.1 0 0015.5 3M20 20v-4h-4"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <secret-field input-id="agent-token" v-model="agentToken" :configured="agentTokenEnabled" :reveal="agentTokenDirty ? null : revealAgentToken" label="Agent Token" placeholder="输入或生成 Agent Token" @changed="markAgentTokenEdited">
+              <template #actions>
+                <button data-agent-action="copy" type="button" @click="copyAgentToken" :disabled="!agentTokenReadable || agentTokenRevealing" title="复制 Token" aria-label="复制 Token" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V5a2 2 0 012-2h7a2 2 0 012 2v7a2 2 0 01-2 2h-2M7 9h7a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7a2 2 0 012-2z"/></svg></button>
+                <button data-agent-action="generate" type="button" @click="generateAgentToken" :disabled="agentTokenGenerating || agentTokenSaving" title="生成随机 Token" aria-label="生成随机 Token" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 11a8.1 8.1 0 00-15.5-3M4 4v4h4M4 13a8.1 8.1 0 0015.5 3M20 20v-4h-4"/></svg></button>
+              </template>
+            </secret-field>
             <div class="flex justify-end">
               <button type="button" @click="saveAgentToken" :disabled="agentTokenSaving || agentTokenGenerating || (!agentTokenEnabled && !agentTokenDirty)" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 dark:border dark:border-slate-700 text-xs font-medium rounded-xl transition disabled:opacity-50">{{ agentTokenSaving ? '保存中…' : '保存设置' }}</button>
             </div>
@@ -2729,20 +2588,8 @@
 
             <template v-if="backupForm.schedule_type !== 'off'">
             <div>
-              <div class="flex items-center justify-between mb-1.5">
-                <label class="block text-xs text-slate-600 dark:text-slate-300">备份加密密码（选填）</label>
-                <span :class="backupForm.backup_password ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'" class="text-[11px] font-medium">{{ backupForm.backup_password ? '已设置' : '未设置' }}</span>
-              </div>
-              <div class="relative">
-                <input v-model="backupForm.backup_password" @input="backupConnectionVerified = false" :type="backupPasswordVisible ? 'text' : 'password'" autocomplete="off" placeholder="留空则不加密直接上传" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                <button type="button" @click="backupPasswordVisible = !backupPasswordVisible" :title="backupPasswordVisible ? '隐藏密码' : '显示密码'" :aria-label="backupPasswordVisible ? '隐藏密码' : '显示密码'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                  <svg v-if="!backupPasswordVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                  <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                </button>
-              </div>
-              <div v-if="backupForm.backup_password" class="mt-1.5">
-                <p class="text-[11px] text-amber-600 dark:text-amber-400">请妥善保管：丢失或忘记此密码后，已有备份将无法恢复。</p>
-              </div>
+              <secret-field v-model="backupForm.backup_password" :configured="backupConfigured.includes('backup_password')" label="备份加密密码（选填）" placeholder="留空则不加密直接上传" @changed="backupConnectionVerified = false"></secret-field>
+              <p class="mt-1.5 text-[11px] text-amber-600 dark:text-amber-400">清空并保存会停止后续备份加密；已有加密备份仍需原密码才能恢复。</p>
               <p class="mt-1 text-[11px] text-slate-400">加密与未加密备份存放于不同的远端目录，切换模式不影响已有备份；列表与恢复仅针对当前模式。</p>
             </div>
 
@@ -2757,17 +2604,7 @@
                 <input v-model.trim="backupForm.webdav_username" @input="backupConnectionVerified = false" placeholder="可选" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
               </div>
               <div>
-                <div class="flex items-center justify-between mb-1.5">
-                  <label class="block text-xs text-slate-600 dark:text-slate-300">密码</label>
-                  <span class="text-[11px] font-medium" :class="backupForm.webdav_password ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'">{{ backupForm.webdav_password ? '已设置' : '未设置' }}</span>
-                </div>
-                <div class="relative">
-                  <input v-model="backupForm.webdav_password" @input="backupConnectionVerified = false" :type="webdavPasswordVisible ? 'text' : 'password'" autocomplete="off" placeholder="可选" class="w-full px-3 py-2 pr-10 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none">
-                  <button type="button" @click="webdavPasswordVisible = !webdavPasswordVisible" :title="webdavPasswordVisible ? '隐藏密码' : '显示密码'" :aria-label="webdavPasswordVisible ? '隐藏密码' : '显示密码'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                    <svg v-if="!webdavPasswordVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                    <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                  </button>
-                </div>
+                <secret-field v-model="backupForm.webdav_password" :configured="backupConfigured.includes('webdav_password')" label="WebDAV 密码" placeholder="可选" @changed="backupConnectionVerified = false"></secret-field>
               </div>
             </div>
 
@@ -4097,24 +3934,7 @@
 
                 <!-- 专属授权码 / 密码 -->
                 <div>
-                  <div class="flex items-center justify-between mb-1">
-                    <label class="block text-slate-700 dark:text-slate-200 font-medium">专属授权码 / 密码</label>
-                    <span v-if="imapStatus?.configured" class="text-[10px] leading-tight inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">已安全配置</span>
-                    <span v-else class="text-[10px] leading-tight inline-flex items-center text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 rounded-md">未配置</span>
-                  </div>
-                  <div class="relative">
-                    <input
-                      v-model="editImap.password"
-                      :type="imapPasswordVisible ? 'text' : 'password'"
-                      autocomplete="new-password"
-                      class="w-full px-3 py-2 pr-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-xs focus:outline-none focus:border-blue-500 shadow-2xs"
-                      :placeholder="imapStatus?.configured ? '已安全配置 · 留空则保持原密码不变' : '请输入邮箱 IMAP 专属授权码'"
-                    >
-                    <button type="button" @click="imapPasswordVisible = !imapPasswordVisible" :title="imapPasswordVisible ? '隐藏密码' : '显示密码'" :aria-label="imapPasswordVisible ? '隐藏密码' : '显示密码'" class="absolute inset-y-0 right-1 px-2 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition">
-                      <svg v-if="!imapPasswordVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
-                      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
-                    </button>
-                  </div>
+                  <secret-field v-model="editImap.password" :configured="imapConfigured.includes('password')" label="专属授权码 / 密码" placeholder="请输入邮箱 IMAP 专属授权码"></secret-field>
                 </div>
 
                 <!-- IMAP 服务器与端口 -->
@@ -5434,6 +5254,65 @@
   <script>
     const { createApp, ref, computed, nextTick, onMounted, onBeforeUnmount, watch } = Vue;
 
+    const SecretField = {
+      props: { modelValue: String, label: String, configured: Boolean, placeholder: String, login: Boolean,
+        inputId: String, reveal: Function, showStatus: { type: Boolean, default: true } },
+      emits: ['update:modelValue', 'changed', 'enter'],
+      setup(props) {
+        const visible = ref(false);
+        const revealing = ref(false);
+        async function toggle() {
+          if (visible.value) { visible.value = false; return; }
+          if (props.reveal && !props.modelValue) {
+            revealing.value = true;
+            try { if (!(await props.reveal())) return; }
+            finally { revealing.value = false; }
+          }
+          visible.value = true;
+        }
+        return { visible, revealing, toggle };
+      },
+      template: `
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs text-slate-600 dark:text-slate-300">{{ label }}</label>
+            <span v-if="showStatus" class="text-[11px] font-medium" :class="configured ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'">{{ configured ? '已设置' : '未设置' }}</span>
+          </div>
+          <div class="relative">
+            <input :id="inputId" :value="modelValue" @input="$emit('update:modelValue', $event.target.value); $emit('changed')" @keyup.enter="$emit('enter')" :type="visible ? 'text' : 'password'" autocomplete="off" spellcheck="false" :placeholder="placeholder" :aria-label="label" class="w-full px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-mono focus:outline-none" :class="[login ? 'py-2.5 text-sm' : 'py-2 text-xs', $slots.actions ? 'pr-28' : 'pr-10']">
+            <div class="absolute inset-y-0 right-1 flex items-center">
+              <button :data-agent-action="inputId === 'agent-token' ? 'visibility' : null" type="button" @click="toggle" :disabled="revealing || (reveal && !modelValue && !configured)" :title="visible ? '隐藏' : '显示'" :aria-label="visible ? '隐藏' + label : '显示' + label" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 disabled:opacity-30">
+              <svg v-if="!visible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>
+              <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.59A2 2 0 0013.41 13.42M9.88 4.24A9.77 9.77 0 0112 4c4.48 0 8.27 2.94 9.54 7a10.93 10.93 0 01-2.16 3.91M6.61 6.61A10.94 10.94 0 002.46 12c1.27 4.06 5.06 7 9.54 7 1.58 0 3.08-.37 4.39-1.03"/></svg>
+              </button>
+              <slot name="actions"></slot>
+            </div>
+          </div>
+        </div>`
+    };
+
+    function useSavedSecrets() {
+      const saved = ref({});
+      const configured = ref([]);
+      const load = (values = {}, fields = []) => {
+        saved.value = { ...values };
+        configured.value = [...fields];
+      };
+      const changes = values => Object.fromEntries(Object.entries(values)
+        .filter(([key, value]) => value !== (saved.value[key] ?? '')));
+      const commit = values => {
+        const changed = changes(values);
+        saved.value = { ...saved.value, ...changed };
+        const fields = new Set(configured.value);
+        for (const [key, value] of Object.entries(changed)) {
+          if (value) fields.add(key);
+          else fields.delete(key);
+        }
+        configured.value = [...fields];
+      };
+      return { saved, configured, load, changes, commit };
+    }
+
     const IconDashboard = {
       template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>'
     };
@@ -5471,6 +5350,7 @@ const IconDictionary = {
       template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>'
     };
     createApp({
+      components: { SecretField },
       setup() {
         const themeMode = ref(localStorage.getItem('ccm_theme_mode') || 'system');
         const sidebarCollapsed = ref(localStorage.getItem('ccm_sidebar_collapsed') === 'true');
@@ -5596,10 +5476,6 @@ const IconDictionary = {
 
 
 
-        const backupPasswordVisible = ref(false);
-        const webdavPasswordVisible = ref(false);
-        const imapPasswordVisible = ref(false);
-        const notifFieldVisible = ref({});
         const mobileMoreExpanded = ref(false);
 
         function toggleMobileMore() {
@@ -6005,6 +5881,7 @@ const IconDictionary = {
           cron_expr: '0 8 * * *',
           initial_sync_months: 3
         });
+        const imapSecrets = useSavedSecrets();
         const testingImap = ref(false);
         const testResult = ref(null);
         const syncRangeOptions = [3, 6, 12, 24];
@@ -6021,7 +5898,10 @@ const IconDictionary = {
         });
         const notificationSaving = ref(false);
         const notificationTesting = ref(false);
-        const notificationConfigured = ref(false);
+        const notificationSecrets = useSavedSecrets();
+        const notificationSavedProvider = ref('disabled');
+        const notificationConfiguredFields = computed(() => notificationForm.value.provider === notificationSavedProvider.value
+          ? notificationSecrets.configured.value : []);
 
         // Backup settings state
         const backupSettings = ref({
@@ -6046,6 +5926,7 @@ const IconDictionary = {
           cron_expr: '0 3 * * *',
           retention_count: 14
         });
+        const backupSecrets = useSavedSecrets();
         const backupSaving = ref(false);
         const backupTesting = ref(false);
         const backupConnectionVerified = ref(false);
@@ -6059,33 +5940,17 @@ const IconDictionary = {
         const backupRestoreItem = ref(null);
         const backupRestoring = ref(false);
         const backupRestarting = ref(false);
-        const backupPasswordClear = ref(false);
-        const backupPasswordEffective = computed(() => Boolean(
-          backupForm.value.backup_password
-          || (backupSettings.value.backup_password_set && !backupPasswordClear.value)
-        ));
         const backupReady = computed(() => Boolean(backupForm.value.webdav_url.trim()));
 
-        // Singleton Agent Token state. Saved plaintext is loaded only on Owner request.
+        // Singleton Agent Token state. Only an authenticated Owner can read its saved value.
         const agentToken = ref('');
         const agentTokenEnabled = ref(false);
         const agentTokenDirty = ref(false);
-        const agentTokenVisible = ref(false);
         const agentTokenSaving = ref(false);
         const agentTokenGenerating = ref(false);
         const agentTokenRevealing = ref(false);
         const agentTokenHasCleartext = computed(() => agentToken.value.length > 0);
-        const agentTokenReadable = computed(() => agentTokenHasCleartext.value || agentTokenEnabled.value);
-        const agentTokenStatus = computed(() => {
-          if (agentTokenDirty.value) return '待保存';
-          return agentTokenEnabled.value ? '已启用' : '未启用';
-        });
-        const agentTokenStatusClass = computed(() => {
-          if (agentTokenDirty.value) return 'text-amber-600 dark:text-amber-400';
-          return agentTokenEnabled.value
-            ? 'text-emerald-600 dark:text-emerald-400'
-            : 'text-slate-400 dark:text-slate-500';
-        });
+        const agentTokenReadable = computed(() => agentTokenHasCleartext.value || (agentTokenEnabled.value && !agentTokenDirty.value));
 
         // Upload & Modals
         const showUploadModal = ref(false);
@@ -6652,7 +6517,6 @@ const IconDictionary = {
         const csrfToken = ref('');
         const needLogin = ref(false);
         const loginToken = ref('');
-        const loginTokenVisible = ref(false);
         const loginLoading = ref(false);
         const loginError = ref('');
 
@@ -8026,51 +7890,57 @@ const IconDictionary = {
 
       function changeNotificationProvider() {
         notificationForm.value.enabled = (notificationForm.value.provider !== 'disabled');
+        const provider = notificationForm.value.provider;
         notificationForm.value.provider_config = {
-          ...(notificationConfigDefaults[notificationForm.value.provider] || {})
+          ...(notificationConfigDefaults[provider] || {}),
+          ...(provider === notificationSavedProvider.value ? notificationSecrets.saved.value : {})
         };
-        notificationConfigured.value = false;
       }
-
-       function getSecretPlaceholder(val, fallback) {
-         const name = fallback || 'API密钥';
-         return (val || notificationConfigured.value) ? '已配置 -- 输入新值可替换' : ('未配置 -- 输入' + name);
-       }
 
       async function loadNotificationSettings() {
          try {
            const data = await api('/notifications/settings');
            notificationProviders.value = data.providers || [];
-           notificationConfigured.value = Boolean(data.setting?.configured);
            const setting = data.setting || {};
            const isEnabled = Boolean(setting.enabled) && setting.provider !== 'disabled';
            const currentProvider = isEnabled ? (setting.provider || 'disabled') : 'disabled';
            const savedConf = setting.provider_config || {};
+           notificationSavedProvider.value = setting.saved_provider || currentProvider;
+           notificationSecrets.load(savedConf, Object.keys(savedConf).filter(key => savedConf[key] != null && savedConf[key] !== ''));
            notificationForm.value = {
              ...notificationForm.value,
              ...setting,
              enabled: isEnabled,
              provider: currentProvider,
-             provider_config: {
-               ...(notificationConfigDefaults[currentProvider] || {}),
-               ...savedConf
-             }
+              provider_config: {
+                ...(notificationConfigDefaults[currentProvider] || {}),
+                ...(currentProvider === notificationSavedProvider.value ? savedConf : {})
+              }
            };
          } catch (e) {
            console.warn('无法加载通知配置', e);
          }
        }
 
-       async function saveNotificationSettings() {
-         notificationSaving.value = true;
-         try {
-           notificationForm.value.enabled = (notificationForm.value.provider !== 'disabled');
+        async function saveNotificationSettings() {
+          notificationSaving.value = true;
+          try {
+            notificationForm.value.enabled = (notificationForm.value.provider !== 'disabled');
+            const provider = notificationForm.value.provider;
+            const config = { ...notificationForm.value.provider_config };
+            const sameProvider = provider === notificationSavedProvider.value;
+            const changes = sameProvider ? notificationSecrets.changes(config) : config;
             await api('/notifications/settings', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(notificationForm.value)
+              body: JSON.stringify({ ...notificationForm.value, provider_config: changes })
             });
-            showToast(notificationForm.value.enabled ? '推送设置已保存' : '通知已关闭');
+            if (provider !== 'disabled') {
+              if (!sameProvider) notificationSecrets.load();
+              notificationSecrets.commit(config);
+              notificationSavedProvider.value = provider;
+            }
+            showToast(provider !== 'disabled' ? '推送设置已保存' : '通知已关闭');
           } catch (e) {
             showToast('保存失败: ' + e.message);
           } finally {
@@ -8102,7 +7972,10 @@ const IconDictionary = {
             const data = await api('/backups/settings');
             backupSettings.value = data;
             backupConnectionVerified.value = Boolean(data.connection_verified);
-            backupPasswordClear.value = false;
+            backupSecrets.load(
+              { backup_password: data.backup_password || '', webdav_password: data.webdav_password || '' },
+              ['backup_password', 'webdav_password'].filter(key => data[key + '_set'])
+            );
             backupForm.value.webdav_url = data.webdav_url || '';
             backupForm.value.webdav_username = data.webdav_username || '';
             backupForm.value.webdav_password = data.webdav_password || '';
@@ -8122,14 +7995,14 @@ const IconDictionary = {
             const data = await api('/agent-token');
             agentTokenEnabled.value = Boolean(data.enabled);
             agentToken.value = '';
-            agentTokenVisible.value = false;
+            if (agentTokenEnabled.value) await revealAgentToken();
           } catch (e) {
             console.error('Failed to load Agent Token status:', e);
           }
         }
 
         function markAgentTokenEdited() {
-          agentTokenDirty.value = agentTokenHasCleartext.value;
+          agentTokenDirty.value = true;
         }
 
         async function generateAgentToken() {
@@ -8138,7 +8011,6 @@ const IconDictionary = {
             const data = await api('/agent-token/generate', { method: 'POST' });
             agentToken.value = data.token;
             agentTokenDirty.value = true;
-            agentTokenVisible.value = false;
           } catch (e) {
             showToast('生成 Agent Token 失败: ' + e.message);
           } finally {
@@ -8148,6 +8020,7 @@ const IconDictionary = {
 
         async function revealAgentToken() {
           if (agentTokenHasCleartext.value) return true;
+          if (agentTokenDirty.value) return false;
           agentTokenRevealing.value = true;
           try {
             const data = await api('/agent-token/reveal', { method: 'POST' });
@@ -8159,14 +8032,6 @@ const IconDictionary = {
           } finally {
             agentTokenRevealing.value = false;
           }
-        }
-
-        async function toggleAgentTokenVisibility() {
-          if (agentTokenVisible.value) {
-            agentTokenVisible.value = false;
-            return;
-          }
-          if (await revealAgentToken()) agentTokenVisible.value = true;
         }
 
         async function copyAgentToken() {
@@ -8182,15 +8047,14 @@ const IconDictionary = {
         async function saveAgentToken() {
           agentTokenSaving.value = true;
           try {
-            const payload = agentTokenDirty.value ? { token: agentToken.value } : {};
+            const token = agentToken.value;
+            const payload = agentTokenDirty.value ? { token } : {};
             const data = await api('/agent-token', {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
             });
-            agentToken.value = '';
-            agentTokenVisible.value = false;
-            agentTokenDirty.value = false;
+            if (agentToken.value === token) agentTokenDirty.value = false;
             agentTokenEnabled.value = Boolean(data.enabled);
             showToast(data.enabled ? 'Agent Token 已保存' : 'Agent Token 尚未配置');
           } catch (e) {
@@ -8202,9 +8066,7 @@ const IconDictionary = {
 
         function backupFormChanged() {
           return Boolean(
-            backupForm.value.backup_password
-            || backupPasswordClear.value
-            || backupForm.value.webdav_password
+            Object.keys(backupSecrets.changes({ backup_password: backupForm.value.backup_password, webdav_password: backupForm.value.webdav_password })).length
             || backupForm.value.webdav_url !== backupSettings.value.webdav_url
             || backupForm.value.webdav_username !== backupSettings.value.webdav_username
             || backupForm.value.schedule_type !== backupSettings.value.schedule_type
@@ -8227,20 +8089,15 @@ const IconDictionary = {
               cron_expr: backupForm.value.cron_expr,
               retention_count: backupForm.value.retention_count
             };
-            if (backupForm.value.backup_password !== backupSettings.value.backup_password) {
-              payload.backup_password = backupForm.value.backup_password || '';
-            }
-            if (backupForm.value.webdav_password !== backupSettings.value.webdav_password) {
-              payload.webdav_password = backupForm.value.webdav_password || '';
-            }
+            const secretValues = { backup_password: backupForm.value.backup_password, webdav_password: backupForm.value.webdav_password };
+            Object.assign(payload, backupSecrets.changes(secretValues));
             const updated = await api('/backups/settings', {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
             });
             backupSettings.value = updated;
-            backupForm.value.backup_password = updated.backup_password || '';
-            backupForm.value.webdav_password = updated.webdav_password || '';
+            backupSecrets.commit(secretValues);
             await loadBackupList();
             if (!silent) {
               showToast('备份设置已保存');
@@ -10248,6 +10105,7 @@ const IconDictionary = {
             editImap.value.initial_sync_months = (imapStatus.value.initial_sync_months === 0 || imapStatus.value.initial_sync_months === 'all') ? 'all' : (imapStatus.value.initial_sync_months || 3);
           }
           editImap.value.password = imapStatus.value?.password || '';
+          imapSecrets.load({ password: editImap.value.password }, editImap.value.password ? ['password'] : []);
           showImapModal.value = true;
           testResult.value = null;
         }
@@ -10315,22 +10173,26 @@ const IconDictionary = {
             return;
           }
           try {
+            const secretValues = { password: editImap.value.password };
+            const payload = {
+              enabled: true,
+              host: editImap.value.host,
+              port: editImap.value.port,
+              username: editImap.value.username.trim(),
+              schedule_type: editImap.value.schedule_type || 'interval',
+              poll_seconds: editImap.value.poll_seconds || 1800,
+              daily_time: editImap.value.daily_time || '08:00',
+              cron_expr: editImap.value.cron_expr || '0 8 * * *',
+              initial_sync_months: editImap.value.initial_sync_months === 'all' ? 0 : Number(editImap.value.initial_sync_months)
+            };
+            Object.assign(payload, imapSecrets.changes(secretValues));
             const res = await api('/imap/config', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                enabled: true,
-                host: editImap.value.host,
-                port: editImap.value.port,
-                username: editImap.value.username.trim(),
-                password: editImap.value.password || null,
-                schedule_type: editImap.value.schedule_type || 'interval',
-                poll_seconds: editImap.value.poll_seconds || 1800,
-                daily_time: editImap.value.daily_time || '08:00',
-                cron_expr: editImap.value.cron_expr || '0 8 * * *',
-                initial_sync_months: editImap.value.initial_sync_months === 'all' ? 0 : Number(editImap.value.initial_sync_months)
-              })
+              body: JSON.stringify(payload)
             });
+            imapStatus.value = res.status;
+            imapSecrets.commit(secretValues);
             showToast('IMAP 配置已保存！');
             showImapModal.value = false;
             await loadAll();
@@ -10462,10 +10324,6 @@ const IconDictionary = {
           IconSync,
           IconCalculator,
           IconDictionary,
-          backupPasswordVisible,
-          webdavPasswordVisible,
-          imapPasswordVisible,
-          notifFieldVisible,
           mobileMoreExpanded,
           toggleMobileMore,
           selectMobileTab,
@@ -10642,7 +10500,6 @@ const IconDictionary = {
           syncLoading,
          syncRangeOptions,
          syncRangeMonths,
-          getSecretPlaceholder,
           showHiddenCards,
           dueCount,
             formatMoney,
@@ -10770,7 +10627,7 @@ const IconDictionary = {
           saveImapSettings,
           notificationProviders,
           notificationForm,
-          notificationConfigured,
+          notificationConfiguredFields,
           notificationSaving,
           notificationTesting,
           changeNotificationProvider,
@@ -10779,21 +10636,20 @@ const IconDictionary = {
           agentToken,
           agentTokenEnabled,
           agentTokenDirty,
-          agentTokenVisible,
           agentTokenSaving,
           agentTokenGenerating,
           agentTokenRevealing,
           agentTokenHasCleartext,
           agentTokenReadable,
-          agentTokenStatus,
-          agentTokenStatusClass,
           markAgentTokenEdited,
           generateAgentToken,
-          toggleAgentTokenVisibility,
+          revealAgentToken,
           copyAgentToken,
           saveAgentToken,
           backupSettings,
           backupForm,
+          backupConfigured: backupSecrets.configured,
+          imapConfigured: imapSecrets.configured,
           backupSaving,
           backupTesting,
           backupConnectionVerified,
@@ -10808,8 +10664,6 @@ const IconDictionary = {
           backupRestoring,
           backupRestarting,
           backupReady,
-          backupPasswordClear,
-          backupPasswordEffective,
           loadBackupSettings,
           saveBackupSettings,
           testBackupConnection,
@@ -10845,7 +10699,6 @@ const IconDictionary = {
           csrfToken,
           needLogin,
           loginToken,
-          loginTokenVisible,
           loginLoading,
           loginError,
           doLogin
@@ -10855,4 +10708,3 @@ const IconDictionary = {
   </script>
 </body>
 </html>
-

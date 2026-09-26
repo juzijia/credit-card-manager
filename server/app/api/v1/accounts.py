@@ -50,10 +50,8 @@ def save_agent_token(payload: AgentTokenWrite) -> dict[str, bool]:
 
     cleartext = payload.token.get_secret_value() if payload.token is not None else ""
     if not cleartext:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Agent token is required; an enabled token can only be rotated",
-        )
+        set_secret(_AGENT_NAMESPACE, _AGENT_KEY, None)
+        return {"enabled": False}
 
     if len(cleartext) < 32 or cleartext != cleartext.strip():
         raise HTTPException(

@@ -53,6 +53,7 @@ def get_settings_and_providers(session: SessionDep) -> dict[str, Any]:
                 "offset_days": [2, 1, 0, -1, -2],
                 "push_time": "09:00",
                 "provider": "disabled",
+                "saved_provider": "disabled",
                 "configured": False,
                 "chat_id_configured": False,
                 "only_if_unpaid": True,
@@ -82,6 +83,7 @@ def get_settings_and_providers(session: SessionDep) -> dict[str, Any]:
             "offset_days": offsets,
             "push_time": setting.push_time,
             "provider": current_provider,
+            "saved_provider": setting.provider,
             "configured": configured,
             "chat_id_configured": bool(
                 setting.provider == "telegram"
@@ -130,7 +132,11 @@ def update_settings(
 
     if previous_provider == payload.provider:
         assembled = assemble_provider_config(setting)
-        assembled.update({k: v for k, v in incoming.items() if v not in (None, "")})
+        for key, value in incoming.items():
+            if value in (None, ""):
+                assembled.pop(key, None)
+            else:
+                assembled[key] = value
     else:
         assembled = {k: v for k, v in incoming.items() if v not in (None, "")}
 
@@ -143,7 +149,7 @@ def update_settings(
 
     if secret_conf:
         set_secret_json("notification", setting.id, secret_conf)
-    elif previous_provider != payload.provider:
+    else:
         set_secret_json("notification", setting.id, None)
 
     return {"success": True, "message": "通知设置已保存"}
@@ -157,16 +163,13 @@ def test_provider(payload: NotificationTestWriteDTO, session: SessionDep) -> dic
 
     if setting and setting.provider == payload.provider:
         assembled = assemble_provider_config(setting)
+        for key, value in payload.provider_config.reveal().items():
+            if value in (None, ""):
+                assembled.pop(key, None)
+            else:
+                assembled[key] = value
     else:
-        assembled = {}
-
-    assembled.update(
-        {
-            key: value
-            for key, value in payload.provider_config.reveal().items()
-            if value not in (None, "")
-        }
-    )
+        assembled = {k: v for k, v in payload.provider_config.reveal().items() if v not in (None, "")}
     try:
         validate_provider_config_endpoints(payload.provider, assembled)
     except ValueError as exc:
@@ -236,4 +239,3 @@ def get_notification_logs(session: SessionDep, limit: int = 50) -> list[dict[str
     )
     result.sort(key=lambda item: item["sent_at"], reverse=True)
     return result[:limit]
-

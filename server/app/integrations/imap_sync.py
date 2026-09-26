@@ -232,6 +232,8 @@ def _sync_folder(
             criteria = ["SINCE", since]
         elif state.last_uid:
             criteria: list[object] = ["UID", f"{state.last_uid + 1}:*"]
+        elif initial_sync_months == 0:
+            criteria = "ALL"
         else:
             since = (
                 datetime.now(UTC)
