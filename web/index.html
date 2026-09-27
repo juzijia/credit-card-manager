@@ -2599,13 +2599,13 @@
                 </label>
               </div>
 
-              <div v-if="!backupForm.allow_unencrypted_backup">
+              <div>
                 <secret-field v-model="backupForm.backup_password" :configured="backupConfigured.includes('backup_password')" label="备份加密密码" placeholder="必须设置加密密码" @changed="backupConnectionVerified = false"></secret-field>
                 <p class="mt-1 text-[11px] text-slate-400">默认启用 rclone crypt 端到端加密；已有加密备份需原密码才能恢复。</p>
               </div>
-              <div v-else>
+              <div v-if="backupForm.allow_unencrypted_backup">
                 <div class="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-[11px] text-amber-700 dark:text-amber-400">
-                  已显式启用明文备份模式。备份将不使用密码加密，直接存储于远端 ccm-backups-plain 目录。
+                  已显式启用明文备份模式。当前备份将不使用密码加密，直接存储于远端 ccm-backups-plain 目录；您仍可在此保留、查看、替换或清除密码，以便切回加密模式或恢复旧的加密备份。
                 </div>
               </div>
             </div>

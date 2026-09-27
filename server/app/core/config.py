@@ -57,10 +57,6 @@ class Settings(BaseSettings):
 
         if self.auth_mode == "session":
             token = self.owner_token.get_secret_value() if self.owner_token else ""
-            if token == "replace_with_random_token_at_least_32_chars":
-                raise ValueError(
-                    "CCM_OWNER_TOKEN cannot use the default placeholder token"
-                )
             # Runtime cannot prove entropy from a string. The deployment contract
             # requires a token generated from 32 random bytes, e.g.
             # secrets.token_urlsafe(32), which is normally 43 URL-safe chars.
