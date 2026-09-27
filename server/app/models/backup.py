@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import sqlalchemy as sa
 from sqlalchemy import DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -11,6 +12,7 @@ class BackupSetting(TimestampMixin, Base):
     __tablename__ = "backup_settings"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default="default")
+    allow_unencrypted_backup: Mapped[bool] = mapped_column(sa.Boolean(), default=False, server_default=sa.false(), nullable=False)
     webdav_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
     webdav_username: Mapped[str | None] = mapped_column(String(255), nullable=True)
     schedule_type: Mapped[str] = mapped_column(String(16), default="off")

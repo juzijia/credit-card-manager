@@ -30,7 +30,7 @@ services:
       - ./data:/data
     environment:
       # 必填：登录验证令牌（首次/管理登录）
-      CCM_OWNER_TOKEN: <所有者登录令牌>
+      CCM_OWNER_TOKEN: ${CCM_OWNER_TOKEN:?CCM_OWNER_TOKEN must be set}
       # 选填：公网反代域名（纯局域网/内网IP访问留空或不填）
       CCM_ALLOWED_HOST: ""
       # 选填：时区（默认上海时区）

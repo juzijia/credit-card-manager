@@ -214,11 +214,20 @@ def _remote_env(
 ) -> dict[str, str]:
     if not setting.webdav_url or not setting.webdav_url.strip():
         raise ValueError("未配置 WebDAV，无法执行备份")
+    allow_unencrypted = bool(getattr(setting, "allow_unencrypted_backup", False))
     password: str | None = None
-    if encrypted is not False:
+    if encrypted is True:
         password = crypt_password or get_secret("backup", "crypt_password")
-        if encrypted and not password:
-            raise ValueError("未配置备份密码")
+        if not password:
+            raise ValueError("未配置备份密码，无法执行加密备份")
+    elif encrypted is False:
+        password = None
+    elif allow_unencrypted:
+        password = None
+    else:
+        password = crypt_password or get_secret("backup", "crypt_password")
+        if not password:
+            raise ValueError("未配置备份密码，无法执行备份。如需明文备份，请显式开启允许明文备份。")
     return build_rclone_env(
         password,
         setting.webdav_url,
@@ -275,6 +284,8 @@ def list_backups(session: Session, settings: Settings) -> list[dict[str, Any]]:
     setting = get_backup_setting(session, create=False)
     if setting is None:
         raise ValueError("未配置 WebDAV")
+    if not getattr(setting, "allow_unencrypted_backup", False) and not get_secret("backup", "crypt_password"):
+        return []
     return list_remote_backups(_remote_env(setting), settings.timezone)
 
 

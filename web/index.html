@@ -2587,10 +2587,27 @@
             </div>
 
             <template v-if="backupForm.schedule_type !== 'off'">
-            <div>
-              <secret-field v-model="backupForm.backup_password" :configured="backupConfigured.includes('backup_password')" label="备份加密密码（选填）" placeholder="留空则不加密直接上传" @changed="backupConnectionVerified = false"></secret-field>
-              <p class="mt-1.5 text-[11px] text-amber-600 dark:text-amber-400">清空并保存会停止后续备份加密；已有加密备份仍需原密码才能恢复。</p>
-              <p class="mt-1 text-[11px] text-slate-400">加密与未加密备份存放于不同的远端目录，切换模式不影响已有备份；列表与恢复仅针对当前模式。</p>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <div>
+                  <div class="text-xs font-medium text-slate-700 dark:text-slate-300">允许明文备份（不推荐）</div>
+                  <div class="text-[11px] text-slate-400">开启后将直接上传未加密的 SQLite 数据库文件至独立目录</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" v-model="backupForm.allow_unencrypted_backup" @change="backupConnectionVerified = false" class="sr-only peer">
+                  <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-slate-600 peer-checked:bg-amber-600"></div>
+                </label>
+              </div>
+
+              <div v-if="!backupForm.allow_unencrypted_backup">
+                <secret-field v-model="backupForm.backup_password" :configured="backupConfigured.includes('backup_password')" label="备份加密密码" placeholder="必须设置加密密码" @changed="backupConnectionVerified = false"></secret-field>
+                <p class="mt-1 text-[11px] text-slate-400">默认启用 rclone crypt 端到端加密；已有加密备份需原密码才能恢复。</p>
+              </div>
+              <div v-else>
+                <div class="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-[11px] text-amber-700 dark:text-amber-400">
+                  已显式启用明文备份模式。备份将不使用密码加密，直接存储于远端 ccm-backups-plain 目录。
+                </div>
+              </div>
             </div>
 
             <div>
@@ -5905,6 +5922,7 @@ const IconDictionary = {
 
         // Backup settings state
         const backupSettings = ref({
+          allow_unencrypted_backup: false,
           backup_password_set: false,
           webdav_url: '',
           webdav_username: '',
@@ -5918,6 +5936,7 @@ const IconDictionary = {
           last_error: null
         });
         const backupForm = ref({
+          allow_unencrypted_backup: false,
           backup_password: '',
           webdav_url: '',
           webdav_username: '',
@@ -7976,6 +7995,7 @@ const IconDictionary = {
               { backup_password: data.backup_password || '', webdav_password: data.webdav_password || '' },
               ['backup_password', 'webdav_password'].filter(key => data[key + '_set'])
             );
+            backupForm.value.allow_unencrypted_backup = Boolean(data.allow_unencrypted_backup);
             backupForm.value.webdav_url = data.webdav_url || '';
             backupForm.value.webdav_username = data.webdav_username || '';
             backupForm.value.webdav_password = data.webdav_password || '';
@@ -8067,6 +8087,7 @@ const IconDictionary = {
         function backupFormChanged() {
           return Boolean(
             Object.keys(backupSecrets.changes({ backup_password: backupForm.value.backup_password, webdav_password: backupForm.value.webdav_password })).length
+            || Boolean(backupForm.value.allow_unencrypted_backup) !== Boolean(backupSettings.value.allow_unencrypted_backup)
             || backupForm.value.webdav_url !== backupSettings.value.webdav_url
             || backupForm.value.webdav_username !== backupSettings.value.webdav_username
             || backupForm.value.schedule_type !== backupSettings.value.schedule_type
@@ -8083,6 +8104,7 @@ const IconDictionary = {
           backupSaving.value = true;
           try {
             const payload = {
+              allow_unencrypted_backup: Boolean(backupForm.value.allow_unencrypted_backup),
               webdav_url: backupForm.value.webdav_url,
               webdav_username: backupForm.value.webdav_username,
               schedule_type: backupForm.value.schedule_type,
@@ -8158,6 +8180,10 @@ const IconDictionary = {
 
         async function loadBackupList() {
           if (!backupForm.value.webdav_url) {
+            backupList.value = [];
+            return;
+          }
+          if (!backupForm.value.allow_unencrypted_backup && !backupConfigured.value.includes('backup_password') && !backupForm.value.backup_password) {
             backupList.value = [];
             return;
           }
