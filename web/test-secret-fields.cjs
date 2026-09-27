@@ -31,3 +31,7 @@ test('saved secrets change only after successful save, including replacement and
   assert.deepEqual(fields.configured.value, ['password']);
   assert.deepEqual(fields.changes({ password: 'new' }), {});
 });
+
+test('imap password field binds reveal callback', () => {
+  assert.ok(html.includes(':reveal="revealImapPassword"'));
+});

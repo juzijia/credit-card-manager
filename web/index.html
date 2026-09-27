@@ -3934,7 +3934,7 @@
 
                 <!-- 专属授权码 / 密码 -->
                 <div>
-                  <secret-field v-model="editImap.password" :configured="imapConfigured.includes('password')" label="专属授权码 / 密码" placeholder="请输入邮箱 IMAP 专属授权码"></secret-field>
+                  <secret-field v-model="editImap.password" :configured="imapConfigured.includes('password')" :reveal="revealImapPassword" label="专属授权码 / 密码" placeholder="请输入邮箱 IMAP 专属授权码"></secret-field>
                 </div>
 
                 <!-- IMAP 服务器与端口 -->
@@ -6901,7 +6901,7 @@ const IconDictionary = {
               editImap.value.poll_seconds = imap.poll_seconds || 1800;
               editImap.value.daily_time = imap.daily_time || '08:00';
               editImap.value.cron_expr = imap.cron_expr || '0 8 * * *';
-              editImap.value.password = imap.password || '';
+              editImap.value.password = '';
               editImap.value.initial_sync_months = (imap.initial_sync_months === 0 || imap.initial_sync_months === 'all') ? 'all' : (imap.initial_sync_months || 3);
               syncRangeMonths.value = (imap.initial_sync_months === 0 || imap.initial_sync_months === 'all') ? 'all' : (imap.initial_sync_months || 3);
             }
@@ -10104,8 +10104,8 @@ const IconDictionary = {
             editImap.value.cron_expr = imapStatus.value.cron_expr || '0 8 * * *';
             editImap.value.initial_sync_months = (imapStatus.value.initial_sync_months === 0 || imapStatus.value.initial_sync_months === 'all') ? 'all' : (imapStatus.value.initial_sync_months || 3);
           }
-          editImap.value.password = imapStatus.value?.password || '';
-          imapSecrets.load({ password: editImap.value.password }, editImap.value.password ? ['password'] : []);
+          editImap.value.password = '';
+          imapSecrets.load({}, (imapStatus.value?.password_set || imapStatus.value?.configured) ? ['password'] : []);
           showImapModal.value = true;
           testResult.value = null;
         }
@@ -10165,6 +10165,18 @@ const IconDictionary = {
           if (sec % 3600 === 0) return (sec / 3600) + ' 小时';
           if (sec % 60 === 0) return (sec / 60) + ' 分钟';
           return sec + ' 秒';
+        }
+
+        async function revealImapPassword() {
+          try {
+            const data = await api('/imap/password/reveal', { method: 'POST' });
+            editImap.value.password = data.password;
+            imapSecrets.load({ password: data.password }, ['password']);
+            return true;
+          } catch (e) {
+            showToast('读取 IMAP 密码失败: ' + e.message);
+            return false;
+          }
         }
 
         async function saveImapSettings() {
@@ -10625,6 +10637,7 @@ const IconDictionary = {
           testResult,
           testImapConnection,
           saveImapSettings,
+          revealImapPassword,
           notificationProviders,
           notificationForm,
           notificationConfiguredFields,

@@ -1,7 +1,7 @@
 import json
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -9,7 +9,7 @@ from pydantic import SecretStr, ValidationError
 
 from app.core.plain_secrets import get_secret, set_secret
 from app.core.redaction import redact_sensitive
-from app.core.security import AccessContext, require_agent_access
+from app.core.security import AccessContext, require_agent_access, require_owner_access
 from app.db.session import get_session
 from app.integrations.imap_sync import ImapRuntimeConfig, sync_mailbox
 from app.models.email_account import EmailAccount
@@ -115,6 +115,7 @@ def _status_payload(account: EmailAccount | None) -> dict[str, object]:
             "port": 993,
             "username_configured": False,
             "username": None,
+            "password_set": False,
             "mailbox": "INBOX",
             "all_folders": True,
             "schedule_type": "interval",
@@ -136,7 +137,7 @@ def _status_payload(account: EmailAccount | None) -> dict[str, object]:
         "port": account.port,
         "username_configured": bool(account.username),
         "username": account.username,
-        "password": get_secret("imap", account.id) or "",
+        "password_set": bool(get_secret("imap", account.id)),
         "mailbox": account.mailbox,
         "all_folders": account.all_folders,
         "schedule_type": account.schedule_type,
@@ -173,6 +174,22 @@ def validate_imap_schedule(
 def imap_status(session: SessionDep) -> dict[str, object]:
     account = get_default_email_account(session)
     return _status_payload(account)
+
+@router.post(
+    "/password/reveal",
+    dependencies=[Depends(require_owner_access)],
+)
+def reveal_imap_password(
+    session: SessionDep,
+    response: Response,
+) -> dict[str, str]:
+    account = get_default_email_account(session)
+    password = get_secret("imap", account.id) if account else None
+    if not password:
+        raise HTTPException(status_code=404, detail="IMAP 授权码尚未配置")
+    response.headers["Cache-Control"] = "no-store"
+    return {"password": password}
+
 
 
 @router.post("/sync")
@@ -322,7 +339,8 @@ def update_imap_config(
                 payload.model_dump(exclude_unset=True)
             )
         except ValidationError as exc:
-            raise RequestValidationError(exc.errors()) from exc
+            errors = [{k: v for k, v in err.items() if k != "input"} for err in exc.errors()]
+            raise RequestValidationError(errors) from exc
         validate_imap_schedule(
             owner_payload.schedule_type,
             owner_payload.daily_time,
