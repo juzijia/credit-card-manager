@@ -243,6 +243,12 @@ def build_analytics(
         if repayment_card_id is not None and repayment.statement.card_id != repayment_card_id:
             continue
         key = _month_key(repayment.paid_at, timezone_name)
+        if (
+            repayment.note == "Marked paid in full"
+            and key not in repayments
+            and repayment.statement.due_date < start_month
+        ):
+            key = _month_key(repayment.statement.due_date)
         if key in repayments:
             repayments[key]["credit_card_paid_minor"] += repayment.amount_minor
     manual_repayments = session.scalars(
