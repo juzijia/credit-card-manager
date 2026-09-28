@@ -34,7 +34,6 @@ class ImapConfigUpdateDTO(ImapSecretDTO):
     host: str | None = None
     port: int | None = Field(default=None, ge=1, le=65535)
     username: str | None = None
-    password: str = ""
     mailbox: str | None = None
     all_folders: bool | None = None
     schedule_type: str | None = None
@@ -51,7 +50,7 @@ class ImapStatusReadDTO(BaseModel):
     port: int
     username_configured: bool
     username: str | None = None
-    password: str = ""
+    password_set: bool = False
     mailbox: str
     all_folders: bool
     schedule_type: str
