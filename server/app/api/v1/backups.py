@@ -59,6 +59,7 @@ def _to_read_dto(setting: BackupSetting, request: Request) -> BackupSettingsRead
     backup_pw = get_secret(BACKUP_SECRET_NS, "crypt_password") or ""
     webdav_pw = get_secret(BACKUP_SECRET_NS, "webdav_password") or ""
     return BackupSettingsRead(
+        allow_unencrypted_backup=bool(getattr(setting, "allow_unencrypted_backup", False)),
         backup_password_set=bool(backup_pw),
         backup_password=backup_pw,
         webdav_url=(
@@ -137,8 +138,16 @@ def update_settings_endpoint(
     webdav_username = (
         payload.webdav_username.strip() if payload.webdav_username is not None else None
     )
+    allow_unencrypted_changed = (
+        payload.allow_unencrypted_backup is not None
+        and payload.allow_unencrypted_backup != bool(getattr(setting, "allow_unencrypted_backup", False))
+    )
+    if allow_unencrypted_changed:
+        setting.allow_unencrypted_backup = payload.allow_unencrypted_backup
+
     connection_changed = (
-        backup_password_changed
+        allow_unencrypted_changed
+        or backup_password_changed
         or backup_password_cleared
         or webdav_password_changed
         or webdav_password_cleared

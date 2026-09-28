@@ -32,6 +32,11 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_auth_configuration(self) -> "Settings":
+        if self.owner_token is not None and self.owner_token.get_secret_value() == "replace_with_random_token_at_least_32_chars":
+            raise ValueError(
+                "CCM_OWNER_TOKEN cannot use the default placeholder token"
+            )
+
         if self.auth_mode in ("dev_bypass", "local") and self.env == "production":
             raise ValueError(
                 f"auth_mode={self.auth_mode} is forbidden in production environment. "

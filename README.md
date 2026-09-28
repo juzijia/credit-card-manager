@@ -30,7 +30,7 @@ services:
       - ./data:/data
     environment:
       # 必填：登录验证令牌（首次/管理登录）
-      CCM_OWNER_TOKEN: <所有者登录令牌>
+      CCM_OWNER_TOKEN: ${CCM_OWNER_TOKEN:?CCM_OWNER_TOKEN must be set}
       # 选填：公网反代域名（纯局域网/内网IP访问留空或不填）
       CCM_ALLOWED_HOST: ""
       # 选填：时区（默认上海时区）
@@ -42,12 +42,12 @@ docker compose up --build -d
 ```
 
 启动时自动完成数据库迁移，浏览器访问 `http://<主机IP>:8000` 即可使用。
-请将上述必填令牌换成自己生成的随机值，不要提交到任何仓库。
+运行前请在环境变量或 `.env` 文件中设置 `CCM_OWNER_TOKEN` 为自行生成的随机值（例如 `secrets.token_urlsafe(32)`）；不要提交该值。
 
 ## 说明
 
 - 纯局域网用户无需配置域名，直接通过内网 IP（如 `http://192.168.x.x:8000`）访问即可。
 - 邮箱与备份凭据在 Web 设置页配置，明文存储于 `./data/config/secrets.json`（目录 700 / 文件 600，请勿泄露该文件）。
-- WebDAV 备份加密可选：设置备份密码时经 rclone crypt 加密上传；清除密码后直接上传未加密的 SQLite 备份。两种模式存放于不同的远端目录，切换模式不影响已有备份，列表与恢复仅针对当前模式。
+- WebDAV 备份默认启用端到端加密（经 rclone crypt 加密上传）；若未设置加密密码将直接阻止备份。仅在显式开启「允许明文备份（allow_unencrypted_backup）」时才允许上传未加密的 SQLite 备份。加密与明文备份存放于独立的远端目录，切换模式不影响已有备份，列表与恢复仅针对当前模式。
 - WebDAV 备份仅上传 SQLite 数据库文件，不包含 `./data/config` 下的配置（含 secrets.json）；数据全部保存在 `./data` 目录，整体迁移请备份该目录。
 - 如需挂在公网，建议配置反向代理（HTTPS），并在 `CCM_ALLOWED_HOST` 填入对应域名。

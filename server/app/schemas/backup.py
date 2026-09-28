@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field, SecretStr
 
 
 class BackupSettingsRead(BaseModel):
+    allow_unencrypted_backup: bool = False
     backup_password_set: bool
     backup_password: str = ""
     webdav_url: str
@@ -21,6 +22,7 @@ class BackupSettingsRead(BaseModel):
 
 
 class BackupSettingsUpdate(BaseModel):
+    allow_unencrypted_backup: bool | None = None
     backup_password: SecretStr | None = None
     webdav_url: str | None = None
     webdav_username: str | None = None
