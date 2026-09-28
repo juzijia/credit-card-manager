@@ -215,16 +215,10 @@ def _remote_env(
     if not setting.webdav_url or not setting.webdav_url.strip():
         raise ValueError("未配置 WebDAV，无法执行备份")
     allow_unencrypted = bool(getattr(setting, "allow_unencrypted_backup", False))
+    if encrypted is not None and encrypted == allow_unencrypted:
+        raise ValueError("备份加密模式与当前设置不一致")
     password: str | None = None
-    if encrypted is True:
-        password = crypt_password or get_secret("backup", "crypt_password")
-        if not password:
-            raise ValueError("未配置备份密码，无法执行加密备份")
-    elif encrypted is False:
-        password = None
-    elif allow_unencrypted:
-        password = None
-    else:
+    if not allow_unencrypted:
         password = crypt_password or get_secret("backup", "crypt_password")
         if not password:
             raise ValueError("未配置备份密码，无法执行备份。如需明文备份，请显式开启允许明文备份。")

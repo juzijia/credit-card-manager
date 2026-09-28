@@ -158,6 +158,14 @@ class BackupSettingsModeApiTest(unittest.TestCase):
                     self.assertEqual(resp.status_code, 200)
                     self.assertTrue(resp.json()["allow_unencrypted_backup"])
 
+                    resp = client.put(
+                        "/api/v1/backups/settings",
+                        json={"retention_count": 7},
+                        headers=headers,
+                    )
+                    self.assertEqual(resp.status_code, 200)
+                    self.assertTrue(resp.json()["allow_unencrypted_backup"])
+
                     # Invalidate verification when toggling
                     with closing(sqlite3.connect(database)) as conn:
                         conn.execute(

@@ -42,7 +42,7 @@ docker compose up --build -d
 ```
 
 启动时自动完成数据库迁移，浏览器访问 `http://<主机IP>:8000` 即可使用。
-请将上述必填令牌换成自己生成的随机值，不要提交到任何仓库。
+运行前请在环境变量或 `.env` 文件中设置 `CCM_OWNER_TOKEN` 为自行生成的随机值（例如 `secrets.token_urlsafe(32)`）；不要提交该值。
 
 ## 说明
 

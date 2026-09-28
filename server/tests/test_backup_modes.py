@@ -68,7 +68,7 @@ def test_remote_backup_uses_plain_when_plaintext_explicitly_allowed(fake_obscure
 
 def test_remote_env_no_encryption_ignores_vault_password(fake_obscure, monkeypatch):
     monkeypatch.setattr(backup, "get_secret", lambda *args: "vaultpw")
-    env = backup._remote_env(_setting(), encrypted=False)
+    env = backup._remote_env(_setting(allow_unencrypted=True), encrypted=False)
     assert not any("CRYPT" in key for key in env)
 
 
@@ -81,6 +81,14 @@ def test_remote_env_requires_url(fake_obscure, monkeypatch):
 def test_remote_env_forced_crypt_requires_password(fake_obscure, monkeypatch):
     monkeypatch.setattr(backup, "get_secret", lambda *args: None)
     with pytest.raises(ValueError):
+        backup._remote_env(_setting(allow_unencrypted=False), encrypted=True)
+
+
+def test_explicit_backup_mode_cannot_override_setting(fake_obscure, monkeypatch):
+    monkeypatch.setattr(backup, "get_secret", lambda *args: "vaultpw")
+    with pytest.raises(ValueError, match="模式与当前设置不一致"):
+        backup._remote_env(_setting(allow_unencrypted=False), encrypted=False)
+    with pytest.raises(ValueError, match="模式与当前设置不一致"):
         backup._remote_env(_setting(allow_unencrypted=True), encrypted=True)
 
 
@@ -163,6 +171,7 @@ def test_upload_list_restore_roundtrip_per_mode(
     fake_obscure, monkeypatch, tmp_path, encrypted, backup_password, prefix
 ):
     fake, settings, setting, session = _wire_flows(monkeypatch, tmp_path)
+    setting.allow_unencrypted_backup = not encrypted
     result = backup.execute_backup(
         session,
         settings,
@@ -186,7 +195,8 @@ def test_mode_switch_does_not_see_other_mode_backups(
 ):
     fake, settings, setting, session = _wire_flows(monkeypatch, tmp_path)
     backup.execute_backup(session, settings, encrypted=True, backup_password="pw")
-    plain_env = backup._remote_env(setting, encrypted=False)
+    setting.allow_unencrypted_backup = True
+    plain_env = backup._remote_env(setting)
     assert backup.list_remote_backups(plain_env, settings.timezone) == []
 
 
@@ -197,3 +207,6 @@ def test_execute_backup_rejected_without_password_when_plaintext_not_allowed(
     setting.allow_unencrypted_backup = False
     with pytest.raises(ValueError, match="未配置备份密码"):
         backup.execute_backup(session, settings)
+    with pytest.raises(ValueError, match="模式与当前设置不一致"):
+        backup.execute_backup(session, settings, encrypted=False)
+    assert not fake.files
