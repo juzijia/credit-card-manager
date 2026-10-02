@@ -10,6 +10,7 @@ from datetime import date
 from typing import TYPE_CHECKING, Any
 
 from app.modules.core.transaction.classification import (
+    CLASSIFICATION_RULE_VERSION,
     ClassificationSource,
     TransactionType,
     classify_transaction_type,
@@ -26,6 +27,11 @@ class LifecycleViolationError(ValueError):
 
 def get_effective_transaction_type(transaction: Transaction | Any) -> TransactionType:
     raw_type = getattr(transaction, "transaction_type", None)
+    if (
+        getattr(transaction, "classification_source", None) == ClassificationSource.RULE.value
+        and getattr(transaction, "classification_rule_version", None) != CLASSIFICATION_RULE_VERSION
+    ):
+        raw_type = None
     if raw_type:
         try:
             return TransactionType(raw_type)

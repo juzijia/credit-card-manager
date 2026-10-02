@@ -2,6 +2,7 @@ import math
 from calendar import monthrange
 from dataclasses import dataclass
 from datetime import date
+from decimal import Decimal, ROUND_HALF_UP
 from typing import Literal
 
 from sqlalchemy import select
@@ -13,7 +14,7 @@ from app.models.mixins import utc_now
 
 
 def round2(val: float) -> float:
-    return round(val + 1e-12, 2)
+    return float(Decimal(str(val)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
 
 
 def add_months(d: date, months: int) -> date:

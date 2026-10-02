@@ -5,7 +5,7 @@ from email.utils import parseaddr
 
 from bs4 import BeautifulSoup, Tag
 
-from app.parsers.base import ParsedSource, ParsedStatement, ParsedTransaction, ParserError
+from app.parsers.base import ParsedSource, ParsedStatement, ParsedTransaction, ParserError, decimal_to_minor
 
 _SPACE_RE = re.compile(r"\s+")
 _DATE_RE = re.compile(r"^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$")
@@ -52,9 +52,7 @@ def _parse_money_minor(
         amount = Decimal(normalized)
     except InvalidOperation as exc:
         raise ParserError(f"Invalid {field} amount") from exc
-    if amount.as_tuple().exponent < -2:
-        raise ParserError(f"{field} has more than two decimal places")
-    minor = int(amount * 100)
+    minor = decimal_to_minor(amount, field)
     if negative:
         minor = -minor
     if minor < 0 and not allow_negative:

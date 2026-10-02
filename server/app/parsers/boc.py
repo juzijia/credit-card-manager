@@ -10,7 +10,7 @@ from tempfile import TemporaryDirectory
 import pymupdf
 from bean_sieve import get_provider
 
-from app.parsers.base import ParsedSource, ParsedStatement, ParsedTransaction, ParserError
+from app.parsers.base import ParsedSource, ParsedStatement, ParsedTransaction, ParserError, decimal_to_minor
 from app.parsers.cgb import _parse_date, _parse_money_minor
 
 
@@ -68,8 +68,19 @@ def _cell(value: object) -> str:
 
 
 def _money_from_cell(value: object, field: str) -> int | None:
-    match = re.search(r"-?[\d,]+\.\d{2}", _cell(value))
-    return _parse_money_minor(match.group(0), field, allow_negative=True) if match else None
+    text = _cell(value).replace("，", ",")
+    if not re.search(r"\d", text):
+        return None
+    match = re.fullmatch(
+        r"(?:[¥￥]|CNY|RMB|USD)?\s*"
+        r"([+-]?(?:\d+|\d{1,3}(?:,\d{3})+|\d{1,3}(?: \d{3})+)(?:\.\d+)?)"
+        r"\s*(?:元|CNY|RMB|USD)?",
+        text,
+        re.IGNORECASE,
+    )
+    if not match:
+        raise ParserError(f"Invalid {field} amount format")
+    return _parse_money_minor(match.group(1).replace(" ", ""), field, allow_negative=True)
 
 
 def _summary_from_tables(doc: pymupdf.Document) -> dict[str, object]:
@@ -277,11 +288,14 @@ class BocStatementParser:
                         ParsedTransaction(
                             transaction_date=t.date,
                             posting_date=t.post_date,
-                            amount_minor=int(t.amount * 100),
+                            amount_minor=decimal_to_minor(t.amount),
                             currency=t.currency,
                             raw_description=t.description,
                         )
                     )
+            except ParserError:
+                doc.close()
+                raise
             except Exception:
                 pass
 

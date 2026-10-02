@@ -4,7 +4,7 @@ from enum import StrEnum
 from typing import Any
 
 
-CLASSIFICATION_RULE_VERSION = "2026-09-15-v2"
+CLASSIFICATION_RULE_VERSION = "2026-10-02-v3"
 
 
 class TransactionType(StrEnum):
@@ -82,7 +82,7 @@ def classify_transaction_type(amount_minor: int, raw_description: str | None) ->
         return TransactionType.INTEREST
     if _RE_FEE.search(desc):
         return TransactionType.FEE
-    if _RE_REPAYMENT.search(desc):
+    if amount_minor < 0 and _RE_REPAYMENT.search(desc):
         return TransactionType.REPAYMENT
     if _RE_REFUND.search(desc):
         return TransactionType.REFUND

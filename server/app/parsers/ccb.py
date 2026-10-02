@@ -15,6 +15,7 @@ from app.parsers.base import (
     ParsedStatement,
     ParsedTransaction,
     ParserError,
+    decimal_to_minor,
     statement_from_billing_unit,
 )
 from app.parsers.cgb import _parse_date, _parse_money_minor
@@ -434,7 +435,8 @@ def _legacy_provider_transactions(source: ParsedSource) -> tuple[ParsedTransacti
         except Exception:
             return ()
         for item in raw_transactions:
-            if item.currency != "CNY" and int(item.amount * 100) != 0:
+            amount_minor = decimal_to_minor(item.amount)
+            if item.currency != "CNY" and amount_minor != 0:
                 raise ParserError(
                     f"CCB legacy transaction settled in non-CNY currency: currency={item.currency} (UNSUPPORTED_FOREIGN_PAYABLE)"
                 )
@@ -442,7 +444,7 @@ def _legacy_provider_transactions(source: ParsedSource) -> tuple[ParsedTransacti
                 ParsedTransaction(
                     transaction_date=item.date,
                     posting_date=item.post_date,
-                    amount_minor=int(item.amount * 100),
+                    amount_minor=amount_minor,
                     currency=item.currency,
                     raw_description=item.description,
                     card_ref=item.card_last4,

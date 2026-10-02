@@ -2,7 +2,7 @@ import re
 from datetime import date
 from email.utils import parseaddr
 from bs4 import BeautifulSoup
-from app.parsers.base import ParsedSource, ParsedStatement, ParsedTransaction, ParserError
+from app.parsers.base import ParsedSource, ParsedStatement, ParsedTransaction, ParserError, decimal_to_minor
 from app.parsers.cgb import _parse_date, _parse_money_minor
 from bean_sieve import get_provider
 from tempfile import TemporaryDirectory
@@ -93,11 +93,13 @@ class AbcStatementParser:
                         ParsedTransaction(
                             transaction_date=t.date,
                             posting_date=t.post_date,
-                            amount_minor=int(t.amount * 100),
+                            amount_minor=decimal_to_minor(t.amount),
                             currency=t.currency,
                             raw_description=t.description,
                         )
                     )
+            except ParserError:
+                raise
             except Exception:
                 pass
 

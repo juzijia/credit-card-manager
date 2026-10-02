@@ -1,11 +1,22 @@
 from dataclasses import dataclass
 from datetime import date
+from decimal import Decimal
 from pathlib import Path
 from typing import Protocol
 
 
 class ParserError(ValueError):
     """A source is recognized but cannot be parsed safely."""
+
+
+def decimal_to_minor(amount: Decimal, field: str = "transaction") -> int:
+    """Preserve exact cents; never silently round imported source amounts."""
+    if not amount.is_finite():
+        raise ParserError(f"Invalid {field} amount")
+    minor = amount * 100
+    if minor != minor.to_integral_value():
+        raise ParserError(f"{field} has more than two nonzero decimal places")
+    return int(minor)
 
 
 @dataclass(frozen=True, slots=True)
