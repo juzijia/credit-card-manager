@@ -7,10 +7,11 @@ from sqlalchemy.orm import Session
 
 from app.integrations.bean_sieve import parse_file
 from app.models.parsed_batch import ParsedBatch, ParsedEntry
+from app.parsers.base import decimal_to_minor
 
 
 def _minor_units(amount: Decimal) -> int:
-    return int((amount * 100).to_integral_exact())
+    return decimal_to_minor(amount)
 
 
 def stage_parsed_file(
@@ -31,6 +32,7 @@ def stage_parsed_file(
         raise ValueError(
             f"Provider {provider.provider_id} recognized the file but returned no transactions"
         )
+    amounts = [_minor_units(item.amount) for item in transactions]
     batch = ParsedBatch(
         source_sha256=digest,
         source_type=source_type,
@@ -49,12 +51,12 @@ def stage_parsed_file(
                 source_line=index,
                 transaction_date=item.date,
                 posting_date=item.post_date,
-                amount_minor=_minor_units(item.amount),
+                amount_minor=amount,
                 currency=item.currency,
                 description=item.description,
                 card_last4=item.card_last4,
             )
-            for index, item in enumerate(transactions, start=1)
+            for index, (item, amount) in enumerate(zip(transactions, amounts), start=1)
         ]
     )
     session.commit()

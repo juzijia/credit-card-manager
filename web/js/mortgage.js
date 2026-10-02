@@ -8,7 +8,10 @@
   'use strict';
 
   function round2(val) {
-    return Math.round((Number(val) + Number.EPSILON) * 100) / 100;
+    var value = Number(val);
+    var parts = String(Math.abs(value)).split('e');
+    var shifted = Number(parts[0] + 'e' + (Number(parts[1] || 0) + 2));
+    return Math.sign(value) * Math.round(shifted) / 100;
   }
 
   /**
