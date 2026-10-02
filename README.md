@@ -51,3 +51,4 @@ docker compose up --build -d
 - WebDAV 备份默认启用端到端加密（经 rclone crypt 加密上传）；若未设置加密密码将直接阻止备份。仅在显式开启「允许明文备份（allow_unencrypted_backup）」时才允许上传未加密的 SQLite 备份。加密与明文备份存放于独立的远端目录，切换模式不影响已有备份，列表与恢复仅针对当前模式。
 - WebDAV 备份仅上传 SQLite 数据库文件，不包含 `./data/config` 下的配置（含 secrets.json）；数据全部保存在 `./data` 目录，整体迁移请备份该目录。
 - 如需挂在公网，建议配置反向代理（HTTPS），并在 `CCM_ALLOWED_HOST` 填入对应域名。
+- 字典更新仅使用项目维护的固定资料源；网络不可用时继续使用内置资料，格式或结构异常的资料不会覆盖现有文件。
