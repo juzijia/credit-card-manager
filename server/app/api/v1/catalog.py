@@ -1,9 +1,12 @@
 from pathlib import Path
 import json
+import os
+import tempfile
+import urllib.request
 from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, TypeAdapter
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
@@ -307,49 +310,95 @@ def batch_review_requests(
 
 
 DEFAULT_CATALOG_SYNC_URL = "https://raw.githubusercontent.com/juzijia/credit-card-manager/main/server/app/data/catalog_fixtures.json"
+MAX_CATALOG_SYNC_BYTES = 8 * 1024 * 1024
 _FIXTURES_PATH = Path(__file__).resolve().parents[2] / "data" / "catalog_fixtures.json"
 
 class CatalogSyncRequest(BaseModel):
-    url: str | None = None
+    model_config = ConfigDict(extra="forbid")
+
+
+class _NoCatalogRedirects(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def _validate_catalog_fixtures(raw_text: str, session: Session) -> dict[str, list[dict[str, Any]]]:
+    candidates = TypeAdapter(dict[str, list[CardExtractCandidate]]).validate_python(
+        json.loads(raw_text), strict=True
+    )
+    if not candidates or not any(candidates.values()):
+        raise ValueError("字典资料不能为空")
+    bank_ids = set(session.scalars(select(BankRegistry.bank_id)))
+    for bank_id, cards in candidates.items():
+        if bank_id not in bank_ids:
+            raise ValueError("字典包含未知银行")
+        names: set[str] = set()
+        for card in cards:
+            name = card.canonical_name.strip()
+            if card.bank_id != bank_id or not 1 <= len(name) <= 64 or name in names:
+                raise ValueError("卡片银行或名称无效，或存在重复卡片")
+            names.add(name)
+            if not 0 <= card.confidence <= 1:
+                raise ValueError("卡片资料置信度无效")
+            for fee in (card.annual_fee.primary, card.annual_fee.supplementary):
+                if fee is not None and not 0 <= fee < 2**63:
+                    raise ValueError("卡片年费金额无效")
+    return {bank_id: [card.model_dump(exclude_unset=True) for card in cards]
+            for bank_id, cards in candidates.items()}
+
+
+def _replace_catalog_fixture(raw_text: str) -> None:
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", newline="", dir=_FIXTURES_PATH.parent,
+            prefix=".catalog-fixtures-", suffix=".tmp", delete=False,
+        ) as handle:
+            temporary = Path(handle.name)
+            handle.write(raw_text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, _FIXTURES_PATH)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 @router.post("/sync", dependencies=[Depends(require_owner_access)])
 def sync_catalog(
     payload: CatalogSyncRequest,
     session: SessionDep,
 ) -> dict[str, Any]:
-    import urllib.request
     from datetime import datetime
     from sqlalchemy import func
 
     ensure_bank_registries(session)
-    source = "builtin"
-    message = "已基于内置资料库更新完成"
-    target_url = payload.url.strip() if (payload.url and payload.url.strip()) else None
+    source = "remote"
+    target_url = DEFAULT_CATALOG_SYNC_URL
+    message = "已从可信源同步更新完成"
     raw_text: str | None = None
+    raw_bytes: bytes | None = None
+    try:
+        req = urllib.request.Request(
+            target_url,
+            headers={"User-Agent": "CreditCardManager/1.0"},
+        )
+        opener = urllib.request.build_opener(_NoCatalogRedirects())
+        with opener.open(req, timeout=10) as resp:
+            if resp.status != 200:
+                raise OSError(f"HTTP {resp.status}")
+            raw_bytes = resp.read(MAX_CATALOG_SYNC_BYTES + 1)
+    except OSError:
+        source = "builtin_fallback"
+        message = "可信源暂不可用，已基于内置资料库更新完成"
 
-    if target_url:
+    if raw_bytes is not None:
+        if len(raw_bytes) > MAX_CATALOG_SYNC_BYTES:
+            raise HTTPException(status_code=413, detail="字典响应超过 8 MiB 限制")
         try:
-            req = urllib.request.Request(
-                target_url,
-                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) CreditCardManager/1.0"}
-            )
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                if resp.status == 200:
-                    raw_text = resp.read().decode("utf-8")
-                    source = "remote"
-                    message = f"已从远程源同步更新完成: {target_url}"
-                    try:
-                        _FIXTURES_PATH.write_text(raw_text, encoding="utf-8")
-                    except Exception:
-                        pass
-                else:
-                    source = "builtin_fallback"
-                    message = f"远程源返回 HTTP {resp.status}，已自动降级基于内置资料库更新完成"
-        except Exception as exc:
-            source = "builtin_fallback"
-            message = f"远程源拉取失败（{exc}），已自动降级基于内置资料库更新完成"
-
-    if raw_text is None:
+            raw_text = raw_bytes.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise HTTPException(status_code=422, detail="字典文件必须使用 UTF-8 编码") from exc
+    else:
         if not _FIXTURES_PATH.exists():
             raise HTTPException(
                 status_code=500,
@@ -364,12 +413,18 @@ def sync_catalog(
             ) from exc
 
     try:
-        data = json.loads(raw_text)
-    except Exception as exc:
+        data = _validate_catalog_fixtures(raw_text, session)
+    except ValueError as exc:
         raise HTTPException(
             status_code=422,
-            detail=f"字典文件格式解析失败: {exc}",
+            detail="字典文件格式或结构无效",
         ) from exc
+
+    if source == "remote":
+        try:
+            _replace_catalog_fixture(raw_text)
+        except OSError as exc:
+            raise HTTPException(status_code=500, detail="保存字典文件失败") from exc
 
     now = datetime.now()
     created, updated = upsert_catalog_products(session, data, now=now)
