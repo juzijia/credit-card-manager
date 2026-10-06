@@ -184,3 +184,39 @@ def ccm_client(ccm_app):
 
     with TestClient(ccm_app) as client:
         yield client
+
+
+@pytest.fixture
+def admin_token() -> str:
+    return "test-admin-token-that-is-at-least-32-characters"
+
+
+@pytest.fixture
+def client(tmp_path, admin_token):
+    from fastapi.testclient import TestClient
+    from app.core.config import Settings
+    from app.db.base import Base
+    from app.main import create_app
+
+    settings = Settings(
+        _env_file=None,
+        env="test",
+        auth_mode="token",
+        admin_token=admin_token,
+        database_url=f"sqlite:///{(tmp_path / 'test.db').as_posix()}",
+        timezone="Asia/Shanghai",
+        error_log_path=None,
+        background_tasks_enabled=False,
+    )
+    application = create_app(settings)
+    Base.metadata.create_all(application.state.engine)
+    try:
+        with TestClient(application) as test_client:
+            yield test_client
+    finally:
+        application.state.engine.dispose()
+
+
+@pytest.fixture
+def auth_headers(admin_token) -> dict[str, str]:
+    return {"Authorization": f"Bearer {admin_token}"}
