@@ -50,7 +50,6 @@ class OwnerTokenValidationTest(unittest.TestCase):
         env_without.pop("CCM_OWNER_TOKEN", None)
         proc = subprocess.run(
             ["docker", "compose", "config"],
-            shell=True,
             capture_output=True,
             text=True,
             cwd=str(repo_root),
@@ -63,7 +62,6 @@ class OwnerTokenValidationTest(unittest.TestCase):
         env_with["CCM_OWNER_TOKEN"] = secrets.token_urlsafe(32)
         proc_ok = subprocess.run(
             ["docker", "compose", "config"],
-            shell=True,
             capture_output=True,
             text=True,
             cwd=str(repo_root),
