@@ -29,6 +29,7 @@ from app.models.email_account import EmailAccount
 from app.parsers.eml import MAX_EML_BYTES
 from app.services.backup import backup_due, execute_backup, get_backup_setting
 from app.services.catalog_service import ensure_bank_registries, ensure_catalog_products
+from app.services.card_products import refresh_dictionary_cards
 from app.services.system_settings import ensure_history_cutoff_date
 
 logger = logging.getLogger(__name__)
@@ -303,6 +304,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             ensure_history_cutoff_date(session)
             ensure_bank_registries(session)
             ensure_catalog_products(session)
+            refresh_dictionary_cards(session)
         background_enabled = resolved_settings.background_tasks_enabled
         imap_task = asyncio.create_task(imap_loop()) if background_enabled else None
         reminder_task = asyncio.create_task(reminder_loop()) if background_enabled else None

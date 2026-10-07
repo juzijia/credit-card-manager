@@ -17,8 +17,7 @@ CLI mapping:
 - `GET /api/v1/cards/{card_id}` - Get details of a specific card.
 - `GET /api/v1/cards/{card_id}/interest-free-estimate` - Estimate interest-free days and repayment periods.
 - `GET /api/v1/cards/calendar-estimates` - View estimated calendar timeline for cards.
-- `PATCH /api/v1/cards/{card_id}` - Update card properties (e.g. `statement_day`, `due_day`, `grace_period_days`, `annual_fee_minor`, `annual_fee_policy`, `reminder_enabled`).
-- `GET /api/v1/cards/rules` - View bank statement matching rules.
+- `PATCH /api/v1/cards/{card_id}` - Update card properties (e.g. `statement_day`, `due_day`, `annual_fee_minor`, `annual_fee_policy`, `reminder_enabled`).
 
 ### Catalog (Card Dictionary & Assets)
 - `GET /api/v1/catalog/stats` - Overview statistics of the bank & card dictionary.

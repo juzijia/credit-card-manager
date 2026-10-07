@@ -24,11 +24,6 @@ from app.modules.optional.interest_free import (
 from app.schemas.interest_free import FutureInterestFreeEstimateRead, InterestFreeRead
 from app.models.import_record import ImportRecord, ImportStatus
 from app.services.due_date_rule_resolver import resolve_effective_due_rule
-from app.services.bank_rules import (
-    get_bank_rules,
-    import_bank_rules,
-    match_product_rule,
-)
 from app.services.card_blacklist import (
     add_ignored_card,
     get_ignored_cards,
@@ -39,12 +34,6 @@ from app.services.statements import local_today
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 SessionDep = Annotated[Session, Depends(get_session)]
-
-
-class BankRulesImport(BaseModel):
-    rules: dict[str, Any]
-    apply_existing: bool = True
-    mode: Literal["merge", "replace"] = "merge"
 
 
 class CalendarEstimateRead(BaseModel):
@@ -78,7 +67,7 @@ def create_card(payload: CardCreate, session: SessionDep) -> Card:
         card.annual_fee_source = "manual"
     else:
         card.annual_fee_source = None
-        apply_product_dictionary(card)
+        apply_product_dictionary(card, session)
     session.add(card)
     try:
         session.commit()
@@ -90,35 +79,6 @@ def create_card(payload: CardCreate, session: SessionDep) -> Card:
         ) from exc
     session.refresh(card)
     return card
-
-
-@router.get("/rules", dependencies=[Depends(require_agent_access)])
-def get_rules() -> dict[str, object]:
-    return get_bank_rules()
-
-
-@router.post("/rules/import", dependencies=[Depends(require_agent_access)])
-def import_rules(payload: BankRulesImport, session: SessionDep) -> dict[str, object]:
-    try:
-        rules = import_bank_rules(payload.rules, merge=payload.mode == "merge")
-    except (OSError, ValueError) as exc:
-        raise HTTPException(status_code=422, detail=str(exc)) from exc
-
-    matched = 0
-    updated = 0
-    if payload.apply_existing:
-        for card in session.scalars(select(Card)):
-            if match_product_rule(card.bank_code, card.card_product):
-                matched += 1
-                if apply_product_dictionary(card):
-                    updated += 1
-        session.commit()
-    return {
-        "success": True,
-        "bank_count": len(rules),
-        "matched_cards": matched,
-        "updated_cards": updated,
-    }
 
 
 @router.get(
@@ -323,7 +283,7 @@ def update_card(card_id: str, payload: CardUpdate, session: SessionDep) -> Card:
     if annual_changed:
         card.annual_fee_source = "manual"
     elif product_changed:
-        apply_product_dictionary(card)
+        apply_product_dictionary(card, session)
 
     session.commit()
     session.refresh(card)

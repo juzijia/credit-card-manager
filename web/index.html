@@ -6014,7 +6014,6 @@ const IconDictionary = {
           '首年5万积分抵扣，次年消费满30笔或5万积分抵扣',
           '刚性年费，核卡即收不可减免'
         ];
-        const bankRules = ref({});
         const showCreditLimit = ref(localStorage.getItem('ccm_show_credit_limit') !== 'false');
        const showSevenDaysDue = ref(localStorage.getItem('ccm_show_seven_days_due') !== 'false');
        const showTotalDue = ref(localStorage.getItem('ccm_show_total_due') !== 'false');
@@ -6864,14 +6863,13 @@ const IconDictionary = {
         }
       async function loadAll() {
         try {
-            const [d, c, s, imap, marked, manualMarked, rulesData, mbills, txns] = await Promise.all([
+            const [d, c, s, imap, marked, manualMarked, mbills, txns] = await Promise.all([
              api('/dashboard'),
              api('/cards'),
              api('/statements'),
              api('/imap/status').catch(() => null),
              api('/statements/marked-paid'),
              api('/manual-bills/marked-paid'),
-             api('/cards/rules').catch(() => null),
               api('/manual-bills').catch(() => []),
               api('/transactions').catch(() => [])
            ]);
@@ -6890,7 +6888,6 @@ const IconDictionary = {
            if (activeCalPrefix !== curMonthPrefix) {
              fetchCalendarMarkedPaid(activeCalPrefix);
            }
-           if (rulesData) bankRules.value = rulesData;
            manualBillsList.value = Array.isArray(mbills) ? mbills : [];
            allTransactions.value = Array.isArray(txns) ? txns : [];
             await loadCatalogData();
@@ -8629,7 +8626,6 @@ const IconDictionary = {
           const bankId = normalizeBankId(code || bankName);
 
           const list = [];
-          const seen = new Set();
 
           const catalogList = (catalogProducts.value || []).filter(p => normalizeBankId(p.bank_id) === bankId);
           for (const p of catalogList) {
@@ -8648,37 +8644,8 @@ const IconDictionary = {
               benefits: p.benefits || [],
               source: 'catalog'
             });
-            seen.add(p.canonical_name.toLowerCase());
-            for (const a of (p.aliases || [])) {
-              seen.add(a.toLowerCase());
-            }
           }
 
-         const rule = bankRules.value[code] || bankRules.value[bankId];
-         if (rule && rule.products) {
-           for (const [name, p] of Object.entries(rule.products)) {
-             if (!seen.has(name.toLowerCase())) {
-                const feeCny = p.annual_fee_cny !== undefined && p.annual_fee_cny !== null
-                  ? Number(p.annual_fee_cny)
-                  : (p.annual_fee_minor !== undefined && p.annual_fee_minor !== null ? p.annual_fee_minor / 100 : null);
-                const feeMinor = p.annual_fee_minor !== undefined && p.annual_fee_minor !== null
-                  ? p.annual_fee_minor
-                  : (feeCny !== null && feeCny !== undefined ? Math.round(feeCny * 100) : null);
-                list.push({
-                  name,
-                  aliases: [],
-                  card_level: null,
-                  annual_fee_minor: feeMinor,
-                  annual_fee_cny: feeCny,
-                  policy: p.policy || '',
-                  artwork_url: null,
-                  benefits: [],
-                  source: 'rule'
-                });
-                seen.add(name.toLowerCase());
-              }
-            }
-          }
 
           return list;
         });
@@ -10635,7 +10602,6 @@ const IconDictionary = {
          editingCardProducts,
          currentSelectedProduct,
          onSelectCardProductPreset,
-          bankRules,
           showCreditLimit,
           toggleCreditLimitVisibility,
           showSevenDaysDue,
