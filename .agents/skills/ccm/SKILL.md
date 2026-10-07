@@ -9,17 +9,17 @@ Use this skill to inspect cards, query upcoming bills, view parsed transactions,
 
 ## Fixed LAN configuration
 
-`scripts/ccm_api.py` reads `C:\Users\orange\.agents\skills\secrets\ccm.env`. The fixed LAN base URL, Host header, and Agent Token are kept there.
+`scripts/ccm_api.py` reads `~/.agents/skills/secrets/ccm.env`. The fixed LAN base URL, Host header, and Agent Token are kept there.
 
 The tool enforces requests against private LAN addresses and passes authentication via `Authorization: Bearer <AGENT_TOKEN>`. Never print, expose, or log the configured Agent Token in commands, prompts, or reports. Read [references/manual.md](references/manual.md) before the first CCM task.
 
 ## Workflow
 
-1. Run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 doctor` before the first CCM operation in a turn.
+1. Run `python3 scripts/ccm_api.py doctor` before the first CCM operation in a turn.
 2. For routine queries (cards, statements, due amounts, dashboard, transactions):
-   `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 get --path <known-path>`
+   `python3 scripts/ccm_api.py get --path <known-path>`
 3. For state-changing operations (trigger sync, mark bill paid, update card settings):
-   `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 post --path <known-path> [--json '<payload>']`
+   `python3 scripts/ccm_api.py post --path <known-path> [--json '<payload>']`
 4. Check [references/api.md](references/api.md) for the exact list of routes permitted under the server-side Agent allowlist.
 
 ## Operational Boundaries

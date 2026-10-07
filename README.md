@@ -37,7 +37,7 @@ services:
       CCM_TIMEZONE: Asia/Shanghai
 ```
 
-```powershell
+```bash
 docker compose up --build -d
 ```
 
