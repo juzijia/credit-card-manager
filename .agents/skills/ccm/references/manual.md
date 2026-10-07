@@ -1,9 +1,9 @@
 # Credit Card Manager (CCM) Agent 操作指南
 
-Version: 2026-09-10  
-标准入口：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1`  
+Version: 2026-10-07
+标准入口：`python3 scripts/ccm_api.py`
 底层脚本：`scripts/ccm_api.py`  
-凭据存储：`C:\Users\orange\.agents\skills\secrets\ccm.env`
+凭据存储：`~/.agents/skills/secrets/ccm.env`
 
 ---
 
@@ -11,8 +11,8 @@ Version: 2026-09-10
 
 在任务中首次操作 CCM 前，必须先执行 `doctor`：
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 doctor
+```bash
+python3 scripts/ccm_api.py doctor
 ```
 
 - 验证局域网网络可达性（`/health` 返回 200）。
@@ -23,13 +23,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 doctor
 
 ## 二、基础操作命令规范
 
-所有对 CCM 的交互必须通过 `run.ps1`，严禁手写 curl、urllib 或临时 HTTP 脚本。
+所有对 CCM 的交互必须通过 `scripts/ccm_api.py`，严禁手写 curl、urllib 或临时 HTTP 脚本。
 
 ### 1. 查询类操作（GET）
 
 格式：
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 get --path <API_PATH>
+```bash
+python3 scripts/ccm_api.py get --path <API_PATH>
 ```
 
 常用查询路径：
@@ -46,26 +46,26 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 get --path <
 ### 2. 状态变更类操作（POST / PATCH）
 
 格式：
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 post --path <API_PATH> [--json '<JSON_PAYLOAD>']
+```bash
+python3 scripts/ccm_api.py post --path <API_PATH> [--json '<JSON_PAYLOAD>']
 ```
 
 常用操作：
 - **触发增量邮件同步**：
-  ```powershell
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 post --path /api/v1/imap/sync
+  ```bash
+  python3 scripts/ccm_api.py post --path /api/v1/imap/sync
   ```
 - **标记账单全额还清**：
-  ```powershell
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 post --path /api/v1/statements/<statement_id>/mark-paid
+  ```bash
+  python3 scripts/ccm_api.py post --path /api/v1/statements/<statement_id>/mark-paid
   ```
 - **标记周期手工账单已结清**：
-  ```powershell
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 post --path /api/v1/manual-bills/<bill_id>/mark-paid
+  ```bash
+  python3 scripts/ccm_api.py post --path /api/v1/manual-bills/<bill_id>/mark-paid
   ```
 - **发送测试通知**：
-  ```powershell
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run.ps1 post --path /api/v1/notifications/test
+  ```bash
+  python3 scripts/ccm_api.py post --path /api/v1/notifications/test
   ```
 
 ---
