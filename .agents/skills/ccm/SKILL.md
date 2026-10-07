@@ -11,16 +11,14 @@ Use this skill to inspect cards, query upcoming bills, view parsed transactions,
 
 `scripts/ccm_api.py` reads `~/.agents/skills/secrets/ccm.env`. The fixed LAN base URL, Host header, and Agent Token are kept there.
 
-The tool enforces requests against private LAN addresses and passes authentication via `Authorization: Bearer <AGENT_TOKEN>`. Never print, expose, or log the configured Agent Token in commands, prompts, or reports. Read [references/manual.md](references/manual.md) before the first CCM task.
+The tool enforces requests against private LAN addresses and passes authentication via `Authorization: Bearer <AGENT_TOKEN>`. Never print, expose, or log the configured Agent Token in commands, prompts, or reports. Use [references/api.md](references/api.md) as the route contract.
 
 ## Workflow
 
 1. Run `python3 scripts/ccm_api.py doctor` before the first CCM operation in a turn.
-2. For routine queries (cards, statements, due amounts, dashboard, transactions):
-   `python3 scripts/ccm_api.py get --path <known-path>`
-3. For state-changing operations (trigger sync, mark bill paid, update card settings):
-   `python3 scripts/ccm_api.py post --path <known-path> [--json '<payload>']`
-4. Check [references/api.md](references/api.md) for the exact list of routes permitted under the server-side Agent allowlist.
+2. For routine queries, use `get`. For JSON state changes, use the HTTP verb that matches the allowlist: `post`, `patch`, `put`, or `delete`.
+3. For statement file uploads, use `upload --path <known-path> --file <path>` and add repeated `--query KEY=VALUE` options only when the API route documents query parameters.
+4. Check [references/api.md](references/api.md) for the exact routes permitted under the server-side Agent allowlist; do not call routes outside it.
 
 ## Operational Boundaries
 

@@ -3,6 +3,11 @@
 All requests must be made via `scripts/ccm_api.py` using the configured Agent Token.
 Agents have a fixed single permission profile defined by the server-side route allowlist (`AGENT_ROUTE_ALLOWLIST`).
 
+CLI mapping:
+- Use `get`, `post`, `patch`, `put`, or `delete` for the matching HTTP verb.
+- Use `upload --path <route> --file <path>` for multipart statement uploads.
+- Add query parameters to uploads with repeated `--query KEY=VALUE` (for example `card_id=<id>` or `provider_id=<id>`).
+
 ---
 
 ## 1. Allowed Route Endpoints
