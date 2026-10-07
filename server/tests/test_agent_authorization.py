@@ -35,8 +35,6 @@ EXPECTED_AGENT_ACCESS = {
         route: "policy"
         for route in {
             ("POST", "/api/v1/cards"),
-            ("GET", "/api/v1/cards/rules"),
-            ("POST", "/api/v1/cards/rules/import"),
             ("GET", "/api/v1/cards"),
             ("GET", "/api/v1/cards/calendar-estimates"),
             ("GET", "/api/v1/cards/{card_id}"),

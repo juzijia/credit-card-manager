@@ -29,7 +29,6 @@ AGENT_ROUTE_ALLOWLIST: frozenset[tuple[str, str]] = frozenset(
     {
         ("GET", "/api/v1/cards"),
         ("GET", "/api/v1/cards/calendar-estimates"),
-        ("GET", "/api/v1/cards/rules"),
         ("GET", "/api/v1/cards/{card_id}"),
         ("GET", "/api/v1/cards/{card_id}/interest-free-estimate"),
         ("PATCH", "/api/v1/cards/{card_id}"),

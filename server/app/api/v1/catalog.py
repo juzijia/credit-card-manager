@@ -1,7 +1,5 @@
 from pathlib import Path
 import json
-import os
-import tempfile
 import urllib.request
 from typing import Annotated, Any, Literal
 
@@ -33,6 +31,7 @@ from app.schemas.catalog import (
     ScanTriggerRequest,
 )
 from app.services.catalog_scanner import run_catalog_scan
+from app.services.card_products import refresh_dictionary_cards
 from app.services.catalog_service import (
     ensure_bank_registries,
     upsert_catalog_products,
@@ -311,7 +310,7 @@ def batch_review_requests(
 
 DEFAULT_CATALOG_SYNC_URL = "https://raw.githubusercontent.com/juzijia/credit-card-manager/main/server/app/data/catalog_fixtures.json"
 MAX_CATALOG_SYNC_BYTES = 8 * 1024 * 1024
-_FIXTURES_PATH = Path(__file__).resolve().parents[2] / "data" / "catalog_fixtures.json"
+_BUNDLED_FIXTURES_PATH = Path(__file__).resolve().parents[2] / "data" / "catalog_fixtures.json"
 
 class CatalogSyncRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -347,22 +346,6 @@ def _validate_catalog_fixtures(raw_text: str, session: Session) -> dict[str, lis
             for bank_id, cards in candidates.items()}
 
 
-def _replace_catalog_fixture(raw_text: str) -> None:
-    temporary: Path | None = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            mode="w", encoding="utf-8", newline="", dir=_FIXTURES_PATH.parent,
-            prefix=".catalog-fixtures-", suffix=".tmp", delete=False,
-        ) as handle:
-            temporary = Path(handle.name)
-            handle.write(raw_text)
-            handle.flush()
-            os.fsync(handle.fileno())
-        os.replace(temporary, _FIXTURES_PATH)
-    finally:
-        if temporary is not None:
-            temporary.unlink(missing_ok=True)
-
 @router.post("/sync", dependencies=[Depends(require_owner_access)])
 def sync_catalog(
     payload: CatalogSyncRequest,
@@ -372,10 +355,7 @@ def sync_catalog(
     from sqlalchemy import func
 
     ensure_bank_registries(session)
-    source = "remote"
     target_url = DEFAULT_CATALOG_SYNC_URL
-    message = "已从可信源同步更新完成"
-    raw_text: str | None = None
     raw_bytes: bytes | None = None
     try:
         req = urllib.request.Request(
@@ -388,46 +368,43 @@ def sync_catalog(
                 raise OSError(f"HTTP {resp.status}")
             raw_bytes = resp.read(MAX_CATALOG_SYNC_BYTES + 1)
     except OSError:
-        source = "builtin_fallback"
-        message = "可信源暂不可用，已基于内置资料库更新完成"
-
-    if raw_bytes is not None:
+        total = session.scalar(select(func.count(CatalogProduct.id))) or 0
+        if total > 0:
+            return {
+                "success": True,
+                "source": "database_fallback",
+                "message": "可信源暂不可用，继续使用已持久化的本地字典",
+                "url": target_url,
+                "created": 0,
+                "updated": 0,
+                "total": total,
+            }
+        if not _BUNDLED_FIXTURES_PATH.exists():
+            raise HTTPException(status_code=500, detail="未找到内置字典资料库文件")
+        try:
+            raw_text = _BUNDLED_FIXTURES_PATH.read_text(encoding="utf-8")
+        except OSError as exc:
+            raise HTTPException(status_code=500, detail="读取内置字典文件失败") from exc
+        source = "builtin_bootstrap"
+        message = "可信源暂不可用，已使用内置资料初始化本地字典"
+    else:
         if len(raw_bytes) > MAX_CATALOG_SYNC_BYTES:
             raise HTTPException(status_code=413, detail="字典响应超过 8 MiB 限制")
         try:
             raw_text = raw_bytes.decode("utf-8")
         except UnicodeDecodeError as exc:
             raise HTTPException(status_code=422, detail="字典文件必须使用 UTF-8 编码") from exc
-    else:
-        if not _FIXTURES_PATH.exists():
-            raise HTTPException(
-                status_code=500,
-                detail="未找到内置字典资料库文件",
-            )
-        try:
-            raw_text = _FIXTURES_PATH.read_text(encoding="utf-8")
-        except Exception as exc:
-            raise HTTPException(
-                status_code=500,
-                detail=f"读取内置字典文件失败: {exc}",
-            ) from exc
+        source = "remote"
+        message = "已从可信源同步更新完成"
 
     try:
         data = _validate_catalog_fixtures(raw_text, session)
     except ValueError as exc:
-        raise HTTPException(
-            status_code=422,
-            detail="字典文件格式或结构无效",
-        ) from exc
-
-    if source == "remote":
-        try:
-            _replace_catalog_fixture(raw_text)
-        except OSError as exc:
-            raise HTTPException(status_code=500, detail="保存字典文件失败") from exc
+        raise HTTPException(status_code=422, detail="字典文件格式或结构无效") from exc
 
     now = datetime.now()
     created, updated = upsert_catalog_products(session, data, now=now)
+    refreshed_cards = refresh_dictionary_cards(session)
     total = session.scalar(select(func.count(CatalogProduct.id))) or 0
     return {
         "success": True,
@@ -436,6 +413,7 @@ def sync_catalog(
         "url": target_url,
         "created": created,
         "updated": updated,
+        "refreshed_cards": refreshed_cards,
         "total": total,
     }
 

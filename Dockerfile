@@ -30,9 +30,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY server ./server
 COPY web ./web
-RUN python /app/web/apply_card_management_ui.py /app/web/index.html \
-    && python /app/web/apply_card_settings_ui.py /app/web/index.html \
-    && rm /app/web/apply_card_management_ui.py /app/web/apply_card_settings_ui.py
 WORKDIR /app/server
 RUN chmod +x scripts/docker-entrypoint.sh
 
