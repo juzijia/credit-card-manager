@@ -1,0 +1,42 @@
+name: CI
+
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 对齐 Dockerfile 生产基线 python:3.13-slim
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      # 安装 uv 加速依赖安装；锁定 pytest==8.4.2 避免 conftest 夹具初始化行为差异
+      - name: Install dependencies
+        run: |
+          pip install uv
+          uv pip install --system -r server/requirements.txt pytest==8.4.2
+
+      # pytest.ini 已配置 testpaths = server/tests 与 pythonpath = server，直接执行 pytest
+      - name: Run backend tests
+        run: pytest
+
+      - name: Run frontend tests
+        run: node --test test/*.test.js web/*.cjs
