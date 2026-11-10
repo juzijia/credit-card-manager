@@ -289,6 +289,103 @@ def test_boc_parser_explicit_zero_due_amount(monkeypatch) -> None:
     assert parsed.minimum_due_minor == 0
 
 
+@pytest.mark.parametrize(
+    "table_amount, currency, summary_text",
+    [
+        ("", "CNY", "150.00\nUSD"),
+        ("", "CNY", "本期人民币欠款总计\n--\n美元 USD 150.00"),
+        ("", "CNY", "本期人民币欠款总计：USD 150.00"),
+        ("", "CNY", "本期人民币欠款总计：150.00 USD"),
+        ("USD 150.00", "USD", ""),
+        ("150.00 USD", "USD", ""),
+        ("150.00", "USD", ""),
+    ],
+    ids=["usd-fallback", "missing-cny", "usd-prefix", "usd-suffix",
+         "table-usd-prefix", "table-usd-suffix", "table-usd-column"],
+)
+def test_boc_parser_rejects_usd_total_due(
+    monkeypatch, table_amount, currency, summary_text
+) -> None:
+    page = _FakePage([
+        _FakeTable([
+            ["Payment Due Date", "Statement Closing Date", "Total Due"],
+            ["2026-08-20", "2026-07-31", table_amount],
+        ]),
+        _FakeTable([
+            ["Credit Card No.", "Current Balance", "Currency", "Minimum Payment Due"],
+            ["**** 1234", table_amount, currency, "0.00"],
+        ]),
+    ])
+    monkeypatch.setattr(page, "get_text", lambda: f"1234\n人民币RMB\n{summary_text}")
+    doc = _FakeDocument([page])
+    monkeypatch.setattr("app.parsers.boc.pymupdf.open", lambda **_kwargs: doc)
+    monkeypatch.setattr("app.parsers.boc.get_provider", lambda _name: SimpleNamespace(parse=lambda _path: []))
+
+    with pytest.raises(ParserError):
+        BocStatementParser().parse_pdf_bytes(b"synthetic-boc-pdf")
+    assert doc.closed is True
+
+
+@pytest.mark.parametrize(
+    "summary_text, expected",
+    [
+        ("本期人民币欠款总计：CNY 321.00\nUSD 150.00", 32100),
+        ("150.00\nUSD\n本期人民币欠款总计\n￥1,234.56", 123456),
+        ("本期人民币欠款总计 0.00\n美元 USD 150.00", 0),
+    ],
+)
+def test_boc_parser_text_cny_total_is_not_replaced_by_usd(
+    monkeypatch, summary_text, expected
+) -> None:
+    page = _FakePage([])
+    monkeypatch.setattr(page, "get_text", lambda: (
+        "Payment Due Date 2026-08-20\nStatement Closing Date 2026-07-31\n"
+        f"1234\n人民币RMB\n{summary_text}"
+    ))
+    doc = _FakeDocument([page])
+    monkeypatch.setattr("app.parsers.boc.pymupdf.open", lambda **_kwargs: doc)
+    monkeypatch.setattr("app.parsers.boc.get_provider", lambda _name: SimpleNamespace(parse=lambda _path: []))
+
+    parsed = BocStatementParser().parse_pdf_bytes(b"synthetic-boc-pdf")
+
+    assert parsed.total_due_minor == expected
+    assert parsed.currency == "CNY"
+    assert doc.closed is True
+
+
+@pytest.mark.parametrize("file_type", ["eml", "pdf"])
+def test_boc_usd_fallback_import_creates_no_financial_rows(
+    client: TestClient, auth_headers: dict[str, str], monkeypatch, file_type
+) -> None:
+    from sqlalchemy import select
+    from app.models.card import Card
+    from app.models.repayment import Repayment
+    from app.models.statement import Statement
+    from app.models.transaction import Transaction
+
+    page = _FakePage([])
+    monkeypatch.setattr(page, "get_text", lambda: (
+        "Payment Due Date 2026-08-20\nStatement Closing Date 2026-07-31\n"
+        "1234\n人民币RMB\n150.00\nUSD"
+    ))
+    monkeypatch.setattr("app.parsers.boc.pymupdf.open", lambda **_kwargs: _FakeDocument([page]))
+    monkeypatch.setattr("app.parsers.boc.get_provider", lambda _name: SimpleNamespace(parse=lambda _path: []))
+    data = _synthetic_boc_eml() if file_type == "eml" else b"synthetic-boc-pdf"
+    route = "/api/v1/imports/eml" if file_type == "eml" else "/api/v1/imports/file"
+    mime_type = "message/rfc822" if file_type == "eml" else "application/pdf"
+
+    response = client.post(
+        route, headers=auth_headers,
+        files={"file": (f"statement.{file_type}", data, mime_type)},
+    )
+
+    assert response.status_code == 422, response.text
+    assert response.json()["detail"]
+    with client.app.state.session_factory() as session:
+        for model in (Card, Statement, Transaction, Repayment):
+            assert session.scalar(select(model)) is None
+
+
 def _synthetic_boc_reminder_eml(
     subject: str = "中国银行信用卡还款提醒",
     html: str = "<html><body>尊敬的客户，您的中国银行信用卡（卡号末四位：3723），到期还款日：2026-09-15，本期应还款额：100.00元。还款提醒：请按时还款。</body></html>",

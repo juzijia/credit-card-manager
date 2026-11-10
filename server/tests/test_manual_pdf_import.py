@@ -159,7 +159,7 @@ def test_bare_boc_pdf_dispatches_to_boc_parser_and_persists(
     assert response.status_code == 200, response.text
     payload = response.json()
     assert payload["bank_code"] == "BOC"
-    assert payload["parser_version"] == "1.1.0"
+    assert payload["parser_version"] == "1.1.1"
     assert payload["statement"]["card_last4"] == "4321"
     assert payload["statement"]["total_due_minor"] == 12_345
     assert calls == {"boc": 1, "citic": 1}
