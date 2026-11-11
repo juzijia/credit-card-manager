@@ -1,6 +1,8 @@
 from datetime import date
 
-from app.parsers.base import ParsedSource
+import pytest
+
+from app.parsers.base import ParsedSource, ParserError
 from app.parsers.icbc import IcbcStatementParser
 from app.services.statement_date_semantics import is_verified_icbc_natural_month
 
@@ -13,20 +15,40 @@ def _source(
     due_date: str = "2025年10月25日",
     transaction_date: str = "2025-09-01",
     description: str = "合成消费",
+    extra_summaries: list[str] | None = None,
+    transactions: list[tuple[str, str, str]] | None = None,
 ) -> ParsedSource:
+    summary_html = """
+      <table><tr>
+        <td>1646(牡丹贷记卡)</td><td>人民币(本位币)</td>
+        <td>100.00/RMB</td><td>10.00/RMB</td><td>32,000.00/RMB</td>
+      </tr></table>
+    """
+    if extra_summaries:
+        for s in extra_summaries:
+            summary_html += f"<table><tr>{s}</tr></table>"
+
+    if transactions is None:
+        tx_html = f"""
+      <table><tr>
+        <td>1646</td><td>{transaction_date}</td><td>{transaction_date}</td>
+        <td>消费</td><td>{description}</td><td>人民币</td><td>100.00/RMB</td>
+      </tr></table>
+        """
+    else:
+        tx_rows = "".join(
+            f"<tr><td>{card}</td><td>{t_d}</td><td>{t_d}</td><td>消费</td><td>{desc}</td><td>人民币</td><td>100.00/RMB</td></tr>"
+            for card, t_d, desc in transactions
+        )
+        tx_html = f"<table>{tx_rows}</table>"
+
     html = f"""
     <html><body>
       <div>账单周期&nbsp;&nbsp;{cycle_start}—{cycle_end}</div>
       <div>对账单生成日&nbsp;&nbsp;{generation_date}</div>
       <div>到期还款日 {due_date}</div>
-      <table><tr>
-        <td>1646(牡丹贷记卡)</td><td>人民币(本位币)</td>
-        <td>100.00/RMB</td><td>10.00/RMB</td><td>32,000.00/RMB</td>
-      </tr></table>
-      <table><tr>
-        <td>1646</td><td>{transaction_date}</td><td>{transaction_date}</td>
-        <td>消费</td><td>{description}</td><td>人民币</td><td>100.00/RMB</td>
-      </tr></table>
+      {summary_html}
+      {tx_html}
     </body></html>
     """
     return ParsedSource(
@@ -71,3 +93,45 @@ def test_icbc_system_interest_can_remain_on_previous_physical_statement() -> Non
     assert parsed.statement_date == date(2025, 8, 31)
     assert parsed.transactions[0].transaction_date == date(2025, 9, 1)
     assert "透支利息" in parsed.transactions[0].raw_description
+    assert parsed.transactions[0].card_ref == "1646"
+
+
+def test_icbc_multiple_cards_in_transactions_rejected() -> None:
+    source = _source(
+        transactions=[
+            ("1646", "2025-09-01", "消费1"),
+            ("8888", "2025-09-02", "消费2"),
+        ]
+    )
+    with pytest.raises(ParserError, match="MULTIPLE_CARD_REFERENCES"):
+        IcbcStatementParser().parse(source)
+
+
+def test_icbc_unknown_or_mismatched_card_in_transactions_rejected() -> None:
+    source = _source(
+        transactions=[
+            ("1646", "2025-09-01", "消费1"),
+            ("", "2025-09-02", "消费2"),
+        ]
+    )
+    with pytest.raises(ParserError, match="UNRESOLVED_CARD_REFERENCE"):
+        IcbcStatementParser().parse(source)
+
+
+@pytest.mark.parametrize("summary", [
+    "<td>1646(牡丹贷记卡)</td><td>人民币(本位币)</td><td>200.00/RMB</td><td>20.00/RMB</td><td>32,000.00/RMB</td>",
+    "<td>8888(牡丹贷记卡)</td><td>人民币(本位币)</td><td>200.00/RMB</td><td>20.00/RMB</td><td>32,000.00/RMB</td>",
+    "<td>1646(牡丹贷记卡)</td><td>美元</td><td>10.00/USD</td>",
+    "<td>8888(牡丹贷记卡)</td><td>人民币(本位币)</td><td>无法读取</td>",
+    "<td>8888（牡丹贷记卡）</td><td>人民币(本位币)</td><td>无法读取</td>",
+])
+def test_icbc_multiple_repayment_summaries_rejected(summary) -> None:
+    with pytest.raises(ParserError, match="MULTIPLE_REPAYMENT_SUMMARIES"):
+        IcbcStatementParser().parse(_source(extra_summaries=[summary]))
+
+
+def test_icbc_empty_description_preserves_column_alignment() -> None:
+    parsed = IcbcStatementParser().parse(_source(description=""))
+    assert len(parsed.transactions) == 1
+    assert parsed.transactions[0].amount_minor == 10000
+    assert parsed.transactions[0].card_ref == "1646"

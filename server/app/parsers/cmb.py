@@ -8,7 +8,7 @@ from app.parsers.cgb import _parse_date, _parse_money_minor
 
 class CmbStatementParser:
     bank_code = "CMB"
-    version = "1.0.0"
+    version = "1.0.1"
 
     def can_handle(self, source: ParsedSource) -> bool:
         address = parseaddr(source.sender)[1].lower()
@@ -40,10 +40,12 @@ class CmbStatementParser:
         stmt_date = _parse_date(m.group(1), "statement date")
 
         # 3. 本期应还金额
-        img_bqyh = soup.find("img", attrs={"data-code": "bqyhje_img"})
-        if not img_bqyh:
+        img_bqyh_list = soup.find_all("img", attrs={"data-code": "bqyhje_img"})
+        if not img_bqyh_list:
             raise ParserError("CMB total due img not found")
-        total_td = img_bqyh.find_parent("td").find_next_sibling("td")
+        if len(img_bqyh_list) > 1:
+            raise ParserError("MULTIPLE_REPAYMENT_SUMMARIES: CMB statement contains multiple repayment summaries")
+        total_td = img_bqyh_list[0].find_parent("td").find_next_sibling("td")
         total_due = _parse_money_minor(total_td.get_text(strip=True), "total due", allow_negative=True)
         if total_due < 0:
             total_due = 0
@@ -69,8 +71,11 @@ class CmbStatementParser:
                 if re.match(r"^\d{4}$", d_post):
                     desc = cells[3].get_text(strip=True)
                     last4_candidate = cells[5].get_text(strip=True)
-                    if re.match(r"^\d{4}$", last4_candidate):
-                        card_last4 = last4_candidate
+                    if not re.fullmatch(r"\d{4}", last4_candidate):
+                        raise ParserError("UNRESOLVED_CARD_REFERENCE: CMB transaction has missing or invalid card last4")
+                    if card_last4 is not None and last4_candidate != card_last4:
+                        raise ParserError("MULTIPLE_CARD_REFERENCES: CMB statement contains multiple card references")
+                    card_last4 = last4_candidate
                     amt_str = cells[7].get_text(strip=True)
                     amount_minor = _parse_money_minor(amt_str, "posting", allow_negative=True)
                     p_month, p_day = int(d_post[:2]), int(d_post[2:])
@@ -92,6 +97,7 @@ class CmbStatementParser:
                             amount_minor=amount_minor,
                             currency="CNY",
                             raw_description=desc,
+                            card_ref=last4_candidate,
                         )
                     )
 
