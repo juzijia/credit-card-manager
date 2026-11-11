@@ -72,9 +72,9 @@ def _money_from_cell(value: object, field: str) -> int | None:
     if not re.search(r"\d", text):
         return None
     match = re.fullmatch(
-        r"(?:[¥￥]|CNY|RMB|USD)?\s*"
+        r"(?:[¥￥]|CNY|RMB)?\s*"
         r"([+-]?(?:\d+|\d{1,3}(?:,\d{3})+|\d{1,3}(?: \d{3})+)(?:\.\d+)?)"
-        r"\s*(?:元|CNY|RMB|USD)?",
+        r"\s*(?:元|CNY|RMB)?",
         text,
         re.IGNORECASE,
     )
@@ -106,6 +106,8 @@ def _summary_from_tables(doc: pymupdf.Document) -> dict[str, object]:
                 card_match = _CARD_LAST4_RE.search(_cell(row[0]))
                 total_due = _money_from_cell(row[1], "total due")
                 if card_match and total_due is not None:
+                    if "USD" in _cell(row[2]).upper():
+                        raise ParserError("BOC USD statement amounts are not supported")
                     result["card_last4"] = card_match.group(1)
                     result["card_total_due_minor"] = total_due
                     result["minimum_due_minor"] = _money_from_cell(row[3], "minimum due")
@@ -162,7 +164,7 @@ def _transaction_identity(transaction: ParsedTransaction) -> tuple[object, ...]:
 
 class BocStatementParser:
     bank_code = "BOC"
-    version = "1.1.0"
+    version = "1.1.1"
 
     def can_handle(self, source: ParsedSource) -> bool:
         address = parseaddr(source.sender)[1].lower()
@@ -210,7 +212,11 @@ class BocStatementParser:
             doc.close()
             raise ParserError("BOC PDF attachment is an adjustment notice, not a monthly statement")
 
-        table_summary = _summary_from_tables(doc)
+        try:
+            table_summary = _summary_from_tables(doc)
+        except ParserError:
+            doc.close()
+            raise
 
         # 到期还款日
         due_date = table_summary.get("due_date")
@@ -251,10 +257,15 @@ class BocStatementParser:
         # 应还款总计
         total_due = table_summary.get("total_due_minor")
         if not isinstance(total_due, int):
-            amt_m = re.search(r"本期人民币欠款总计.*?([\d,]+\.\d{2})", text.replace("\n", " "))
+            # A missing CNY amount must not consume a later currency or field.
+            amt_m = re.search(
+                r"本期人民币欠款总计\s*[:：]?\s*(?:[¥￥]|CNY|RMB)?\s*"
+                r"([\d,]+\.\d{2})(?![\d.]|[ \t]*USD)",
+                text,
+                re.IGNORECASE,
+            )
             if not amt_m:
-                amt_m = re.search(r"\b(\d+\.\d{2})\s*\n\s*USD", text)
-            if not amt_m:
+                doc.close()
                 raise ParserError("BOC total due amount not found")
             total_due = _parse_money_minor(amt_m.group(1), "total due")
 
