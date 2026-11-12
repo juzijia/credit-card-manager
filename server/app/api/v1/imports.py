@@ -3,6 +3,7 @@ from tempfile import TemporaryDirectory
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
@@ -13,7 +14,7 @@ from app.models.parsed_batch import ParsedBatch
 from app.parsers.base import ParserError
 from app.parsers.eml import MAX_EML_BYTES
 from app.schemas.import_record import ImportResult
-from app.services.eml_import import import_eml_data, import_pdf_bytes
+from app.services.eml_import import ImportConflict, import_eml_data, import_pdf_bytes
 
 router = APIRouter(prefix="/imports", tags=["imports"])
 SessionDep = Annotated[Session, Depends(get_session)]
@@ -104,12 +105,17 @@ async def import_eml(
     session: SessionDep,
     file: Annotated[UploadFile, File(description="Bank statement in EML format")],
     card_id: str | None = None,
+    confirmation_token: Annotated[str | None, Query(max_length=64)] = None,
 ) -> ImportResult:
     data = await file.read(MAX_EML_BYTES + 1)
     if len(data) > MAX_EML_BYTES:
         raise HTTPException(status_code=413, detail="EML exceeds the 10 MiB size limit")
     try:
-        return import_eml_data(session, data, card_id=card_id)
+        return import_eml_data(
+            session, data, card_id=card_id, confirmation_token=confirmation_token
+        )
+    except ImportConflict as exc:
+        raise HTTPException(status_code=409, detail=jsonable_encoder(exc.detail)) from exc
     except ParserError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
@@ -123,6 +129,7 @@ async def import_file(
     session: SessionDep,
     file: Annotated[UploadFile, File(description="Bank statement in EML or supported BOC/CITIC PDF format")],
     card_id: str | None = None,
+    confirmation_token: Annotated[str | None, Query(max_length=64)] = None,
 ) -> ImportResult:
     data = await file.read(MAX_EML_BYTES + 1)
     if len(data) > MAX_EML_BYTES:
@@ -130,12 +137,20 @@ async def import_file(
     suffix = Path(file.filename or "statement").suffix.lower()
     if suffix == ".eml":
         try:
-            return import_eml_data(session, data, card_id=card_id)
+            return import_eml_data(
+                session, data, card_id=card_id, confirmation_token=confirmation_token
+            )
+        except ImportConflict as exc:
+            raise HTTPException(status_code=409, detail=jsonable_encoder(exc.detail)) from exc
         except ParserError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
     if suffix == ".pdf":
         try:
-            return import_pdf_bytes(session, data, card_id=card_id)
+            return import_pdf_bytes(
+                session, data, card_id=card_id, confirmation_token=confirmation_token
+            )
+        except ImportConflict as exc:
+            raise HTTPException(status_code=409, detail=jsonable_encoder(exc.detail)) from exc
         except ParserError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
     raise HTTPException(

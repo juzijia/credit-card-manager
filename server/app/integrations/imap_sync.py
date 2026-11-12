@@ -27,7 +27,7 @@ from app.models.mixins import utc_now
 from app.parsers import default_registry, parse_eml_bytes
 from app.parsers.base import ParserError
 from app.parsers.eml import MAX_EML_BYTES
-from app.services.eml_import import import_eml_data
+from app.services.eml_import import ImportConflict, import_eml_data
 from app.services.parsed_batches import stage_parsed_file
 
 _HEADER_QUERY = b"BODY.PEEK[HEADER.FIELDS (FROM SUBJECT MESSAGE-ID)]"
@@ -161,6 +161,10 @@ def _stage_message(session: Session, raw: bytes, locator: str, result: SyncResul
             else:
                 result.complete_statements += 1
             handled = True
+        except ImportConflict as exc:
+            session.rollback()
+            result.add_failure(f"{locator}: {exc.detail['code']}: {exc}; 请手动上传账单核对差异。")
+            return False
         except ParserError as exc:
             errors.append(str(exc))
             session.rollback()

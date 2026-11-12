@@ -108,10 +108,8 @@ def test_single_card_reimport_and_rejection_preserve_existing_financial_data(
     rejected = _import(client, auth_headers, _eml(bank, second_card="5678"))
     assert rejected.status_code == 422, rejected.text
     repeated = _import(client, auth_headers, data)
-    assert repeated.status_code == 200, repeated.text
-    assert repeated.json()["deduplicated"] is True
-    assert repeated.json()["statement"]["id"] == statement_id
-    assert repeated.json()["statement"]["paid_minor"] == 5000
+    assert repeated.status_code == 409, repeated.text
+    assert repeated.json()["detail"]["code"] == "IMPORT_CORRECTION_BLOCKED"
     with client.app.state.session_factory() as session:
         assert len(session.scalars(select(Card)).all()) == 1
         assert len(session.scalars(select(Statement)).all()) == 1

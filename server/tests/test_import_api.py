@@ -157,9 +157,22 @@ def test_reimport_with_new_parser_refreshes_summary_and_only_adds_missing_transa
     )
 
     second = client.post("/api/v1/imports/eml", headers=auth_headers, files=files)
-    assert second.status_code == 200, second.text
-    payload = second.json()
-    assert payload["deduplicated"] is True
+    assert second.status_code == 409, second.text
+    detail = second.json()["detail"]
+    assert detail["code"] == "IMPORT_CONFIRMATION_REQUIRED"
+    token = detail["confirmation_token"]
+    assert token is not None
+
+    confirmed = client.post(
+        "/api/v1/imports/eml",
+        headers=auth_headers,
+        files=files,
+        params={"confirmation_token": token},
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    payload = confirmed.json()
+    assert payload["corrected"] is True
+    assert payload["deduplicated"] is False
     assert payload["parser_version"] == "1.1.0-test"
     assert payload["statement"]["due_date"] == "2026-09-27"
     assert payload["statement"]["minimum_due_minor"] == 82_315

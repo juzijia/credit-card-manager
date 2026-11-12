@@ -357,11 +357,30 @@ def test_ccb_reimport_corrects_legacy_summary_without_duplicating_transactions(c
         session.commit()
 
     replay = client.post("/api/v1/imports/eml", headers=auth_headers, files=files)
-    assert replay.status_code == 200
-    assert replay.json()["deduplicated"] is True
-    assert replay.json()["statement"]["id"] == statement_id
-    assert replay.json()["statement"]["total_due_minor"] == 6789
-    assert replay.json()["parser_version"] == "1.1.0"
+    assert replay.status_code == 409, replay.text
+    detail = replay.json()["detail"]
+    assert detail["code"] == "IMPORT_CONFIRMATION_REQUIRED"
+    token = detail["confirmation_token"]
+    assert token is not None
+    assert len(detail["differences"]) == 1
+    diff = detail["differences"][0]
+    assert diff["old"]["total_due_minor"] == 12345
+    assert diff["new"]["total_due_minor"] == 6789
+    assert diff["blocked_reason"] is None
+
+    confirmed = client.post(
+        "/api/v1/imports/eml",
+        headers=auth_headers,
+        files=files,
+        params={"confirmation_token": token},
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    payload = confirmed.json()
+    assert payload["corrected"] is True
+    assert payload["deduplicated"] is False
+    assert payload["statement"]["id"] == statement_id
+    assert payload["statement"]["total_due_minor"] == 6789
+    assert payload["parser_version"] == "1.1.0"
     assert client.get("/api/v1/transactions", headers=auth_headers).json() == transactions
 
 

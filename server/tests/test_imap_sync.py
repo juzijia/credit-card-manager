@@ -10,6 +10,7 @@ from app.integrations.imap_sync import ImapRuntimeConfig
 from app.models.imap_state import ImapState
 from app.models.imap_sync_run import ImapSyncRun
 from app.parsers.base import ParserError
+from app.services.eml_import import ImportConflict
 
 
 TEST_CONFIG = ImapRuntimeConfig(
@@ -171,6 +172,24 @@ def test_stage_message_records_failure_reason(client, monkeypatch) -> None:
     assert result.failure_reasons == [
         "imap:test:42:2: native parser miss; no transactions"
     ]
+
+
+def test_stage_message_reports_correction_instead_of_hiding_it_in_batch_fallback(client, monkeypatch):
+    monkeypatch.setattr(imap_sync, "parse_eml_bytes", lambda _raw: object())
+    monkeypatch.setattr(imap_sync.default_registry, "parser_for", lambda _source: object())
+
+    def conflict(*_args):
+        raise ImportConflict("IMPORT_CONFIRMATION_REQUIRED", "statement changed")
+
+    monkeypatch.setattr(imap_sync, "import_eml_data", conflict)
+    monkeypatch.setattr(imap_sync, "bank_providers", lambda: [])
+    monkeypatch.setattr(imap_sync, "stage_parsed_file", lambda *_args, **_kwargs: (object(), False))
+    result = imap_sync.SyncResult()
+    with client.app.state.session_factory() as session:
+        handled = imap_sync._stage_message(session, b"Subject: statement\r\n\r\nbody", "imap:test:42:3", result)
+    assert handled is False
+    assert result.parsed_batches == 0
+    assert any("IMPORT_CONFIRMATION_REQUIRED" in reason for reason in result.failure_reasons)
 
 
 def test_imap_sync_runs_endpoint(client, auth_headers) -> None:

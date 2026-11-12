@@ -8,6 +8,7 @@ class ImportResult(BaseModel):
     bank_code: str
     parser_version: str
     deduplicated: bool
+    corrected: bool = False
     statement: StatementRead
     statements: list[StatementRead]
 
