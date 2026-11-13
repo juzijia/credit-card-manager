@@ -3,17 +3,18 @@ from tempfile import TemporaryDirectory
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
-from app.core.security import require_agent_access
+from app.core.security import AccessContext, require_agent_access
 from app.db.session import get_session
 from app.integrations.bean_sieve import bank_providers, parse_file
 from app.models.parsed_batch import ParsedBatch
 from app.parsers.base import ParserError
 from app.parsers.eml import MAX_EML_BYTES
 from app.schemas.import_record import ImportResult
-from app.services.eml_import import import_eml_data, import_pdf_bytes
+from app.services.eml_import import ImportConflict, import_eml_data, import_pdf_bytes
 
 router = APIRouter(prefix="/imports", tags=["imports"])
 SessionDep = Annotated[Session, Depends(get_session)]
@@ -98,18 +99,25 @@ async def inspect_statement(
 @router.post(
     "/eml",
     response_model=ImportResult,
-    dependencies=[Depends(require_agent_access)],
 )
 async def import_eml(
     session: SessionDep,
+    access: Annotated[AccessContext, Depends(require_agent_access)],
     file: Annotated[UploadFile, File(description="Bank statement in EML format")],
     card_id: str | None = None,
+    confirmation_token: Annotated[str | None, Query(max_length=64)] = None,
 ) -> ImportResult:
+    if confirmation_token and access.role == "agent":
+        raise HTTPException(status_code=403, detail="Agent token cannot confirm statement corrections")
     data = await file.read(MAX_EML_BYTES + 1)
     if len(data) > MAX_EML_BYTES:
         raise HTTPException(status_code=413, detail="EML exceeds the 10 MiB size limit")
     try:
-        return import_eml_data(session, data, card_id=card_id)
+        return import_eml_data(
+            session, data, card_id=card_id, confirmation_token=confirmation_token
+        )
+    except ImportConflict as exc:
+        raise HTTPException(status_code=409, detail=jsonable_encoder(exc.detail)) from exc
     except ParserError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
@@ -117,25 +125,36 @@ async def import_eml(
 @router.post(
     "/file",
     response_model=ImportResult,
-    dependencies=[Depends(require_agent_access)],
 )
 async def import_file(
     session: SessionDep,
+    access: Annotated[AccessContext, Depends(require_agent_access)],
     file: Annotated[UploadFile, File(description="Bank statement in EML or supported BOC/CITIC PDF format")],
     card_id: str | None = None,
+    confirmation_token: Annotated[str | None, Query(max_length=64)] = None,
 ) -> ImportResult:
+    if confirmation_token and access.role == "agent":
+        raise HTTPException(status_code=403, detail="Agent token cannot confirm statement corrections")
     data = await file.read(MAX_EML_BYTES + 1)
     if len(data) > MAX_EML_BYTES:
         raise HTTPException(status_code=413, detail="File exceeds the 10 MiB size limit")
     suffix = Path(file.filename or "statement").suffix.lower()
     if suffix == ".eml":
         try:
-            return import_eml_data(session, data, card_id=card_id)
+            return import_eml_data(
+                session, data, card_id=card_id, confirmation_token=confirmation_token
+            )
+        except ImportConflict as exc:
+            raise HTTPException(status_code=409, detail=jsonable_encoder(exc.detail)) from exc
         except ParserError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
     if suffix == ".pdf":
         try:
-            return import_pdf_bytes(session, data, card_id=card_id)
+            return import_pdf_bytes(
+                session, data, card_id=card_id, confirmation_token=confirmation_token
+            )
+        except ImportConflict as exc:
+            raise HTTPException(status_code=409, detail=jsonable_encoder(exc.detail)) from exc
         except ParserError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
     raise HTTPException(

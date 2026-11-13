@@ -1,10 +1,11 @@
 import calendar
 import hashlib
-from collections import Counter
-from dataclasses import dataclass
+import json
+from collections import defaultdict
+from dataclasses import asdict, dataclass
 from datetime import date
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session, selectinload
 
 from app.models.card import Card
@@ -27,6 +28,7 @@ from app.parsers.base import (
 from app.parsers.boc import BocStatementParser
 from app.parsers.citic import CiticStatementParser
 from app.schemas.import_record import ImportResult
+from app.schemas.statement import StatementCreate
 from app.services.card_blacklist import is_card_ignored
 from app.services.statement_date_semantics import (
     parsed_account_statement_day,
@@ -54,6 +56,133 @@ class _PlannedUnit:
     parsed: ParsedStatement
     card: Card | None = None
     existing: Statement | None = None
+
+
+class ImportConflict(ParserError):
+    def __init__(
+        self, code: str, message: str, *, differences: list[dict] | None = None,
+        confirmation_token: str | None = None,
+    ):
+        super().__init__(message)
+        self.detail = {
+            "code": code, "message": message, "differences": differences or [],
+            "confirmation_token": confirmation_token,
+        }
+
+
+def _row_snapshot(row) -> dict:
+    return {column.name: getattr(row, column.name) for column in row.__table__.columns}
+
+
+def _transaction_preview(session: Session, row: Transaction) -> dict:
+    result = {name: getattr(row, name) for name in (
+        "transaction_date", "posting_date", "amount_minor", "currency", "raw_description", "card_id"
+    )}
+    card = session.get(Card, row.card_id) if row.card_id else None
+    result["card_last4"] = card.last4 if card else None
+    return result
+
+
+def _confirm_correction(
+    session: Session, source: ParsedSource, document: ParsedBillingDocument,
+    planned: list[_PlannedUnit], confirmation_token: str | None,
+) -> bool:
+    differences = []
+    changes = []
+    snapshots = []
+    summary_fields = ("statement_date", "due_date", "total_due_minor", "minimum_due_minor")
+    for item in sorted(planned, key=lambda item: item.existing.id):
+        statement = item.existing
+        old_groups = defaultdict(list)
+        new_groups = defaultdict(list)
+        for row in sorted(statement.transactions, key=lambda row: row.id):
+            old_groups[_transaction_identity(row) + (row.card_id,)].append(row)
+        for transaction in item.transactions:
+            row = _transaction_from_parsed(session, statement.id, transaction,
+                                           document.bank_code, item.card)
+            new_groups[_transaction_identity(row) + (row.card_id,)].append(row)
+        references = session.scalars(select(Transaction).where(
+            Transaction.original_transaction_id.in_([row.id for row in statement.transactions])
+        )).all()
+        referenced_ids = {row.original_transaction_id for row in references}
+        removed = []
+        added = []
+        blocked_reason = None
+        for key in sorted(old_groups.keys() | new_groups.keys(), key=repr):
+            old_rows, new_rows = old_groups[key], new_groups[key]
+            kept = min(len(old_rows), len(new_rows))
+            if len(old_rows) > len(new_rows):
+                # Identical duplicates cannot identify which manually edited row disappeared.
+                if any(row.id in referenced_ids or row.original_transaction_id or
+                       row.classification_source != "rule" or
+                       any(getattr(row, field) is not None for field in
+                           ("merchant", "channel", "category", "external_ref"))
+                       for row in old_rows):
+                    blocked_reason = "待删除交易含人工修改、未知分类来源或退款关联，无法安全匹配。"
+                removed.extend(old_rows[kept:])
+            added.extend(new_rows[kept:])
+        old_summary = {name: getattr(statement, name) for name in summary_fields}
+        new_summary = {name: getattr(item.parsed, name) for name in summary_fields}
+        if removed and _statement_parse_status(item.parsed) != ParseStatus.COMPLETE:
+            blocked_reason = "新账单的交易明细不完整，不能据此删除旧交易。"
+        if sum(row.amount_minor for row in statement.repayments) > item.unit.total_due_minor:
+            blocked_reason = "更正后的应还金额低于已记录还款，需人工核对。"
+        if old_summary != new_summary or removed or added:
+            differences.append({
+                "statement_id": statement.id, "bank_code": document.bank_code,
+                "card_last4": item.unit.card_ref, "currency": item.unit.currency,
+                "old": old_summary, "new": new_summary,
+                "transactions_added": [_transaction_preview(session, row) for row in added],
+                "transactions_removed": [_transaction_preview(session, row) for row in removed],
+                "blocked_reason": blocked_reason,
+            })
+        changes.append((item, removed, added))
+        snapshots.append({
+            "statement": _row_snapshot(statement),
+            "card": _row_snapshot(item.card) if item.card else None,
+            "transactions": [_row_snapshot(row) for row in sorted(statement.transactions, key=lambda row: row.id)],
+            "repayments": [_row_snapshot(row) for row in sorted(statement.repayments, key=lambda row: row.id)],
+            "references": [_row_snapshot(row) for row in sorted(references, key=lambda row: row.id)],
+        })
+    if not differences:
+        return False
+    if any(diff["blocked_reason"] for diff in differences):
+        raise ImportConflict("IMPORT_CORRECTION_BLOCKED", "账单存在差异，但包含无法安全合并的用户记录。",
+                             differences=differences)
+    fingerprint = hashlib.sha256(json.dumps(
+        {"source": source.sha256, "document": asdict(document), "existing": snapshots,
+         "differences": differences}, sort_keys=True, default=str, ensure_ascii=False,
+    ).encode()).hexdigest()
+    if confirmation_token != fingerprint:
+        code = "IMPORT_CONFIRMATION_STALE" if confirmation_token else "IMPORT_CONFIRMATION_REQUIRED"
+        message = ("确认已过期或账单数据已变化，请重新上传并核对差异。" if confirmation_token
+                   else "账单内容发生变化，请核对差异后确认更正。")
+        raise ImportConflict(code, message,
+                             differences=differences,
+                             confirmation_token=fingerprint if not confirmation_token else None)
+    for item, removed, added in changes:
+        for row in removed:
+            session.delete(row)
+        session.add_all(added)
+        statement = item.existing
+        statement.due_date = item.parsed.due_date
+        statement.total_due_minor = item.unit.total_due_minor
+        statement.minimum_due_minor = item.unit.minimum_due_minor
+        statement.parse_status = _statement_parse_status(item.parsed)
+        if item.card is not None:
+            # Statement correction must not overwrite manually maintained card settings.
+            is_latest = session.scalar(select(Statement.id).where(
+                Statement.card_id == item.card.id,
+                Statement.statement_date > item.parsed.statement_date,
+            ).limit(1)) is None
+            _apply_annual_fee_transactions(session, item.card, item.parsed,
+                                          is_latest_statement=is_latest,
+                                          document_bank_code=document.bank_code)
+        else:
+            _apply_annual_fee_transactions(session, None, item.parsed,
+                                          is_latest_statement=True,
+                                          document_bank_code=document.bank_code)
+    return True
 
 
 def _refresh_card_metadata(
@@ -551,100 +680,13 @@ def _statements_by_source(session: Session, import_id: str) -> list[Statement]:
     )
 
 
-def _reparse_existing_source(
-    session: Session, record: ImportRecord, source: ParsedSource
-) -> list[Statement] | None:
-    """Refresh only an exact existing topology; never perform historical splitting."""
-    statements = _statements_by_source(session, record.id)
-    if not statements:
-        return None
-    try:
-        parser = default_registry.parser_for(source)
-        document = _parse_document(parser, source)
-        planned = _plan_document(document, source)
-    except ParserError:
-        return statements
-
-    existing_by_key = {
-        (
-            statement.bank_code,
-            statement.card.last4 if statement.card else "",
-            statement.currency,
-            statement.statement_date,
-        ): statement
-        for statement in statements
-    }
-    planned_by_key = {
-        (
-            document.bank_code,
-            item.unit.card_ref,
-            item.unit.currency,
-            document.statement_date,
-        ): item
-        for item in planned
-    }
-    if set(existing_by_key) != set(planned_by_key):
-        # A changed unit topology would be a historical repair, which Phase 1 forbids.
-        return statements
-
-    for key, item in planned_by_key.items():
-        statement = existing_by_key[key]
-        item.card = statement.card
-        if statement.card is not None:
-            is_latest = _refresh_card_metadata(session, statement.card, item.parsed)
-            _apply_annual_fee_transactions(
-                session,
-                statement.card,
-                item.parsed,
-                is_latest_statement=is_latest,
-                document_bank_code=document.bank_code,
-            )
-        else:
-            _apply_annual_fee_transactions(
-                session,
-                None,
-                item.parsed,
-                is_latest_statement=True,
-                document_bank_code=document.bank_code,
-            )
-        statement.due_date = item.parsed.due_date
-        statement.total_due_minor = item.parsed.total_due_minor
-        statement.minimum_due_minor = item.parsed.minimum_due_minor
-        statement.parse_status = _statement_parse_status(item.parsed)
-
-        existing = Counter(
-            _transaction_identity(transaction)
-            for transaction in statement.transactions
-        )
-        for transaction in item.transactions:
-            identity = _transaction_identity(transaction)
-            if existing[identity]:
-                existing[identity] -= 1
-                continue
-            session.add(
-                _transaction_from_parsed(
-                    session,
-                    statement.id,
-                    transaction,
-                    document.bank_code,
-                    statement.card,
-                )
-            )
-
-    record.bank_code = document.bank_code
-    record.parser_version = parser.version
-    record.parse_status = ImportStatus.SUMMARY_OK
-    record.error_message = None
-    session.commit()
-    return _statements_by_source(session, record.id)
-
-
 def _result(
     session: Session,
     record: ImportRecord,
     statements: list[Statement],
     *,
     deduplicated: bool,
+    corrected: bool = False,
 ) -> ImportResult:
     if not statements:
         raise RuntimeError("Imported statements could not be reloaded")
@@ -663,6 +705,7 @@ def _result(
         bank_code=record.bank_code or "",
         parser_version=record.parser_version or "",
         deduplicated=deduplicated,
+        corrected=corrected,
         statement=reads[0],
         statements=reads,
     )
@@ -695,27 +738,6 @@ def _mark_failed_import(
     session.commit()
 
 
-def _deduplicated_result_for_source(
-    session: Session, source: ParsedSource
-) -> ImportResult | None:
-    """Return the already-imported statements for an exact source, or None.
-
-    Handles both the tombstone gate and the dedup path that re-parses an
-    existing successful import. Shared by the EML and bare-PDF import cores so
-    a source arriving over either channel is deduplicated identically.
-    """
-    record = session.scalar(
-        select(ImportRecord).where(ImportRecord.source_sha256 == source.sha256)
-    )
-    if record and record.parse_status == ImportStatus.DELETED_BY_USER:
-        raise ParserError("Source was deleted by user (tombstone)")
-    if record and record.parse_status == ImportStatus.SUMMARY_OK:
-        statements = _reparse_existing_source(session, record, source)
-        if statements:
-            return _result(session, record, statements, deduplicated=True)
-    return None
-
-
 def import_parsed_source(
     session: Session,
     source: ParsedSource,
@@ -723,6 +745,7 @@ def import_parsed_source(
     document: ParsedBillingDocument | None = None,
     parser: BankStatementParser | None = None,
     card_id: str | None = None,
+    confirmation_token: str | None = None,
 ) -> ImportResult:
     """Shared persistence core for a fully-parsed source (EML or bare PDF).
 
@@ -733,18 +756,42 @@ def import_parsed_source(
     billing document may be supplied instead (bare-PDF path, which no registry
     parser can recognize by sender/subject).
     """
-    record = _deduplicated_result_for_source(session, source)
-    if record is not None:
-        return record
-
+    # Serialize preview/confirmation with repayment writes before reading old state.
+    if not session.connection().connection.driver_connection.in_transaction:
+        session.execute(text("BEGIN IMMEDIATE"))
+    session.expire_all()
     record = session.scalar(
         select(ImportRecord).where(ImportRecord.source_sha256 == source.sha256)
     )
+    preserve_record = record is not None and record.parse_status in (
+        ImportStatus.SUMMARY_OK, ImportStatus.DUPLICATE, ImportStatus.DELETED_BY_USER,
+    )
     try:
+        if record and record.parse_status == ImportStatus.DELETED_BY_USER:
+            raise ParserError("Source was deleted by user (tombstone)")
         if document is None:
             parser = default_registry.parser_for(source)
             document = _parse_document(parser, source)
         planned = _plan_document(document, source)
+        for item in planned:
+            try:
+                StatementCreate(
+                    card_id=item.unit.card_ref, bank_code=document.bank_code,
+                    statement_date=document.statement_date, due_date=document.due_date,
+                    total_due_minor=item.unit.total_due_minor,
+                    minimum_due_minor=item.unit.minimum_due_minor, currency=item.unit.currency,
+                )
+            except ValueError as exc:
+                raise ParserError("Invalid statement dates, amounts or currency") from exc
+        prior = _statements_by_source(session, record.id) if record else []
+        if prior:
+            old_keys = {(row.bank_code, row.card.last4 if row.card else "",
+                         row.currency, row.statement_date) for row in prior}
+            new_keys = {(document.bank_code, item.unit.card_ref, item.unit.currency,
+                         document.statement_date) for item in planned}
+            if old_keys != new_keys:
+                raise ImportConflict("IMPORT_CORRECTION_BLOCKED",
+                                     "账单的卡片、币种或账期结构发生变化，无法安全自动更正。")
 
         selected_card = session.get(Card, card_id) if card_id else None
         if card_id and selected_card is None:
@@ -784,6 +831,16 @@ def import_parsed_source(
         for item in planned:
             if item.card is None and not (document.bank_code == "CCB" and not document.billing_units):
                 raise RuntimeError("Billing unit card resolution was incomplete")
+            if document.bank_code == "CCB":
+                other_scope = session.scalar(select(Statement.id).where(
+                    Statement.bank_code == document.bank_code,
+                    Statement.statement_date == document.statement_date,
+                    Statement.currency == item.unit.currency,
+                    Statement.card_id.is_not(None) if item.card is None else Statement.card_id.is_(None),
+                ).limit(1))
+                if other_scope:
+                    raise ImportConflict("IMPORT_CORRECTION_BLOCKED",
+                                         "同账期同时涉及账户级与卡片级账单，不能自动合并或重复计入。")
             if item.card is not None:
                 item.existing = session.scalar(
                     select(Statement)
@@ -813,7 +870,25 @@ def import_parsed_source(
                         Statement.currency == item.unit.currency,
                     )
                 )
+            if item.existing is None:
+                other_currency = session.scalar(select(Statement.id).where(
+                    Statement.bank_code == document.bank_code,
+                    Statement.card_id == (item.card.id if item.card else None),
+                    Statement.statement_date == document.statement_date,
+                    Statement.currency != item.unit.currency,
+                ))
+                if other_currency:
+                    raise ImportConflict("IMPORT_CORRECTION_BLOCKED",
+                                         "同卡同账期存在不同币种的账单，无法确认是更正还是独立应还。")
         existing_count = sum(item.existing is not None for item in planned)
+        if prior and {row.id for row in prior} != {
+            item.existing.id for item in planned if item.existing is not None
+        }:
+            raise ImportConflict("IMPORT_CORRECTION_BLOCKED",
+                                 "来源账单的实体卡归属发生变化，无法安全自动更正。")
+        if confirmation_token and existing_count != len(planned):
+            raise ImportConflict("IMPORT_CONFIRMATION_STALE",
+                                 "原账单已变化或被删除，请重新上传并核对。")
         if existing_count not in (0, len(planned)):
             raise _gate_error(document, source, "PARTIAL_DUPLICATE_STATEMENT_SET")
 
@@ -831,13 +906,22 @@ def import_parsed_source(
         record.error_message = None
 
         if existing_count == len(planned):
-            record.parse_status = ImportStatus.DUPLICATE
+            corrected = _confirm_correction(
+                session, source, document, planned, confirmation_token
+            )
+            if corrected:
+                for item in planned:
+                    item.existing.source_import_id = record.id
+                record.parse_status = ImportStatus.SUMMARY_OK
+            elif not prior:
+                record.parse_status = ImportStatus.DUPLICATE
             session.commit()
             return _result(
                 session,
                 record,
                 [item.existing for item in planned if item.existing is not None],
-                deduplicated=True,
+                deduplicated=not corrected,
+                corrected=corrected,
             )
 
         for item in planned:
@@ -888,7 +972,13 @@ def import_parsed_source(
         session.commit()
         loaded = _statements_by_source(session, record.id)
         return _result(session, record, loaded, deduplicated=False)
+    except ImportConflict:
+        session.rollback()
+        raise
     except ParserError as error:
+        if preserve_record:
+            session.rollback()
+            raise
         _mark_failed_import(
             session,
             source,
@@ -897,18 +987,23 @@ def import_parsed_source(
             parser_version=getattr(parser, "version", None),
         )
         raise
+    except Exception:
+        session.rollback()
+        raise
 
 
 def import_eml_data(
-    session: Session, data: bytes, *, card_id: str | None = None
+    session: Session, data: bytes, *, card_id: str | None = None,
+    confirmation_token: str | None = None,
 ) -> ImportResult:
     """Import a bank statement from raw EML bytes (thin wrapper)."""
     source = parse_eml_bytes(data)
-    return import_parsed_source(session, source, card_id=card_id)
+    return import_parsed_source(session, source, card_id=card_id, confirmation_token=confirmation_token)
 
 
 def import_pdf_bytes(
-    session: Session, data: bytes, *, card_id: str | None = None
+    session: Session, data: bytes, *, card_id: str | None = None,
+    confirmation_token: str | None = None,
 ) -> ImportResult:
     """Import a supported bare statement PDF through one proven bank parser.
 
@@ -946,4 +1041,5 @@ def import_pdf_bytes(
         document=document,
         parser=parser,
         card_id=card_id,
+        confirmation_token=confirmation_token,
     )

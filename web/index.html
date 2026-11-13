@@ -4161,8 +4161,12 @@
           <p class="text-[11px] text-slate-400">EML 支持 9 家银行；PDF 支持中国银行 / 中信银行</p>
         </div>
 
-        <div v-if="uploadStatus" class="p-3 rounded-xl text-xs font-mono" :class="uploadError ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400' : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'">
+        <div v-if="uploadStatus" role="status" class="p-3 rounded-xl text-xs font-mono whitespace-pre-wrap break-words max-h-64 overflow-y-auto" :class="uploadError ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400' : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'">
           {{ uploadStatus }}
+        </div>
+        <div v-if="pendingImport" class="flex gap-3">
+          <button type="button" :disabled="uploadBusy" @click="confirmImportCorrection" class="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm">确认更正</button>
+          <button type="button" :disabled="uploadBusy" @click="cancelImportCorrection" class="px-4 py-2 rounded-lg border text-sm">取消</button>
         </div>
       </div>
     </div>
@@ -5975,6 +5979,8 @@ const IconDictionary = {
         const showUploadModal = ref(false);
         const isDragging = ref(false);
         const uploadStatus = ref('');
+        const uploadBusy = ref(false);
+        const pendingImport = ref(null);
         const uploadError = ref(false);
 
         const editingCard = ref(null);
@@ -6580,8 +6586,11 @@ const IconDictionary = {
             throw new Error('未授权，请先登录');
           }
           if (!res.ok) {
-            const err = await res.json().catch(() => ({ detail: res.statusText }));
-            throw new Error(err.detail || '请求失败');
+            const errData = await res.json().catch(() => ({ detail: res.statusText }));
+            const err = new Error(typeof errData.detail === 'string' ? errData.detail : (errData.detail?.message || '请求失败'));
+            err.status = res.status;
+            err.detail = errData.detail;
+            throw err;
           }
          if (res.status === 204) return null;
          return res.json();
@@ -10208,34 +10217,117 @@ const IconDictionary = {
 
         function openUploadModal() {
           showUploadModal.value = true;
+          if (uploadBusy.value) return;
+          pendingImport.value = null;
           uploadStatus.value = '';
           uploadError.value = false;
         }
 
-        async function uploadFile(file) {
-          if (!file) return;
-          uploadStatus.value = '正在上传并解析账单...';
+        function formatAmount(minor) {
+          if (minor === null || minor === undefined) return '未知/未提供';
+          return (minor / 100).toFixed(2);
+        }
+
+        function formatCorrectionDifference(d) {
+          const lines = [];
+          const header = [d.bank_code || '', d.card_last4 ? ('尾号 ' + d.card_last4) : '', d.currency || ''].filter(Boolean).join(' ');
+          if (header) lines.push('【' + header + '】');
+          if (d.old && d.new) {
+            if (d.old.total_due_minor !== d.new.total_due_minor) {
+              lines.push('应还金额: ' + formatAmount(d.old.total_due_minor) + ' -> ' + formatAmount(d.new.total_due_minor));
+            }
+            if (d.old.minimum_due_minor !== d.new.minimum_due_minor) {
+              lines.push('最低应还: ' + formatAmount(d.old.minimum_due_minor) + ' -> ' + formatAmount(d.new.minimum_due_minor));
+            }
+            if (d.old.statement_date !== d.new.statement_date) {
+              lines.push('账单日: ' + (d.old.statement_date || '-') + ' -> ' + (d.new.statement_date || '-'));
+            }
+            if (d.old.due_date !== d.new.due_date) {
+              lines.push('还款日: ' + (d.old.due_date || '-') + ' -> ' + (d.new.due_date || '-'));
+            }
+          }
+          function formatTx(t, sign) {
+            const parts = [sign];
+            const datePart = [t.transaction_date || '-', t.posting_date ? ('入账 ' + t.posting_date) : ''].filter(Boolean).join(' / ');
+            if (datePart) parts.push(datePart);
+            if (t.raw_description) parts.push(t.raw_description);
+            const cur = t.currency || '';
+            parts.push((cur ? (cur + ' ') : '') + formatAmount(t.amount_minor));
+            const cardPart = t.card_last4 ? ('尾号 ' + t.card_last4) : (t.card_id ? ('卡ID ' + t.card_id) : '');
+            if (cardPart) parts.push('(' + cardPart + ')');
+            return '  ' + parts.join(' ');
+          }
+          if (d.transactions_added && d.transactions_added.length > 0) {
+            lines.push('新增交易 (' + d.transactions_added.length + ' 笔):');
+            for (const t of d.transactions_added) {
+              lines.push(formatTx(t, '+'));
+            }
+          }
+          if (d.transactions_removed && d.transactions_removed.length > 0) {
+            lines.push('删除交易 (' + d.transactions_removed.length + ' 笔):');
+            for (const t of d.transactions_removed) {
+              lines.push(formatTx(t, '-'));
+            }
+          }
+          if (d.blocked_reason) {
+            lines.push('受保护原因: ' + d.blocked_reason);
+          }
+          return lines.join('\n');
+        }
+
+        function cancelImportCorrection() {
+          if (uploadBusy.value) return;
+          pendingImport.value = null;
+          uploadError.value = false;
+          uploadStatus.value = '已取消更新，原账单保持不变';
+        }
+
+        async function confirmImportCorrection() {
+          const pending = pendingImport.value;
+          if (!pending || uploadBusy.value) return;
+          await uploadFile(pending.file, pending.token);
+        }
+
+        async function uploadFile(file, confirmationToken = null) {
+          if (!file || uploadBusy.value) return;
+          uploadBusy.value = true;
+          pendingImport.value = null;
+          uploadStatus.value = confirmationToken ? '正在确认更新账单...' : '正在上传并解析账单...';
           uploadError.value = false;
           const formData = new FormData();
           formData.append('file', file);
-          const lowerName = (file.name || '').toLowerCase();
-          const importPath = lowerName.endsWith('.pdf') ? '/imports/file' : '/imports/eml';
+          const basePath = (file.name || '').toLowerCase().endsWith('.pdf') ? '/imports/file' : '/imports/eml';
+          const importPath = basePath + (confirmationToken ? '?confirmation_token=' + encodeURIComponent(confirmationToken) : '');
           try {
-            const data = await api(importPath, {
-              method: 'POST',
-              body: formData
-            });
-            uploadStatus.value = data.deduplicated ? '已存在相同的账单' : '导入成功！识别到 ' + data.bank_code + ' 账单';
-            showToast(data.deduplicated ? '已存在相同的账单' : '账单导入成功！');
+            const data = await api(importPath, { method: 'POST', body: formData });
+            uploadStatus.value = data.corrected ? '账单更正成功！' :
+              (data.deduplicated ? '已存在相同的账单' : '导入成功！识别到 ' + data.bank_code + ' 账单');
+            showToast(uploadStatus.value);
             await loadAll();
           } catch (e) {
-            uploadError.value = true;
-            uploadStatus.value = '解析失败: ' + e.message;
+            const conflict = e.status === 409 && e.detail;
+            if (conflict && typeof conflict === 'object') {
+              const diffText = (conflict.differences || []).map(formatCorrectionDifference).join('\n\n');
+              if (!confirmationToken && conflict.code === 'IMPORT_CONFIRMATION_REQUIRED' && conflict.confirmation_token) {
+                pendingImport.value = { file, token: conflict.confirmation_token };
+                uploadStatus.value = (conflict.message || '请核对差异后确认更正。') + '\n\n' + diffText;
+              } else {
+                uploadError.value = true;
+                uploadStatus.value = conflict.code === 'IMPORT_CORRECTION_BLOCKED' ?
+                  ('更新被阻止：' + conflict.message + '\n\n' + diffText) : '数据已变化，请重新上传查看差异';
+              }
+            } else {
+              uploadError.value = true;
+              uploadStatus.value = '导入失败: ' + e.message;
+            }
+          } finally {
+            uploadBusy.value = false;
           }
         }
 
         function handleFileSelect(e) {
           const file = e.target.files[0];
+          e.target.value = '';
           if (file) uploadFile(file);
         }
 
@@ -10679,6 +10771,10 @@ const IconDictionary = {
           formatBackupSize,
           confirmBackupRestore,
           showUploadModal,
+          uploadBusy,
+          pendingImport,
+          confirmImportCorrection,
+          cancelImportCorrection,
           openUploadModal,
           isDragging,
           uploadStatus,
