@@ -1,4 +1,7 @@
+import hashlib
 import threading
+from datetime import date
+from email.message import EmailMessage
 from types import SimpleNamespace
 
 from imapclient.exceptions import IMAPClientError
@@ -9,8 +12,9 @@ from app.integrations import imap_sync
 from app.integrations.imap_sync import ImapRuntimeConfig
 from app.models.imap_state import ImapState
 from app.models.imap_sync_run import ImapSyncRun
-from app.parsers.base import ParserError
-from app.services.eml_import import ImportConflict
+from app.models.statement import Statement
+from app.parsers.base import ParsedStatement, ParserError
+from app.services.eml_import import ImportConflict, import_eml_data
 
 
 TEST_CONFIG = ImapRuntimeConfig(
@@ -96,6 +100,64 @@ def test_imap_fetches_body_only_for_candidate(client, monkeypatch) -> None:
     assert len(runs) == 2
     assert runs[-1].status == "success"
     assert FakeImap.body_fetches == []
+
+
+@pytest.mark.parametrize("previous_uidvalidity", [None, 41], ids=["new-folder", "uidvalidity-reset"])
+def test_imap_state_survives_first_message_correction_rollback(
+    client, monkeypatch, previous_uidvalidity
+) -> None:
+    message = EmailMessage()
+    message["Subject"] = "广发信用卡电子账单"
+    message["From"] = "statement@example.invalid"
+    message.set_content("<html><body>Synthetic IMAP correction</body></html>", subtype="html")
+    raw = message.as_bytes()
+    current = {"amount": 10000}
+    parser = SimpleNamespace(version="test", parse=lambda _source: ParsedStatement(
+        "CGB", "1234", date(2026, 9, 1), date(2026, 9, 20), current["amount"], 0, "CNY",
+    ))
+    monkeypatch.setattr(imap_sync.default_registry, "parser_for", lambda _source: parser)
+
+    class CorrectionImap(FakeImap):
+        def search(self, criteria):
+            self.search_calls.append(criteria)
+            return [2]  # The first message must reach the real importer before any cursor commit.
+
+        def fetch(self, uids, queries):
+            if b"HEADER.FIELDS" in queries[0]:
+                return super().fetch(uids, queries)
+            self.body_fetches.append(uids[0])
+            return {uids[0]: {b"BODY[]": raw}}
+
+    CorrectionImap.body_fetches = []
+    CorrectionImap.search_calls = []
+    monkeypatch.setattr(imap_sync, "IMAPClient", CorrectionImap)
+    with client.app.state.session_factory() as session:
+        original = import_eml_data(session, raw)
+        if previous_uidvalidity is not None:
+            account_key = hashlib.sha256(
+                (TEST_CONFIG.host + chr(0) + TEST_CONFIG.username).encode()
+            ).hexdigest()
+            session.add(ImapState(
+                account_key=account_key, mailbox="INBOX", uidvalidity=previous_uidvalidity,
+                last_uid=100, pending_uids="[99]",
+            ))
+            session.commit()
+    current["amount"] = 15000
+    with client.app.state.session_factory() as session:
+        result = imap_sync.sync_mailbox(session, TEST_CONFIG)
+
+    with client.app.state.session_factory() as session:
+        state = session.query(ImapState).one()
+        assert (state.uidvalidity, state.last_uid, state.pending_uids) == (42, 2, "[2]")
+        assert session.query(Statement).count() == 1
+        assert session.get(Statement, original.statement.id).total_due_minor == 10000
+        assert session.query(ImapSyncRun).one().status == "partial"
+    assert result.scanned == result.candidates == result.failed_candidates == 1
+    assert result.complete_statements == result.parsed_batches == 0
+    assert len(result.failure_reasons) == 1
+    assert "IMPORT_CONFIRMATION_REQUIRED" in result.failure_reasons[0]
+    assert CorrectionImap.body_fetches == [2]
+    assert CorrectionImap.search_calls[0][0] == "SINCE"
 
 
 def test_imap_records_lookback_and_full_scan_modes(client, monkeypatch) -> None:

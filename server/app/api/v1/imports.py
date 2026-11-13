@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
-from app.core.security import require_agent_access
+from app.core.security import AccessContext, require_agent_access
 from app.db.session import get_session
 from app.integrations.bean_sieve import bank_providers, parse_file
 from app.models.parsed_batch import ParsedBatch
@@ -99,14 +99,16 @@ async def inspect_statement(
 @router.post(
     "/eml",
     response_model=ImportResult,
-    dependencies=[Depends(require_agent_access)],
 )
 async def import_eml(
     session: SessionDep,
+    access: Annotated[AccessContext, Depends(require_agent_access)],
     file: Annotated[UploadFile, File(description="Bank statement in EML format")],
     card_id: str | None = None,
     confirmation_token: Annotated[str | None, Query(max_length=64)] = None,
 ) -> ImportResult:
+    if confirmation_token and access.role == "agent":
+        raise HTTPException(status_code=403, detail="Agent token cannot confirm statement corrections")
     data = await file.read(MAX_EML_BYTES + 1)
     if len(data) > MAX_EML_BYTES:
         raise HTTPException(status_code=413, detail="EML exceeds the 10 MiB size limit")
@@ -123,14 +125,16 @@ async def import_eml(
 @router.post(
     "/file",
     response_model=ImportResult,
-    dependencies=[Depends(require_agent_access)],
 )
 async def import_file(
     session: SessionDep,
+    access: Annotated[AccessContext, Depends(require_agent_access)],
     file: Annotated[UploadFile, File(description="Bank statement in EML or supported BOC/CITIC PDF format")],
     card_id: str | None = None,
     confirmation_token: Annotated[str | None, Query(max_length=64)] = None,
 ) -> ImportResult:
+    if confirmation_token and access.role == "agent":
+        raise HTTPException(status_code=403, detail="Agent token cannot confirm statement corrections")
     data = await file.read(MAX_EML_BYTES + 1)
     if len(data) > MAX_EML_BYTES:
         raise HTTPException(status_code=413, detail="File exceeds the 10 MiB size limit")

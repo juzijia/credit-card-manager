@@ -219,14 +219,16 @@ def _sync_folder(
         folder_info = client.select_folder(mailbox, readonly=True)
         uidvalidity = int(folder_info.get(b"UIDVALIDITY", 0))
         state = session.scalar(select(ImapState).where(ImapState.account_key == account_key, ImapState.mailbox == mailbox))
+        # Persist folder identity before imports can expire or roll back the shared session.
         if state is None:
             state = ImapState(account_key=account_key, mailbox=mailbox, uidvalidity=uidvalidity, last_uid=0, pending_uids="[]")
             session.add(state)
-            session.flush()
+            session.commit()
         elif state.uidvalidity != uidvalidity:
             state.uidvalidity = uidvalidity
             state.last_uid = 0
             state.pending_uids = "[]"
+            session.commit()
 
         historical_scan = full_scan or lookback_months is not None
         if full_scan:

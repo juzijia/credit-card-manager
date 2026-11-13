@@ -4,8 +4,10 @@ from email.message import EmailMessage
 import pytest
 from fastapi.testclient import TestClient
 
-from app.parsers.base import ParsedStatement, ParsedTransaction
+from app.core.plain_secrets import set_secret
+from app.parsers.base import ParsedStatement, ParsedTransaction, ParserError
 from app.models.card import Card
+from app.models.statement import Statement
 from app.services.eml_import import _refresh_card_metadata
 
 
@@ -87,6 +89,66 @@ def test_eml_import_creates_statement_and_is_idempotent(
     assert transactions[0]["transaction_type"] == "purchase"
     assert transactions[0]["classification_source"] == "rule"
     assert transactions[0]["classification_rule_version"]
+
+
+@pytest.mark.parametrize("route,suffix", [("eml", "eml"), ("file", "eml"), ("file", "pdf")])
+@pytest.mark.parametrize("confirmer", ["admin", "owner"])
+def test_agent_can_preview_but_only_owner_or_admin_can_confirm_correction(
+    client, auth_headers, monkeypatch, route, suffix, confirmer
+):
+    data = synthetic_cgb_eml()
+    if suffix == "pdf":
+        data = b"synthetic PDF for authorization regression"
+        parsed = ParsedStatement(
+            "BOC", "1234", date(2026, 9, 6), date(2026, 9, 26), 10000, 1000, "CNY",
+        )
+        monkeypatch.setattr("app.parsers.boc.BocStatementParser.parse_pdf_bytes", lambda *_: parsed)
+
+        def reject_citic(*_args):
+            raise ParserError("not CITIC")
+
+        monkeypatch.setattr("app.parsers.citic.CiticStatementParser.parse_pdf_bytes", reject_citic)
+
+    set_secret("agent", "token", "synthetic-agent-token-for-correction-regression")
+    agent_headers = {"Authorization": "Bearer synthetic-agent-token-for-correction-regression"}
+    path = f"/api/v1/imports/{route}"
+    files = {"file": (f"statement.{suffix}", data)}
+    first = client.post(path, headers=agent_headers, files=files)
+    assert first.status_code == 200, first.text
+    original = first.json()["statement"]
+    statement_path = f"/api/v1/statements/{original['id']}"
+    with client.app.state.session_factory() as session:
+        session.get(Statement, original["id"]).total_due_minor += 100
+        session.commit()
+    before = client.get(statement_path, headers=auth_headers).json()
+    transactions = client.get("/api/v1/transactions", headers=auth_headers).json()
+
+    # Empty tokens retain preview semantics and cannot bypass confirmation authorization.
+    for params in ({}, {"confirmation_token": ""}):
+        preview = client.post(path, headers=agent_headers, files=files, params=params)
+        assert preview.status_code == 409, preview.text
+        assert preview.json()["detail"]["code"] == "IMPORT_CONFIRMATION_REQUIRED"
+    params = {"confirmation_token": preview.json()["detail"]["confirmation_token"]}
+    assert params["confirmation_token"]
+    assert client.post(path, files=files, params=params).status_code == 401
+    denied = client.post(path, headers=agent_headers, files=files, params=params)
+    assert denied.status_code == 403, denied.text
+    assert client.get(statement_path, headers=auth_headers).json() == before
+    assert client.get("/api/v1/transactions", headers=auth_headers).json() == transactions
+
+    confirmation_headers = auth_headers
+    if confirmer == "owner":
+        login = client.post("/api/v1/auth/login", json={
+            "owner_token": client.app.state.settings.owner_token.get_secret_value(),
+        })
+        assert login.status_code == 200, login.text
+        assert client.post(path, files=files, params=params).status_code == 403
+        confirmation_headers = {"X-CSRF-Token": login.json()["csrf_token"]}
+    confirmed = client.post(path, headers=confirmation_headers, files=files, params=params)
+    assert confirmed.status_code == 200, confirmed.text
+    assert confirmed.json()["corrected"] is True
+    assert confirmed.json()["statement"]["id"] == original["id"]
+    assert confirmed.json()["statement"]["total_due_minor"] == original["total_due_minor"]
 
 
 def test_reimport_with_new_parser_refreshes_summary_and_only_adds_missing_transactions(
