@@ -8,7 +8,7 @@ Vue 3 Web 前端 + FastAPI 后端，打包为单个 Python Docker 镜像，数�
 - [架构基线](ARCHITECTURE_BASELINE.md)：产品边界、七条硬原则及数据/财务/安全约束。
 - [分阶段重构计划](docs/refactoring-plan.md)：七个阶段、Phase 1 删除范围与验收条件。
 
-以上文档描述目标架构，不表示重构已经完成。当前尚未正式使用，无历史用户数据或旧接口兼容要求。
+以上文档描述目标架构，不表示重构已经完成
 
 ## 功能
 
@@ -62,7 +62,7 @@ docker compose up --build -d
 
 ## 许可证
 
-本项目采用 [AGPL-3.0](LICENSE) 许可证。修改后的版本若以网络服务形式提供，须按 AGPL-3.0 第 13 条向使用者提供对应源码。
+本项目采用 [AGPL-3.0](LICENSE) 许可证
 
 ## 商标声明
 
