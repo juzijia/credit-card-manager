@@ -15,7 +15,7 @@ function setup(handler) {
     FormData: class { constructor() { this.items = []; } append(key, value) { this.items.push([key, value]); } },
   };
   const start = html.indexOf('function formatAmount(minor) {');
-  const end = html.indexOf('function handleFileSelect(', start);
+  const end = html.indexOf('function handleDrop(', start);
   vm.runInNewContext(html.slice(start, end), context);
   return { ...context, calls };
 }
@@ -110,4 +110,38 @@ test('overlapping uploads do not replace the pending source', async () => {
   release({ deduplicated: true });
   await first;
   assert.equal(ctx.uploadBusy.value, false);
+});
+
+test('file selection can retry the same file after cancellation and stale confirmation', async () => {
+  const ctx = setup(n => { throw conflict(n === 3 ? 'IMPORT_CONFIRMATION_STALE' : 'IMPORT_CONFIRMATION_REQUIRED'); });
+  const input = { files: [file], value: '' };
+  async function selectSameFile() {
+    if (input.value === file.name) return;
+    input.value = file.name;
+    ctx.handleFileSelect({ target: input });
+    await new Promise(resolve => setImmediate(resolve));
+  }
+
+  await selectSameFile();
+  assert.equal(ctx.pendingImport.value.file, file);
+  assert.equal(input.value, '');
+  ctx.cancelImportCorrection();
+  await selectSameFile();
+  assert.equal(ctx.calls.length, 2);
+  await ctx.confirmImportCorrection();
+  assert.equal(ctx.pendingImport.value, null);
+  await selectSameFile();
+  assert.equal(ctx.calls.length, 4);
+  assert.equal(ctx.pendingImport.value.file, file);
+});
+
+test('empty and busy file selections do not upload and leave the picker reusable', () => {
+  const ctx = setup(() => { throw new Error('unexpected upload'); });
+  const empty = { files: [], value: '' };
+  ctx.handleFileSelect({ target: empty });
+  ctx.uploadBusy.value = true;
+  const input = { files: [file], value: file.name };
+  ctx.handleFileSelect({ target: input });
+  assert.equal(ctx.calls.length, 0);
+  assert.equal(input.value, '');
 });

@@ -161,10 +161,8 @@ def _stage_message(session: Session, raw: bytes, locator: str, result: SyncResul
             else:
                 result.complete_statements += 1
             handled = True
-        except ImportConflict as exc:
-            session.rollback()
-            result.add_failure(f"{locator}: {exc.detail['code']}: {exc}; 请手动上传账单核对差异。")
-            return False
+        except ImportConflict:
+            raise
         except ParserError as exc:
             errors.append(str(exc))
             session.rollback()
@@ -282,6 +280,12 @@ def _sync_folder(
                     else:
                         result.failed_candidates += 1
                         pending.add(uid)
+                except ImportConflict as exc:
+                    session.rollback()
+                    result.failed_candidates += 1
+                    result.add_failure(f"imap:{folder_key}:{uidvalidity}:{uid}: {exc.detail['code']}: {exc}; 请手动上传账单核对差异。")
+                    # User decisions cannot be resolved by automatic retries; retain the sync failure record.
+                    pending.discard(uid)
                 except Exception as exc:
                     result.failed_candidates += 1
                     result.add_failure(f"{mailbox} UID {uid}: {type(exc).__name__}: {exc}")

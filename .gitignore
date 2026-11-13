@@ -17,6 +17,10 @@ data/
 dev/private-fixtures/
 private-fixtures/
 dev/reference/
+dev/phase4_inventory.py
+dev/phase4_inventory_report.json
+dev/phase5_relationship_scan.py
+dev/phase5_relationship_report.json
 .codex/
 *.log
 .tmp-*.png

@@ -12,6 +12,7 @@ from app.integrations import imap_sync
 from app.integrations.imap_sync import ImapRuntimeConfig
 from app.models.imap_state import ImapState
 from app.models.imap_sync_run import ImapSyncRun
+from app.models.repayment import Repayment
 from app.models.statement import Statement
 from app.parsers.base import ParsedStatement, ParserError
 from app.services.eml_import import ImportConflict, import_eml_data
@@ -102,9 +103,10 @@ def test_imap_fetches_body_only_for_candidate(client, monkeypatch) -> None:
     assert FakeImap.body_fetches == []
 
 
-@pytest.mark.parametrize("previous_uidvalidity", [None, 41], ids=["new-folder", "uidvalidity-reset"])
+@pytest.mark.parametrize("previous_uidvalidity", [None, 41, 42], ids=["new-folder", "uidvalidity-reset", "pending-conflict"])
+@pytest.mark.parametrize("corrected_amount", [15000, 5000], ids=["confirmation-required", "blocked-by-repayment"])
 def test_imap_state_survives_first_message_correction_rollback(
-    client, monkeypatch, previous_uidvalidity
+    client, monkeypatch, previous_uidvalidity, corrected_amount
 ) -> None:
     message = EmailMessage()
     message["Subject"] = "广发信用卡电子账单"
@@ -133,31 +135,84 @@ def test_imap_state_survives_first_message_correction_rollback(
     monkeypatch.setattr(imap_sync, "IMAPClient", CorrectionImap)
     with client.app.state.session_factory() as session:
         original = import_eml_data(session, raw)
+        session.add(Repayment(
+            statement_id=original.statement.id, amount_minor=6000, idempotency_key="synthetic-payment",
+        ))
         if previous_uidvalidity is not None:
             account_key = hashlib.sha256(
                 (TEST_CONFIG.host + chr(0) + TEST_CONFIG.username).encode()
             ).hexdigest()
             session.add(ImapState(
                 account_key=account_key, mailbox="INBOX", uidvalidity=previous_uidvalidity,
-                last_uid=100, pending_uids="[99]",
+                last_uid=100, pending_uids="[2]" if previous_uidvalidity == 42 else "[99]",
             ))
-            session.commit()
-    current["amount"] = 15000
+        session.commit()
+    current["amount"] = corrected_amount
     with client.app.state.session_factory() as session:
         result = imap_sync.sync_mailbox(session, TEST_CONFIG)
 
     with client.app.state.session_factory() as session:
         state = session.query(ImapState).one()
-        assert (state.uidvalidity, state.last_uid, state.pending_uids) == (42, 2, "[2]")
+        expected_last_uid = 100 if previous_uidvalidity == 42 else 2
+        assert (state.uidvalidity, state.last_uid, state.pending_uids) == (42, expected_last_uid, "[]")
         assert session.query(Statement).count() == 1
         assert session.get(Statement, original.statement.id).total_due_minor == 10000
-        assert session.query(ImapSyncRun).one().status == "partial"
+        assert session.query(Repayment).one().amount_minor == 6000
+        run = session.query(ImapSyncRun).one()
+        assert run.status == "partial"
+        assert run.failed_candidates == 1
+        assert "请手动上传账单核对差异" in run.failure_reasons
     assert result.scanned == result.candidates == result.failed_candidates == 1
     assert result.complete_statements == result.parsed_batches == 0
     assert len(result.failure_reasons) == 1
-    assert "IMPORT_CONFIRMATION_REQUIRED" in result.failure_reasons[0]
+    code = "IMPORT_CONFIRMATION_REQUIRED" if corrected_amount == 15000 else "IMPORT_CORRECTION_BLOCKED"
+    assert code in result.failure_reasons[0]
     assert CorrectionImap.body_fetches == [2]
-    assert CorrectionImap.search_calls[0][0] == "SINCE"
+    assert CorrectionImap.search_calls[0][0] == ("UID" if previous_uidvalidity == 42 else "SINCE")
+
+    with client.app.state.session_factory() as session:
+        repeated = imap_sync.sync_mailbox(session, TEST_CONFIG)
+    assert repeated.scanned == repeated.failed_candidates == 0
+    assert CorrectionImap.body_fetches == [2]
+
+    # Explicit historical scans can revisit conflicts without putting them back into automatic retries.
+    with client.app.state.session_factory() as session:
+        historical = imap_sync.sync_mailbox(session, TEST_CONFIG, full_scan=True)
+        assert session.query(ImapState).one().pending_uids == "[]"
+    assert historical.failed_candidates == 1
+    assert code in historical.failure_reasons[0]
+    assert CorrectionImap.body_fetches == [2, 2]
+
+
+@pytest.mark.parametrize("failure_at", ["header", "body", "parser"])
+def test_imap_transient_failures_remain_retryable(client, monkeypatch, failure_at):
+    failing = {"enabled": True}
+
+    class FailingImap(FakeImap):
+        def fetch(self, uids, queries):
+            stage = "header" if b"HEADER.FIELDS" in queries[0] else "body"
+            if uids == [2] and failing["enabled"] and failure_at == stage:
+                raise OSError("synthetic temporary fetch failure")
+            return super().fetch(uids, queries)
+
+    def stage_message(*_args):
+        return not (failing["enabled"] and failure_at == "parser")
+
+    FailingImap.body_fetches = []
+    FailingImap.search_calls = []
+    monkeypatch.setattr(imap_sync, "IMAPClient", FailingImap)
+    monkeypatch.setattr(imap_sync, "_stage_message", stage_message)
+    with client.app.state.session_factory() as session:
+        first = imap_sync.sync_mailbox(session, TEST_CONFIG)
+        assert first.failed_candidates == 1
+        assert session.query(ImapState).one().pending_uids == "[2]"
+        assert session.query(ImapState).one().last_uid == 2
+    failing["enabled"] = False
+    with client.app.state.session_factory() as session:
+        recovered = imap_sync.sync_mailbox(session, TEST_CONFIG)
+        assert recovered.scanned == 1
+        assert recovered.failed_candidates == 0
+        assert session.query(ImapState).one().pending_uids == "[]"
 
 
 def test_imap_records_lookback_and_full_scan_modes(client, monkeypatch) -> None:
@@ -248,10 +303,9 @@ def test_stage_message_reports_correction_instead_of_hiding_it_in_batch_fallback
     monkeypatch.setattr(imap_sync, "stage_parsed_file", lambda *_args, **_kwargs: (object(), False))
     result = imap_sync.SyncResult()
     with client.app.state.session_factory() as session:
-        handled = imap_sync._stage_message(session, b"Subject: statement\r\n\r\nbody", "imap:test:42:3", result)
-    assert handled is False
+        with pytest.raises(ImportConflict, match="statement changed"):
+            imap_sync._stage_message(session, b"Subject: statement\r\n\r\nbody", "imap:test:42:3", result)
     assert result.parsed_batches == 0
-    assert any("IMPORT_CONFIRMATION_REQUIRED" in reason for reason in result.failure_reasons)
 
 
 def test_imap_sync_runs_endpoint(client, auth_headers) -> None:
